@@ -1,0 +1,29 @@
+.navbar{
+  background-color: var(--black);
+  display: flex;
+  height: 16.5rem;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--white);
+  font-size: 4rem;
+  padding: 0 5rem;
+}
+.user{
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.userImage{
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.routes{
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
