@@ -1,8 +1,10 @@
 import styles from './Home.module.css';
 import TitleBox from '../../components/TitleBox/TitleBox';
 import MainButton from '../../components/MainButton/MainButton';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
+  const navigate = useNavigate()
   return (
     <div className={styles.home}>
       <div className={styles.rank}>
@@ -14,7 +16,7 @@ export default function Home() {
         <div className={styles.options}>
           <MainButton text="Entrar em Sala" onClick={() => {}} />
           <MainButton text="Criar Sala" onClick={() => {}} />
-          <MainButton text="Jogar Fases" onClick={() => {}} />
+          <MainButton text="Jogar Fases" onClick={() => { navigate('/worlds') }} />
           <MainButton text="Quiz Aleatório" onClick={() => {}} />
 
         </div>
