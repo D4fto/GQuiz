@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Login from './pages/login/login';
 import ChooseWorlds from './pages/chooseWorlds/chooseWorlds';
+import Home from './pages/Home/Home';
 import NavBar from './components/NavBar/NavBar';
 
 export default function App() {
@@ -9,8 +10,9 @@ export default function App() {
       <NavBar />
 
       <Routes>
-        <Route path="login" element={<Login />} />
-        <Route path="worlds" element={<ChooseWorlds />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/worlds" element={<ChooseWorlds />} />
       </Routes>
     </>
   );

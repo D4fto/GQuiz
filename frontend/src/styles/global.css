@@ -13,4 +13,8 @@ html{
 #root{
   height: 100dvh;
   width: 100dvw;
+  display: flex;
+  flex-direction: column;
+  max-height: 100dvh;
+  max-width: 100dvw;
 }

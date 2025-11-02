@@ -10,6 +10,7 @@ export default function NavBar() {
                 <img src={gql} alt="GQuiz Logo" className={styles.logoImage} />
             </div>
             <div className={styles.routes}>
+              <Link to={'/'}>Home</Link>
               <Link to={'/login'}>Login</Link>
               <Link to={'/worlds'}>Worlds</Link>
             </div>

@@ -1,0 +1,11 @@
+.titleBox{
+  background-color: var(--primary);
+  padding: 5rem;
+  border-radius: 1rem;
+  color: var(--white);
+  text-align: center;
+}
+.title{
+  font-size: 4.8rem;
+  font-weight: 400;
+}
