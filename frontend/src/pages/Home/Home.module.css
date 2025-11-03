@@ -2,6 +2,8 @@
   background-color: var(--primary);
   height: 100%;
   display: flex;
+  position: relative;
+  overflow: hidden;
 }
 .rank{
   background-color: var(--primary-dark);
@@ -23,6 +25,7 @@
   justify-content: center;
   align-items: center;
   margin: auto;
+  z-index: 1;
 }
 .options>*{
   width: 30rem !important;

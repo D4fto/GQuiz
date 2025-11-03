@@ -8,6 +8,7 @@
   color: var(--white);
   font-size: 4rem;
   padding: 0 5rem;
+  z-index: 99;
 }
 .user{
   display: flex;
