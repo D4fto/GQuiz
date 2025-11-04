@@ -12,10 +12,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 48px;
-  border-radius: 10px;
-  padding-left: 150px;
-  padding-right: 150px;
+  font-size: 4.8rem;
+  border-radius: 1.0rem;
+  padding-left: 15.0rem;
+  padding-right: 15.0rem;
 }
 
 .boxWorlds{
