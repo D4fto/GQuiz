@@ -1,10 +1,10 @@
-import styles from "./login.module.css"
+import styles from "./CreateAccount.module.css"
 import { useNavigate } from "react-router-dom";
 import MainButton from "../../components/MainButton/MainButton";
 import StyleSquare from "../../components/StyleSquare/StyleSquare";
 import BlackQ from "../../components/BlackQ/BlackQ";
 import { Link } from 'react-router-dom';
-export default function Login(){
+export default function CreateAccount(){
     const navigate = useNavigate()
 
 
@@ -14,7 +14,7 @@ export default function Login(){
                 <StyleSquare option={2} innerColor={'var(--primary-dark)'} outColor={'var(--primary)'} position={'bottomRight'}></StyleSquare>
                 <StyleSquare option={3} innerColor={'var(--primary-dark)'} position={'topLeft'}></StyleSquare>
                 <div className={styles.login}>
-                    <div className={styles.title}>LOGIN</div>
+                    <div className={styles.title}>CADASTRAR-SE</div>
                     <div className={styles.else}>
                         <div className={styles.validation}>
                             <label htmlFor="email">Email</label>
@@ -23,14 +23,8 @@ export default function Login(){
                             <input className={styles.input} type="text" id="senha" name="senha" placeholder="*******"/>
                         </div>
                         
-                        <MainButton text="Fazer Login" onClick={() => {navigate("/")}} />
+                        <MainButton text="Fazer Cadastro" onClick={() => {navigate("/")}} />
                         
-                        <div className={styles.account}>Não tem conta? <Link className={styles.link} to={'/create-account'}>Cadastre-se</Link></div>
-                        <div className={styles.white}></div>
-                        <div className={styles.google}>
-                            <img className={styles.img} src="https://img.icons8.com/?size=100&id=V5cGWnc9R4xj&format=png&color=000000" alt="" />
-                            continuar com google
-                        </div>
                     </div>  
                 </div>
             </div>

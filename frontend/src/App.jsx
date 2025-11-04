@@ -1,10 +1,11 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
+import CreateAccount from './pages/CreateAccount/CreateAccount';
 import Login from './pages/login/login';
 import ChooseWorlds from './pages/chooseWorlds/chooseWorlds';
 import Home from './pages/Home/Home';
 import NavBar from './components/NavBar/NavBar';
 
-const noNavRoutes = ['/login']
+const noNavRoutes = ['/login','/create-account']
 
 export default function App() {
   const location = useLocation()
@@ -15,6 +16,7 @@ export default function App() {
       {!noNavRoutes.includes(location.pathname) && <NavBar />}
 
       <Routes>
+        <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/worlds" element={<ChooseWorlds />} />
