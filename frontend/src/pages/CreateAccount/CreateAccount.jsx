@@ -17,6 +17,8 @@ export default function CreateAccount(){
                     <div className={styles.title}>CADASTRAR-SE</div>
                     <div className={styles.else}>
                         <div className={styles.validation}>
+                            <label htmlFor="user">Nome de usuário:</label>
+                            <input className={styles.input} type="text" name="user" id="user" placeholder="NomeLegal123" />
                             <label htmlFor="email">Email</label>
                             <input className={styles.input} type="email" id="email" name="email" placeholder="example@gmail.com"/>
                             <label htmlFor="senha">Digite sua senha</label>
