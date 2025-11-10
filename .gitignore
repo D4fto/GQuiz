@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
 
 # Editor directories and files
 .vscode/*
@@ -22,5 +23,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-frontend/src/components/GeneralRank/GeneralRank.jsx
-frontend/src/components/GeneralRank/GeneralRank.module.css
+
+
+
+backend/src/generated/prisma
