@@ -2,6 +2,7 @@ import styles from "./Home.module.css";
 import TitleBox from "../../components/TitleBox/TitleBox";
 import MainButton from "../../components/MainButton/MainButton";
 import StyleSquare from "../../components/StyleSquare/StyleSquare";
+import GeneralRank from "../../components/GeneralRank/GeneralRank";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       <StyleSquare option={2} innerColor={'var(--gray)'} outColor={'var(--black)'} position={'bottomRight'}></StyleSquare>
       <div className={styles.rank}>
         <TitleBox title="Ranking Geral" />
+        <GeneralRank></GeneralRank>
       </div>
       <div className={styles.mainContent}>
         <p className={styles.description}>

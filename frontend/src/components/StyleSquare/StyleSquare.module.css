@@ -6,20 +6,20 @@
 .topLeft{
   top: 0;
   left: 0;
-  transform: translate(-50%,-50%);
+  transform: translate(-40%,-40%);
 }
 .topRight{
   top: 0;
   right: 0;
-  transform: translate(50%,-50%);
+  transform: translate(40%,-40%);
 }
 .bottomLeft{
   bottom: 0;
   left: 0;
-  transform: translate(-50%,50%);
+  transform: translate(-40%,40%);
 }
 .bottomRight{
   bottom: 0;
   right: 0;
-  transform: translate(50%,50%);
+  transform: translate(40%,40%);
 }
