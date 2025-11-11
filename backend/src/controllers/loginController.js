@@ -1,3 +1,4 @@
+import { error } from "console";
 import prisma from "../config/db.js";
 import { sign } from "../config/jwt.js";
 
@@ -31,4 +32,25 @@ export async function login(req, res) {
 export function logout(req, res){
   res.cookie('token', '', {maxAge : 0 })
   res.status(200).send({message: "Usuário deslogado com sucesso"})
+}
+
+export async function createAccount(req, res){
+  const { email, username, password } = req.body
+
+  try{
+    const response = await prisma.user.create({
+      data:{
+        email: email,
+        username: username,
+        password: password,
+  
+      },
+    })
+    res.status(200).send({message: "Usuário criado", response: response})
+  } catch(e){
+    
+    res.status(400).send({error: e})
+  }
+
+
 }
