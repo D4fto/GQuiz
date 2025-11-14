@@ -1,12 +1,13 @@
 
 import styles from "./Question.module.css";
 import React, { useState, useEffect } from 'react';
+import StyleSquare from "../../components/StyleSquare/StyleSquare";
 
   export default function Question() {
     const [selectedOption, setSelectedOption] = useState(2);
     const [hoveredOption, setHoveredOption] = useState(null);
     const [buttonHovered, setButtonHovered] = useState(false);
-    const [time, setTime] = useState(28);
+    const [time, setTime] = useState(60);
   
     useEffect(() => {
       const timer = setInterval(() => {
@@ -30,12 +31,9 @@ import React, { useState, useEffect } from 'react';
   
     return (
       <div className={styles.container}>
-        <div className={styles.header}>
-          <div className={styles.logo}>
-            {/* Logo do GQuiz será inserido aqui */}
-          </div>
+        <StyleSquare option={1} innerColor={'var(--black)'} outColor={'var(--gray)'} position={'bottomLeft'}></StyleSquare>
           <div className={styles.timer}>{formatTime(time)}</div>
-        </div>
+        
   
         <div className={styles.mainContent}>
           <div className={styles.questionCard}>
