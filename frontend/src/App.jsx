@@ -7,6 +7,7 @@ import NavBar from './components/NavBar/NavBar';
 import PrivateRoute from "./utils/PrivateRoute";
 import { Providers } from './contexts/Providers';
 import { Toaster } from "react-hot-toast";
+import Question from './pages/Question/Question';
 
 const noNavRoutes = ['/login','/create-account']
 
@@ -30,6 +31,11 @@ export default function App() {
           <Route path="/worlds" element={
             <PrivateRoute>
               <ChooseWorlds />
+            </PrivateRoute>
+            } />
+            <Route path="/question" element={
+            <PrivateRoute>
+              <Question />
             </PrivateRoute>
             } />
           <Route path="/login" element={<Login />} />
