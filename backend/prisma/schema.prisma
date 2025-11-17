@@ -10,14 +10,16 @@ datasource db {
 }
 
 model user {
-  id         Int       @id @default(autoincrement())
-  created_at DateTime  @default(now()) @db.Timestamptz(6)
-  email      String    @unique @db.VarChar
-  username   String    @unique @db.VarChar
-  password   String    @db.VarChar
-  points     Int?      @default(0)
-  id_userImg Int?
-  userImgs   userImgs? @relation(fields: [id_userImg], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id             Int              @id @default(autoincrement())
+  created_at     DateTime         @default(now()) @db.Timestamptz(6)
+  email          String           @unique @db.VarChar
+  username       String           @unique @db.VarChar
+  password       String           @db.VarChar
+  points         Int?             @default(0)
+  id_userImg     Int?
+  isAdmin        Boolean          @default(false)
+  userImgs       userImgs?        @relation(fields: [id_userImg], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_has_level user_has_level[]
 }
 
 model userImgs {
@@ -28,8 +30,70 @@ model userImgs {
 }
 
 model world {
-  id         Int      @id @default(autoincrement())
+  id              Int               @id @default(autoincrement())
+  created_at      DateTime          @default(now()) @db.Timestamptz(6)
+  name            String            @db.VarChar
+  icon            String            @db.VarChar
+  world_has_level world_has_level[]
+}
+
+model category {
+  id         Int        @id @default(autoincrement())
+  created_at DateTime   @default(now()) @db.Timestamptz(6)
+  name       String?    @db.VarChar
+  question   question[]
+}
+
+model level {
+  id                 Int                  @id @default(autoincrement())
+  created_at         DateTime             @default(now()) @db.Timestamptz(6)
+  number             Int?
+  level_has_question level_has_question[]
+  user_has_level     user_has_level[]
+  world_has_level    world_has_level[]
+}
+
+model level_has_question {
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  id_level    Int
+  id_question Int
+  level       level    @relation(fields: [id_level], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  question    question @relation(fields: [id_question], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_level, id_question])
+}
+
+model question {
+  id                 Int                  @id @default(autoincrement())
+  created_at         DateTime             @default(now()) @db.Timestamptz(6)
+  title              String               @db.VarChar
+  correct            String               @db.VarChar
+  wrong1             String               @db.VarChar
+  wrong2             String               @db.VarChar
+  wrong3             String               @db.VarChar
+  weight             Int                  @default(1000)
+  id_category        Int                  @default(1)
+  level_has_question level_has_question[]
+  category           category             @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model user_has_level {
+  id_user    Int      @default(autoincrement())
   created_at DateTime @default(now()) @db.Timestamptz(6)
-  name       String   @db.VarChar
-  icon       String   @db.VarChar
+  id_level   Int
+  max_points Int?
+  level      level    @relation(fields: [id_level], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user       user     @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_user, id_level])
+}
+
+model world_has_level {
+  id_world   Int      @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  id_level   Int
+  level      level    @relation(fields: [id_level], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  world      world    @relation(fields: [id_world], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_world, id_level])
 }
