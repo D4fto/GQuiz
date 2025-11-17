@@ -18,6 +18,7 @@ export async function login(req, res) {
     id: user.id,
     email: user.email,
     username: user.username,
+    isAdmin: user.isAdmin,
   })
 
   console.log("token:", token)
@@ -38,12 +39,12 @@ export async function createAccount(req, res){
   const { email, username, password } = req.body
 
   try{
+
     const response = await prisma.user.create({
       data:{
         email: email,
         username: username,
         password: password,
-  
       },
     })
     res.status(200).send({message: "Usuário criado", response: response})
