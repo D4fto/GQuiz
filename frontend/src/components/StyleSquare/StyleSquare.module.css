@@ -1,25 +1,31 @@
-.styleSquare{
+.styleSquare {
   position: absolute;
   z-index: 0;
+  width: 40rem; /* escolha o valor que encaixa no design */
+  height: auto; /* mantém proporção */
+}
+.styleSquare svg {
+  width: 100%;
+  height: auto;
 }
 
 .topLeft{
   top: 0;
   left: 0;
-  transform: translate(-40%,-40%);
+  transform: translate(-40%,-50%);
 }
 .topRight{
   top: 0;
   right: 0;
-  transform: translate(40%,-40%);
+  transform: translate(40%,-50%);
 }
 .bottomLeft{
   bottom: 0;
   left: 0;
-  transform: translate(-40%,40%);
+  transform: translate(-40%,50%);
 }
 .bottomRight{
   bottom: 0;
   right: 0;
-  transform: translate(40%,40%);
+  transform: translate(40%,50%);
 }

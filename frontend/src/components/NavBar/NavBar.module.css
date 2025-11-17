@@ -29,3 +29,12 @@
   align-items: center;
   gap: 1.6rem;
 }
+
+.logoImage{
+  height: 100%;
+  width: auto;
+}
+
+.logo{
+  height: 100%;
+}

@@ -137,10 +137,10 @@
 
 .bottomLeftCard {
   position: absolute;
-  bottom: 3rem;
-  left: 3rem;
+  bottom: 4rem;
+  left: 2rem;
   color: var(--white);
-  padding: 2rem 2.5rem;
+
   border-radius: 1rem;
   font-size: 2.4rem;
   font-weight: 500;
