@@ -8,7 +8,9 @@ import prisma from './src/config/db.js';
 import loginRouter from './src/routes/login.routes.js'
 import rankingRouter from './src/routes/ranking.routes.js'
 import { verify } from './src/config/jwt.js';
-import worldController from './src/routes/world.routes.js'
+import worldRouter from './src/routes/world.routes.js'
+import categoryRouter from './src/routes/category.routes.js'
+import questionRouter from './src/routes/question.routes.js'
 
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -35,7 +37,9 @@ const io = new Server(server, {
 
 app.use('/login', loginRouter)
 app.use('/ranking', rankingRouter)
-app.use('/world', worldController)
+app.use('/world', worldRouter)
+app.use('/category', categoryRouter)
+app.use('/question', questionRouter)
 app.get("/me", (req, res) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).end();
