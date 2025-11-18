@@ -5,9 +5,9 @@ import { adminMiddleware, authMiddleware } from "../middlewares/authMiddleware.j
 const router = Router();
 
 router.get("/", authMiddleware, categoryController.getCategories);
-router.post("/", adminMiddleware, categoryController.createCategory);
-router.patch("/:id", adminMiddleware, categoryController.updateCategory);
-router.delete("/:id", adminMiddleware, categoryController.deleteCategory);
+router.post("/", authMiddleware, adminMiddleware, categoryController.createCategory);
+router.patch("/:id", authMiddleware, adminMiddleware, categoryController.updateCategory);
+router.delete("/:id", authMiddleware, adminMiddleware, categoryController.deleteCategory);
 
 
 

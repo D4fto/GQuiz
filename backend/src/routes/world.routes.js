@@ -5,9 +5,9 @@ import { adminMiddleware, authMiddleware } from "../middlewares/authMiddleware.j
 const router = Router();
 
 router.get("/", authMiddleware, worldController.getWorlds);
-router.post("/", adminMiddleware, worldController.createWorld);
-router.patch("/:id", adminMiddleware, worldController.editWorld);
-router.delete("/:id", adminMiddleware, worldController.deleteWorld);
+router.post("/", authMiddleware, adminMiddleware, worldController.createWorld);
+router.patch("/:id", authMiddleware, adminMiddleware, worldController.editWorld);
+router.delete("/:id", authMiddleware, adminMiddleware, worldController.deleteWorld);
 
 
 

@@ -21,25 +21,10 @@ export function authMiddleware(req, res, next) {
 }
 
 export function adminMiddleware(req, res, next) {
-  const token = req.cookies.token;
-
-  if (!token) {
-    return res.status(401).json({ error: "Token não encontrado" });
+  if(req.user.isAdmin){
+    next(); // segue para a rota
+    return
   }
-
-  try {
-    const payload = verify(token);
-    req.user = payload;
-    console.log(payload)
-    if(payload.isAdmin){
-      next(); // segue para a rota
-      return
-    }
-    return res.status(401).json({error: 'Usuário não tem permissão para acessar esse serviço'})
-  } catch (e) {
-    if (e instanceof jwt.JsonWebTokenError) {
-      return res.status(401).json({ error: "Token inválido" });
-    }
-    return res.status(400).json({ error: "Erro na requisição" });
-  }
+  return res.status(401).json({error: 'Usuário não tem permissão para acessar esse serviço'})
+  
 }

@@ -16,7 +16,7 @@ model user {
   username       String           @unique @db.VarChar
   password       String           @db.VarChar
   points         Int?             @default(0)
-  id_userImg     Int?
+  id_userImg     Int?             @default(1)
   isAdmin        Boolean          @default(false)
   userImgs       userImgs?        @relation(fields: [id_userImg], references: [id], onDelete: NoAction, onUpdate: NoAction)
   user_has_level user_has_level[]
@@ -47,7 +47,7 @@ model category {
 model level {
   id                 Int                  @id @default(autoincrement())
   created_at         DateTime             @default(now()) @db.Timestamptz(6)
-  number             Int?
+  number             Int
   level_has_question level_has_question[]
   user_has_level     user_has_level[]
   world_has_level    world_has_level[]
@@ -67,13 +67,10 @@ model question {
   id                 Int                  @id @default(autoincrement())
   created_at         DateTime             @default(now()) @db.Timestamptz(6)
   title              String               @db.VarChar
-  correct            String               @db.VarChar
-  wrong1             String               @db.VarChar
-  wrong2             String               @db.VarChar
-  wrong3             String               @db.VarChar
   weight             Int                  @default(1000)
   id_category        Int                  @default(1)
   level_has_question level_has_question[]
+  option             option[]
   category           category             @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
@@ -96,4 +93,13 @@ model world_has_level {
   world      world    @relation(fields: [id_world], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([id_world, id_level])
+}
+
+model option {
+  id          Int      @id @default(autoincrement())
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  label       String   @db.VarChar
+  isCorrect   Boolean  @default(false)
+  id_question Int
+  question    question @relation(fields: [id_question], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
