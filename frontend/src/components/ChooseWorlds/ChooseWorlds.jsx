@@ -38,7 +38,7 @@ export default function ChooseWorlds() {
     fetchWorlds();
   }, []);
 
-  if (loading) return <div>Carregando...</div>;
+  if (loading) return <div className={styles.loading}>Carregando...</div>;
 
   return (
     <div className={styles.worldsMenu}>

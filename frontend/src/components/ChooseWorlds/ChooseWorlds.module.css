@@ -23,3 +23,7 @@
 .worldsMenuItens:hover {
   background-color: var(--primary);
 }
+
+.loading{
+  font-size: 3.6rem;
+}
