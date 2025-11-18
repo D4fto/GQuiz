@@ -1,0 +1,230 @@
+.container {
+    min-height: 100vh;
+    background-color: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .card {
+    background: linear-gradient(135deg, #c62828 0%, #d32f2f 50%, #e53935 100%);
+    border-radius: 24px;
+    padding: 40px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    position: relative;
+  }
+  
+  .header {
+    position: relative;
+    margin-bottom: 30px;
+  }
+  
+  .title {
+    background-color: rgba(220, 50, 50, 0.9);
+    color: white;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .backButton {
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .backButton:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: translateY(-50%) scale(1.05);
+  }
+  
+  .backArrow {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .searchContainer {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .searchIcon {
+    color: #c62828;
+    flex-shrink: 0;
+  }
+  
+  .searchInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .searchInput::placeholder {
+    color: #999;
+  }
+  
+  .addButton {
+    background-color: transparent;
+    border: none;
+    color: #c62828;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+  
+  .addButton:hover {
+    background-color: rgba(198, 40, 40, 0.1);
+    transform: scale(1.1);
+  }
+  
+  .roomList {
+    background-color: rgba(255, 255, 255, 0.98);
+    border-radius: 12px;
+    padding: 8px;
+    margin-bottom: 30px;
+    max-height: 320px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .roomList::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .roomList::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+  }
+  
+  .roomList::-webkit-scrollbar-thumb {
+    background: #c62828;
+    border-radius: 4px;
+  }
+  
+  .roomItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .roomItem:last-child {
+    border-bottom: none;
+  }
+  
+  .roomItem:hover {
+    background-color: rgba(198, 40, 40, 0.05);
+  }
+  
+  .roomLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .usersIcon {
+    color: #666;
+  }
+  
+  .roomName {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .roomRight {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .roomScore {
+    font-size: 15px;
+    color: #666;
+    font-weight: 500;
+  }
+  
+  .lockIcon {
+    color: #333;
+  }
+  
+  .playButton {
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 48px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin-left: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .playButton:hover {
+    background-color: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  }
+  
+  .playButton:active {
+    transform: translateY(0);
+  }
+  
+  @media (max-width: 640px) {
+    .card {
+      padding: 24px;
+    }
+  
+    .title {
+      font-size: 22px;
+      padding: 16px;
+    }
+  
+    .backButton {
+      width: 44px;
+      height: 44px;
+    }
+  
+    .roomList {
+      max-height: 280px;
+    }
+  }
+  

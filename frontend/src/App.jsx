@@ -8,6 +8,7 @@ import PrivateRoute from "./utils/PrivateRoute";
 import { Providers } from './contexts/Providers';
 import { Toaster } from "react-hot-toast";
 import Question from './pages/Question/Question';
+import RoomSelection from './pages/RoomSelection/RoomSelection';
 
 const noNavRoutes = ['/login','/create-account']
 
@@ -36,6 +37,11 @@ export default function App() {
             <Route path="/question" element={
             <PrivateRoute>
               <Question />
+            </PrivateRoute>
+            } />
+            <Route path="/room-selection" element={
+            <PrivateRoute>
+              <RoomSelection />
             </PrivateRoute>
             } />
           <Route path="/login" element={<Login />} />
