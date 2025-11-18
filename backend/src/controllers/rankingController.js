@@ -5,7 +5,7 @@ export async function getRanking(req, res){
   const limit = req.params.limit || 10
   try{
     const response = await prisma.user.findMany({
-      take: limit,
+      take: parseInt(limit),
       where: {
         isAdmin: false
       },
@@ -15,7 +15,11 @@ export async function getRanking(req, res){
       select:{
         username: true,
         points: true,
-        id_userImg: true
+        userImgs: {
+          select: {
+            imgName: true
+          }
+        }
       }
     })
     res.send({response})

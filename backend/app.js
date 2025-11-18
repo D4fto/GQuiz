@@ -11,6 +11,8 @@ import { verify } from './src/config/jwt.js';
 import worldRouter from './src/routes/world.routes.js'
 import categoryRouter from './src/routes/category.routes.js'
 import questionRouter from './src/routes/question.routes.js'
+import levelRouter from './src/routes/level.routes.js'
+import userRouter from './src/routes/user.routes.js'
 
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -40,6 +42,9 @@ app.use('/ranking', rankingRouter)
 app.use('/world', worldRouter)
 app.use('/category', categoryRouter)
 app.use('/question', questionRouter)
+app.use('/level', levelRouter)
+app.use('/user', userRouter)
+
 app.get("/me", (req, res) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).end();
@@ -65,6 +70,10 @@ io.on('connection', (socket) => {
 
   io.emit('message', 'Olá mundo ' + socket.id)
 
+  socket.on('noo', () => {
+    console.log('user noooooooooo:', socket.id);
+  });
+  
   socket.on('disconnect', () => {
     console.log('user disconnected:', socket.id);
   });

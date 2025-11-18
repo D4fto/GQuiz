@@ -21,8 +21,6 @@ export async function login(req, res) {
     isAdmin: user.isAdmin,
   })
 
-  console.log("token:", token)
-
   res.cookie("token", token, { 
     maxAge: jwtExpirySeconds * 1000,
   })
@@ -39,12 +37,16 @@ export async function createAccount(req, res){
   const { email, username, password } = req.body
 
   try{
-
+    const countImgs = await prisma.userImgs.count()
+    const { id } = await prisma.userImgs.findFirst({
+      skip: Math.floor(Math.random() * countImgs)
+    })
     const response = await prisma.user.create({
       data:{
         email: email,
         username: username,
         password: password,
+        id_userImg: id
       },
     })
     res.status(200).send({message: "Usuário criado", response: response})
