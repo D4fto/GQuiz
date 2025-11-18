@@ -4,9 +4,9 @@ import { adminMiddleware, authMiddleware } from "../middlewares/authMiddleware.j
 
 const router = Router();
 
-router.get("/", adminMiddleware, questionController.getQuestions);
-router.post("/", adminMiddleware, questionController.createQuestion);
-router.patch("/:id", adminMiddleware, questionController.updateQuestion);
-router.delete("/:id", adminMiddleware, questionController.deleteQuestion);
+router.get("/", authMiddleware, adminMiddleware, questionController.getQuestions);
+router.post("/", authMiddleware, adminMiddleware, questionController.createQuestion);
+router.patch("/:id", authMiddleware, adminMiddleware, questionController.updateQuestion);
+router.delete("/:id", authMiddleware, adminMiddleware, questionController.deleteQuestion);
 
 export default router;
