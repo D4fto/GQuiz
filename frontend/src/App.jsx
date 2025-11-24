@@ -10,6 +10,7 @@ import { Providers } from './contexts/Providers';
 import { Toaster } from "react-hot-toast";
 import Question from './pages/Question/Question';
 import RoomSelection from './pages/RoomSelection/RoomSelection';
+import UserProfile from './components/UserProfile/UserProfile';
 
 const noNavRoutes = ['/login','/create-account']
 
@@ -40,9 +41,14 @@ export default function App() {
               <ChooseWorlds />
             </PrivateRoute>
             } />
-            <Route path="/question" element={
+          <Route path="/question" element={
             <PrivateRoute>
               <Question />
+            </PrivateRoute>
+            } />
+          <Route path="/profile" element={
+            <PrivateRoute>
+              <UserProfile />
             </PrivateRoute>
             } />
             <Route path="/room-selection" element={
