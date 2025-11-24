@@ -6,6 +6,10 @@ const router = Router();
 
 
 router.patch("/update-many/", authMiddleware, adminMiddleware, optionController.upateManyOptions);
+router.get("/", authMiddleware,adminMiddleware, optionController.getOptions);
+router.post("/", authMiddleware, adminMiddleware, optionController.createOption);
+router.patch("/:id", authMiddleware, adminMiddleware, optionController.updateOption);
+router.delete("/:id", authMiddleware, adminMiddleware, optionController.deleteOptions);
 
 
 export default router;
