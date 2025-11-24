@@ -13,6 +13,7 @@ import categoryRouter from './src/routes/category.routes.js'
 import questionRouter from './src/routes/question.routes.js'
 import levelRouter from './src/routes/level.routes.js'
 import userRouter from './src/routes/user.routes.js'
+import optionRouter from './src/routes/option.routes.js'
 
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -44,6 +45,7 @@ app.use('/category', categoryRouter)
 app.use('/question', questionRouter)
 app.use('/level', levelRouter)
 app.use('/user', userRouter)
+app.use('/option', optionRouter)
 
 app.get("/me", (req, res) => {
   const token = req.cookies.token;
@@ -57,12 +59,12 @@ app.get("/me", (req, res) => {
   }
 });
 
-async function main() {
-  const users = await prisma.user.findMany();
-  console.log(users);
-}
+// async function main() {
+//   const users = await prisma.user.findMany();
+//   console.log(users);
+// }
 
-main();
+// main();
 
 
 io.on('connection', (socket) => {
