@@ -19,6 +19,7 @@ export default function NavBar() {
             <Link to={'/login'}>Login</Link>
             <Link to={'/worlds'}>Worlds</Link>
             <Link to={'/question'}>Question</Link>
+            <Link to={'/profile'}>Profile</Link>
           </div>
           {
             !noProfileRoutes.includes(location.pathname) &&
