@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import CreateAccount from './pages/CreateAccount/CreateAccount';
 import Login from './pages/login/login';
 import ChooseWorlds from './pages/chooseWorlds/chooseWorlds';
+import Admin from './pages/Admin/Admin';
 import Home from './pages/Home/Home';
 import NavBar from './components/NavBar/NavBar';
 import PrivateRoute from "./utils/PrivateRoute";
@@ -28,6 +29,11 @@ export default function App() {
               <Home />
             </PrivateRoute>
             } />
+          <Route path="/admin" element={
+            <PrivateRoute>
+              <Admin />
+            </PrivateRoute>
+            } />
           <Route path="/worlds" element={
             <PrivateRoute>
               <ChooseWorlds />
@@ -41,7 +47,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
         </Routes>
 
-        <Toaster position='top-right'></Toaster>
+        <Toaster position='top-right' toastOptions={{style:{fontSize: "2.4rem"}}}></Toaster>
       </Providers>
     </>
   );
