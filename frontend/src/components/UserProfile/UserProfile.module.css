@@ -1,0 +1,91 @@
+:root {
+  --white: #F7F4F3;
+  --black: #070707;
+  --primary: #F03828;
+  --primary-dark: #BA1B1D;
+  --gray: #2F2A22;
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  background: var(--primary-dark);
+}
+
+.card {
+  width: 50rem;
+  background: var(--white);
+  border-radius: 1.125rem;
+  padding: 2rem 2rem;
+  text-align: center;
+  color: var(--black);
+}
+
+.avatarWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.avatar {
+  margin-top: 8rem;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 50%;
+  border: 0.25rem solid var(--primary);
+}
+
+.name {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  color: var(--black);
+}
+
+.username {
+  font-size: 2rem;
+  margin-bottom: 5rem;
+  color: var(--gray);
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 5rem;
+  color: var(--black);
+}
+
+.stats div {
+  text-align: center;
+}
+
+.puncctuation {
+  font-size: 4rem;
+  font-weight: bold;
+  color: var(--black);
+}
+
+.span {
+  font-size: 2rem;
+}
+
+.editButton {
+  width: 70%;
+  padding: 2rem;
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.2s;
+  font-size: 2rem;
+}
+
+.editButton:hover {
+  background: var(--primary-dark);
+}
