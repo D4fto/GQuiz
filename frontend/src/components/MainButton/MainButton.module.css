@@ -10,6 +10,12 @@
   cursor: pointer;
   transition: background-color .5s;
 }
-.mainButton:hover{
+.mainButton:hover:not(:disabled){
   background-color: var(--primary);
+}
+
+.mainButton:disabled{
+  background-color: var(--primary);
+  filter: brightness(.8) grayscale(.7);
+  cursor: unset;
 }
