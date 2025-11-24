@@ -1,6 +1,20 @@
 import prisma from "../config/db.js"
 
 
+export async function getQuestionsTitles(req,res) {
+  try{
+    const response = await prisma.question.findMany({
+      select: {
+        id: true,
+        title: true
+      }
+    })
+    return res.status(200).send({data: response})
+  }catch(e){
+    return res.status(400).send({error: e})
+  }
+}
+
 export async function getQuestions(req,res) {
   try{
     const response = await prisma.question.findMany({
@@ -8,7 +22,8 @@ export async function getQuestions(req,res) {
         option: {
           select: {
             id: true,
-            label: true
+            label: true,
+            isCorrect: true
           }
         }
       }

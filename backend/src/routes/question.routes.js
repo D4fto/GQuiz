@@ -4,6 +4,7 @@ import { adminMiddleware, authMiddleware } from "../middlewares/authMiddleware.j
 
 const router = Router();
 
+router.get("/title/", authMiddleware, adminMiddleware, questionController.getQuestionsTitles);
 router.get("/", authMiddleware, adminMiddleware, questionController.getQuestions);
 router.post("/", authMiddleware, adminMiddleware, questionController.createQuestion);
 router.patch("/:id", authMiddleware, adminMiddleware, questionController.updateQuestion);
