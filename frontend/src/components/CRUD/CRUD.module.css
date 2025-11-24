@@ -1,0 +1,143 @@
+.crud{
+  display: flex;
+  flex-direction: column;
+  font-size: 1.6rem;
+  height: 100%;
+  width: 100%;
+  background-color: var(--primary);
+  height: 100%;
+  padding: 2rem;
+  gap: 2rem;
+  min-width: 100rem;
+  max-height: 60dvh;
+}
+
+.tableContainer{
+  width: 100%;
+  position: relative;
+  max-height: 100%;
+  overflow: scroll;
+  overflow-x: scroll;
+}
+
+.tableContainer::-webkit-scrollbar, .form::-webkit-scrollbar{
+  width: 1rem;
+}
+
+.tableContainer::-webkit-scrollbar-thumb, .form::-webkit-scrollbar-thumb{
+  background-color: var(--primary-dark);
+}
+
+.tableContainer table{
+  border: .5rem solid var(--primary-dark);
+  border-top: none;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableContainer tbody td{
+  padding: .5rem 1rem;
+  border-left: .3rem solid var(--primary-dark);
+}
+
+.tableContainer tbody td:first-child{
+  position: sticky;
+  background-color: var(--primary);
+  left: 0;
+}
+
+.tableContainer tbody tr:nth-child(even){
+  filter: brightness(.85);
+  background-color: hsla(0, 0%, 0%, 0.15);
+}
+
+.tableContainer thead{
+  position: sticky;
+  background-color: var(--primary-dark);
+  top:  0;
+  z-index: 1;
+  th{
+    border-left: .3rem solid var(--primary-dark);
+    padding: .5rem 1rem;
+
+  }
+  th:first-child{
+    position: sticky;
+    left: 0;
+    background-color: var(--primary-dark);
+  }
+}
+.actions{
+  text-align: end;
+}
+
+.main{
+  display: flex;
+  gap: 2rem;
+  height: 90%;
+  
+}
+.form{
+  width: 100%;
+  border: .5rem solid var(--primary-dark);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 2rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.inputsContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.inputsContainer>div{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  input, select{
+    width: 100%;
+    padding: .5rem;
+    font-size: 1.6rem;
+  }
+}
+
+.submitButton{
+  height: 5rem;
+  padding: 0;
+  width: 50%;
+  font-size: 2.4rem ;
+  border-width: .3rem;
+}
+
+.actionsContainer{
+  display: flex;
+  gap: .5rem;
+  justify-content: flex-end;
+}
+
+.deleteButton{
+  background: var(--primary-dark);
+  border: none;
+  cursor: pointer;
+  padding: .5rem;
+}
+
+.deleteButton:hover{
+  filter: brightness(1.1);
+}
+
+.editButton:hover{
+  filter: brightness(1.1);
+}
+
+.editButton{
+  border: .3rem solid var(--primary-dark);
+  background-color: var(--primary);
+  cursor: pointer;
+  padding: .5rem;
+}
