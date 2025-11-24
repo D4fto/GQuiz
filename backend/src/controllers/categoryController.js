@@ -2,7 +2,11 @@ import prisma from "../config/db.js";
 
 export async function getCategories(req,res){
   try{
-    const response = await prisma.category.findMany()
+    const response = await prisma.category.findMany({
+      orderBy:{
+        name: 'asc'
+      }
+    })
     return res.status(200).send({data: response})
   }catch(e){
     return res.status(400).send({error: e})
