@@ -4,9 +4,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model user {
@@ -30,11 +29,11 @@ model userImgs {
 }
 
 model world {
-  id              Int               @id @default(autoincrement())
-  created_at      DateTime          @default(now()) @db.Timestamptz(6)
-  name            String            @db.VarChar
-  icon            String            @db.VarChar
-  world_has_level world_has_level[]
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  name       String   @db.VarChar
+  icon       String
+  level      level[]
 }
 
 model category {
@@ -48,9 +47,11 @@ model level {
   id                 Int                  @id @default(autoincrement())
   created_at         DateTime             @default(now()) @db.Timestamptz(6)
   number             Int
+  label              String?
+  id_world           Int?
+  world              world?               @relation(fields: [id_world], references: [id], onDelete: NoAction, onUpdate: NoAction)
   level_has_question level_has_question[]
   user_has_level     user_has_level[]
-  world_has_level    world_has_level[]
 }
 
 model level_has_question {
@@ -83,16 +84,6 @@ model user_has_level {
   user       user     @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([id_user, id_level])
-}
-
-model world_has_level {
-  id_world   Int      @default(autoincrement())
-  created_at DateTime @default(now()) @db.Timestamptz(6)
-  id_level   Int
-  level      level    @relation(fields: [id_level], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  world      world    @relation(fields: [id_world], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([id_world, id_level])
 }
 
 model option {
