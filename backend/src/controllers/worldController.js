@@ -1,7 +1,11 @@
 import prisma from "../config/db.js";
 
 export async function getWorlds(req, res){
-  const worlds = await prisma.world.findMany()
+  const worlds = await prisma.world.findMany({
+    orderBy: {
+      id: 'asc'
+    }
+  })
   res.send({data: worlds})
 };
 
