@@ -1,0 +1,36 @@
+.admin{
+  background-color: var(--primary-dark);
+  height: 100%;
+  font-size: 2.4rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.crud{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 90%;
+  height: 50dvh;
+}
+
+.crudSelection{
+  background-color: var(--primary);
+  border: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 2.5rem;
+  width: 70%;
+  border-radius: 1rem;
+}
+
+.main{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 5rem;
+}
