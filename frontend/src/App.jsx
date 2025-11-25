@@ -11,6 +11,7 @@ import { Toaster } from "react-hot-toast";
 import Question from './pages/Question/Question';
 import RoomSelection from './pages/RoomSelection/RoomSelection';
 import UserProfile from './components/UserProfile/UserProfile';
+import ChooseLevel from './pages/ChosseLevel/ChooseLevel';
 
 const noNavRoutes = ['/login','/create-account']
 
@@ -39,6 +40,11 @@ export default function App() {
           <Route path="/worlds" element={
             <PrivateRoute>
               <ChooseWorlds />
+            </PrivateRoute>
+            } />
+          <Route path="/worlds/:world" element={
+            <PrivateRoute>
+              <ChooseLevel />
             </PrivateRoute>
             } />
           <Route path="/question" element={

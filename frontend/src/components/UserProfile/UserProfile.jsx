@@ -8,7 +8,7 @@ export default function UserProfile() {
         
         <div className={styles.avatarWrapper}>
           <img 
-            src="https://via.placeholder.com/140" 
+            src={import.meta.env.VITE_URL+'/geral.png'} 
             alt="Foto de Perfil" 
             className={styles.avatar}
           />

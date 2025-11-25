@@ -1,0 +1,28 @@
+.wrapper {
+  display: inline-block;
+}
+
+.tooltip {
+  position: fixed;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: .5rem 1rem;
+  border-radius: 1rem;
+  font-size: 2.4rem;
+  z-index: 9999;
+  white-space: nowrap;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
