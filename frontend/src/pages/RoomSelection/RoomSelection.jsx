@@ -1,68 +1,84 @@
-import React, { useState } from "react"
-import styles from "./RoomSelection.module.css"
-import {Search, Plus, Users, Lock} from 'lucide-react'
+import React, { useState } from 'react';
+import styles from './RoomSelection.module.css';
+import StyleSquare from '../../components/StyleSquare/StyleSquare';
 
+export default function RoomSelect() {
+  const [searchTerm, setSearchTerm] = useState('');
+  
+  const rooms = [
+    { id: 1, name: 'Sala1', people: '10/10', locked: true },
+    { id: 2, name: 'Sala2', people: '10/20', locked: false },
+    { id: 3, name: 'Sala3', people: '10/10', locked: false },
+    { id: 4, name: 'Sala4', people: '5/10', locked: true },
+    { id: 5, name: 'Sala5', people: '9/10', locked: true },
+    { id: 6, name: 'Sala6', people: '15/20', locked: false },
+    { id: 7, name: 'Sala7', people: '7/10', locked: false },
+    { id: 8, name: 'Sala8', people: '2/10', locked: false },
+  ];
 
-function App() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [rooms] = useState([
-    { id: 1, name: "Sala1", score: "10/10", isLocked: true },
-    { id: 2, name: "Sala2", score: "10/20", isLocked: false },
-    { id: 3, name: "Sala3", score: "10/10", isLocked: false },
-    { id: 4, name: "Sala4", score: "5/10", isLocked: true },
-    { id: 5, name: "Sala5", score: "9/10", isLocked: true },
-    { id: 6, name: "Sala6", score: "15/20", isLocked: false },
-    { id: 7, name: "Sala7", score: "7/10", isLocked: false },
-    { id: 8, name: "Sala8", score: "2/10", isLocked: false },
-  ])
-
-  const filteredRooms = rooms.filter((room) =>
+  const filteredRooms = rooms.filter(room =>
     room.name.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  );
 
   return (
     <div className={styles.container}>
-      <div className={styles.card}>
-        <div className={styles.header}>
+      <StyleSquare option={1} innerColor={'var(--black)'} outColor={'var(--gray)'} position={'bottomLeft'}></StyleSquare>
+      <div className={styles.mainContent}>
+        {/* Title */}
+        <div className={styles.titleBox}>
           <h1 className={styles.title}>Qual Sala Deseja ?</h1>
-          <button className={styles.backButton}>
-            <span className={styles.backArrow}>←</span>
-          </button>
         </div>
 
-        <div className={styles.searchContainer}>
-          <Search className={styles.searchIcon} size={20} />
-          <input
-            type="text"
-            className={styles.searchInput}
-            placeholder="Buscar sala..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button className={styles.addButton}>
-            <Plus size={20} />
-          </button>
+        {/* Search Bar */}
+        <div className={styles.searchBar}>
+          <div className={styles.searchInput}>
+            <span className={styles.searchIcon}>🔍</span>
+            <input
+              type="text"
+              placeholder="Buscar sala..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={styles.input}
+            />
+          </div>
+          <button className={styles.addButton}>+</button>
         </div>
 
-        <div className={styles.roomList}>
+        {/* Rooms List */}
+        <div className={styles.roomsList}>
           {filteredRooms.map((room) => (
             <div key={room.id} className={styles.roomItem}>
-              <div className={styles.roomLeft}>
-                <Users size={18} className={styles.usersIcon} />
+              <div className={styles.roomInfo}>
+                <svg className={styles.icon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
                 <span className={styles.roomName}>{room.name}</span>
               </div>
-              <div className={styles.roomRight}>
+              
+              <div className={styles.roomDetails}>
                 <span className={styles.roomScore}>{room.score}</span>
-                {room.isLocked && <Lock size={18} className={styles.lockIcon} />}
+                {room.locked && (
+                  <svg className={styles.lockIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                )}
               </div>
             </div>
           ))}
         </div>
 
-        <button className={styles.playButton}>Jogar</button>
+        {/* Play Button */}
+        <div className={styles.playButtonContainer}>
+          <button className={styles.playButton}>Jogar</button>
+        </div>
       </div>
-    </div>
-  )
-}
 
-export default App
+      {/* Back Button */}
+      <button className={styles.backButton}>←</button>
+    </div>
+  );
+}
