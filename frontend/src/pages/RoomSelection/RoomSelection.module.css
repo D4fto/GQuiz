@@ -1,230 +1,197 @@
 .container {
-    min-height: 100vh;
-    background-color: #0a0a0a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-  
-  .card {
-    background: linear-gradient(135deg, #c62828 0%, #d32f2f 50%, #e53935 100%);
-    border-radius: 24px;
-    padding: 40px;
-    width: 100%;
-    max-width: 600px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    position: relative;
-  }
-  
-  .header {
-    position: relative;
-    margin-bottom: 30px;
-  }
-  
-  .title {
-    background-color: rgba(220, 50, 50, 0.9);
-    color: white;
-    font-size: 28px;
-    font-weight: 600;
-    text-align: center;
-    padding: 20px;
-    border-radius: 12px;
-    margin: 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .backButton {
-    position: absolute;
-    right: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.3);
-    border: 2px solid rgba(0, 0, 0, 0.5);
-    border-radius: 8px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .backButton:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-    transform: translateY(-50%) scale(1.05);
-  }
-  
-  .backArrow {
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .searchContainer {
-    background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    gap: 12px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .searchIcon {
-    color: #c62828;
-    flex-shrink: 0;
-  }
-  
-  .searchInput {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 16px;
-    color: #333;
-  }
-  
-  .searchInput::placeholder {
-    color: #999;
-  }
-  
-  .addButton {
-    background-color: transparent;
-    border: none;
-    color: #c62828;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-  }
-  
-  .addButton:hover {
-    background-color: rgba(198, 40, 40, 0.1);
-    transform: scale(1.1);
-  }
-  
-  .roomList {
-    background-color: rgba(255, 255, 255, 0.98);
-    border-radius: 12px;
-    padding: 8px;
-    margin-bottom: 30px;
-    max-height: 320px;
-    overflow-y: auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .roomList::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .roomList::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
-  }
-  
-  .roomList::-webkit-scrollbar-thumb {
-    background: #c62828;
-    border-radius: 4px;
-  }
-  
-  .roomItem {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 16px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    transition: background-color 0.2s ease;
-    cursor: pointer;
-  }
-  
-  .roomItem:last-child {
-    border-bottom: none;
-  }
-  
-  .roomItem:hover {
-    background-color: rgba(198, 40, 40, 0.05);
-  }
-  
-  .roomLeft {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  
-  .usersIcon {
-    color: #666;
-  }
-  
-  .roomName {
-    font-size: 16px;
-    color: #333;
-    font-weight: 500;
-  }
-  
-  .roomRight {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  
-  .roomScore {
-    font-size: 15px;
-    color: #666;
-    font-weight: 500;
-  }
-  
-  .lockIcon {
-    color: #333;
-  }
-  
-  .playButton {
-    background-color: #000;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 16px 48px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: block;
-    margin-left: auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  }
-  
-  .playButton:hover {
-    background-color: #1a1a1a;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-  }
-  
-  .playButton:active {
-    transform: translateY(0);
-  }
-  
-  @media (max-width: 640px) {
-    .card {
-      padding: 24px;
-    }
-  
-    .title {
-      font-size: 22px;
-      padding: 16px;
-    }
-  
-    .backButton {
-      width: 44px;
-      height: 44px;
-    }
-  
-    .roomList {
-      max-height: 280px;
-    }
-  }
-  
+  min-height: 100vh;
+  background-color: var(--primary-dark);
+  padding-top: 10rem;
+  padding-bottom: 5rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.mainContent {
+  max-width: 90rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.titleBox {
+  background-color: var(--primary);
+  border-radius: 2rem;
+  box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
+  margin-bottom: 3rem;
+  padding: 4rem;
+  text-align: center;
+}
+
+.title {
+  color: white;
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.searchBar {
+  background-color: #f3f4f6;
+  border-radius: 1.5rem;
+  box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
+  margin-bottom: 3rem;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.searchInput {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.searchIcon {
+  color: #dc2626;
+  font-size: 2rem;
+  margin-left: 1rem;
+}
+
+.input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding-left: 1.5rem;
+  color: #374151;
+  font-size: 1.6rem;
+}
+
+.input::placeholder {
+  color: #9ca3af;
+}
+
+.addButton {
+  background-color: #ef4444;
+  color: white;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.addButton:hover {
+  background-color: #dc2626;
+}
+
+.roomsList {
+  background-color: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 4rem;
+}
+
+.roomItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 3rem;
+  border-bottom: 0.1rem solid #e5e7eb;
+  transition: background-color 0.2s;
+}
+
+.roomItem:last-child {
+  border-bottom: none;
+}
+
+.roomItem:hover {
+  background-color: #f9fafb;
+  cursor: pointer;
+}
+
+.roomInfo {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  color: #4b5563;
+  stroke-width: 0.2rem;
+}
+
+.roomName {
+  color: #1f2937;
+  font-weight: 500;
+  font-size: 1.8rem;
+}
+
+.roomDetails {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.roomScore {
+  color: #4b5563;
+  font-weight: 500;
+  font-size: 1.8rem;
+}
+
+.lockIcon {
+  width: 2rem;
+  height: 2rem;
+  color: #4b5563;
+  stroke-width: 0.2rem;
+}
+
+.playButtonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.playButton {
+  background-color: #000;
+  color: white;
+  padding: 2rem 6rem;
+  border-radius: 50rem;
+  font-size: 2.2rem;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.playButton:hover {
+  background-color: #1f2937;
+  transform: scale(1.05);
+}
+
+.backButton {
+  position: fixed;
+  top: 11rem;
+  right: 3rem;
+  background-color: #991b1b;
+  color: white;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 1rem;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.backButton:hover {
+  background-color: #7f1d1d;
+}
