@@ -1,6 +1,6 @@
 import styles from "./Admin.module.css";
 import { useState } from "react";
-import { CRUDCategory, CRUDWorld, CRUDQuestion, CRUDLevelHasQuestion, CRUDLevel, CRUDUser, CRUDUserHasLevel } from "../../components/CRUDS/CRUDS";
+import { CRUDCategory, CRUDOption, CRUDWorld, CRUDQuestion, CRUDLevelHasQuestion, CRUDLevel, CRUDUser, CRUDUserHasLevel } from "../../components/CRUDS/CRUDS";
 
 export default function Admin() {
   const [adminState, setAdminState] = useState("categorias");
@@ -13,6 +13,7 @@ export default function Admin() {
     mundos: <CRUDWorld></CRUDWorld>,
     levels: <CRUDLevel></CRUDLevel>,
     users: <CRUDUser></CRUDUser>,
+    opções: <CRUDOption></CRUDOption>,
     questoes:
       <>
         <p>Utilize a coluna <strong>option</strong> para editar e as conlunas <strong>corrects</strong> e <strong>wrongs</strong> para criar</p>
