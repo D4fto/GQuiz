@@ -39,27 +39,6 @@ export function GameProvider({ children }){
     timeByQuestion = parseInt(timeByQuestion)
     setGameState('loading')
     socket.emit("startRandom", numberOfQuestions, timeByQuestion, categories)
-    // try {
-    //   const res = await (await fetch(import.meta.env.VITE_API_URL+"/game/random/start/", {
-    //     credentials: "include" ,
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       numberOfQuestions: numberOfQuestions,
-    //       timeByQuestion: timeByQuestion,
-    //       categories: categories
-    //     })
-    //   })).json();
-    //   console.log(res)
-    //   setQuestionInitTime(res.time)
-    //   setTimeByQuestion(res.timeByQuestion)
-    //   setActualQuestion(res.question)
-    //   setGameState("question");
-    // } catch(e) {
-    //   console.error(e)
-    // }
   }
   async function answerQuestion(id) {
     setGameState('loading')
@@ -105,7 +84,7 @@ export function GameProvider({ children }){
     })
     socket.emit('createRoom', "sala", 20)
     socket.on("createRoom",(roomId)=>{
-      socket.emit("startRoomGame")
+      socket.emit("startRoomGame", roomId)
     })
   },[])
 
