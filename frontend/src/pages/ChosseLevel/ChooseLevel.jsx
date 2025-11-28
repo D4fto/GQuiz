@@ -5,6 +5,7 @@ import useWindowWidth from '../../hooks/useWindowWidth';
 import Tooltip from '../../components/Tooltip/Tooltip';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/authContext';
+import { useGame } from '../../contexts/gameContext';
 
  function MapLevels({
   levels = [],
@@ -12,6 +13,7 @@ import { useAuth } from '../../contexts/authContext';
 }) {
   const total = levels.length
   const width = useWindowWidth();
+
   const scale = width/1920
   const nodes = [];
   const spacingX = 300;
@@ -163,6 +165,7 @@ async function loadLevels(worldId, userId){
 }
 export default function ChooseLevel(){
   const { user } = useAuth();
+  const { startLevel, startRandom } = useGame();
   console.log(user)
   const [useIsLoading, setUseIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
@@ -191,13 +194,14 @@ export default function ChooseLevel(){
   return <div className={styles.chooseLevel}>
     <div className={styles.levels}>
       <TitleBox title={"Fases"}></TitleBox>
+      <button onClick={()=>{startRandom(20,30)}}>Play Random</button>
     </div>
     {
       isError? 
       <div className={styles.error}>Erro ao carregar as fases. <button onClick={fetchData}>Recarregar</button></div> :
       useIsLoading? 
       <div className={styles.loading}>Carregando...</div> :
-      <MapLevels levels={levels}></MapLevels>
+      <MapLevels levels={levels} onSelect={(id)=>startLevel(id)}></MapLevels>
     }
     
   </div>
