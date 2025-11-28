@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import CreateAccount from './pages/CreateAccount/CreateAccount';
 import Login from './pages/login/login';
-import ChooseWorlds from './pages/ChooseWorlds/chooseWorlds';
+import ChooseWorlds from './pages/chooseWorlds/chooseWorlds';
 import Admin from './pages/Admin/Admin';
 import Home from './pages/Home/Home';
 import NavBar from './components/NavBar/NavBar';
@@ -15,7 +15,7 @@ import ChooseLevel from './pages/ChosseLevel/ChooseLevel';
 import { useGame } from './contexts/gameContext';
 
 
-const noNavRoutes = ['/login','/create-account','/room-selection']
+const noNavRoutes = ['/login','/create-account',]
 
 
 export default function App() {
@@ -68,7 +68,11 @@ export default function App() {
               <UserProfile />
             </PrivateRoute>
             } />
-          <Route path="/room-selection" element={ <RoomSelection />} />
+          <Route path="/room-selection" element={ 
+            <PrivateRoute>
+              <RoomSelection />
+            </PrivateRoute>
+          } />
           <Route path="/login" element={<Login />} />
         </Routes>
 

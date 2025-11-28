@@ -77,8 +77,6 @@ export default function RoomSelect() {
         </div>
       </div>
 
-      {/* Back Button */}
-      <button className={styles.backButton}>←</button>
     </div>
   );
 }
