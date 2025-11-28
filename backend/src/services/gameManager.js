@@ -16,9 +16,6 @@ export default class GameManager {
         this.users.set(userId, user);
     }
     addUser(userId) {
-        if (this.users.has(userId)) {
-            throw new Error('User with this ID already exists.');
-        }
         this.users.set(userId, { actualGame: null });
     }
     removeUser(userId) {

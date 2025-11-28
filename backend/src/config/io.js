@@ -101,6 +101,8 @@ io.on('connection', (socket) => {
       }
     }
     socket.join(roomId)
+    gameManager.addUser(socket.user.id)
+    gameManager.setUserActualGame(socket.user.id, rooms)
     io.to(roomId).emit("playerEnter")
   })
   
