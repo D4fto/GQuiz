@@ -2,19 +2,41 @@
 import styles from "./Question.module.css";
 import React, { useState, useEffect } from 'react';
 import StyleSquare from "../../components/StyleSquare/StyleSquare";
+import { useGame } from "../../contexts/gameContext";
 
   export default function Question() {
-    const [selectedOption, setSelectedOption] = useState(2);
+    const { actualQuestion, answerQuestion, questionInitTime, timeByQuestion } = useGame()
+    const [selectedOption, setSelectedOption] = useState(null);
     const [hoveredOption, setHoveredOption] = useState(null);
     const [buttonHovered, setButtonHovered] = useState(false);
-    const [time, setTime] = useState(60);
+    const [options, setOptions] = useState([])
+    const [time, setTime] = useState(timeByQuestion);
   
     useEffect(() => {
-      const timer = setInterval(() => {
-        setTime((prev) => (prev > 0 ? prev - 1 : 0));
-      }, 1000);
-      return () => clearInterval(timer);
+      if(!actualQuestion.option){
+        return
+      }
+      const newOptions = actualQuestion.option.map((e,i)=>{
+        e.id = i
+        return e
+      });
+      setOptions(newOptions)
+      
     }, []);
+
+    useEffect(()=>{
+      const endTime = questionInitTime + timeByQuestion * 1000;
+
+      const timer = setInterval(() => {
+        const now = Date.now();
+        const diff = Math.max(Math.floor((endTime - now) / 1000), 0);
+        setTime(diff);
+
+        if (diff <= 0) clearInterval(timer);
+      }, 200); 
+
+      return () => clearInterval(timer);
+    },[questionInitTime])
   
     const formatTime = (seconds) => {
       const mins = Math.floor(seconds / 60);
@@ -22,12 +44,6 @@ import StyleSquare from "../../components/StyleSquare/StyleSquare";
       return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     };
   
-    const options = [
-      { id: 1, text: 'Resposta 01' },
-      { id: 2, text: 'Resposta 02' },
-      { id: 3, text: 'Resposta 03' },
-      { id: 4, text: 'Resposta 04' },
-    ];
   
     return (
       <div className={styles.container}>
@@ -37,7 +53,7 @@ import StyleSquare from "../../components/StyleSquare/StyleSquare";
   
         <div className={styles.mainContent}>
           <div className={styles.questionCard}>
-            <h2 className={styles.questionTitle}>Pergunta</h2>
+            <h2 className={styles.questionTitle}>{actualQuestion.title}</h2>
             
             <div className={styles.progressBar}>
               <div className={styles.progressFill}></div>
@@ -63,7 +79,7 @@ import StyleSquare from "../../components/StyleSquare/StyleSquare";
                       <div className={styles.radioInner}></div>
                     )}
                   </div>
-                  <span className={styles.optionText}>{option.text}</span>
+                  <span className={styles.optionText}>{option.label}</span>
                 </div>
               ))}
             </div>
@@ -75,6 +91,7 @@ import StyleSquare from "../../components/StyleSquare/StyleSquare";
         </div>
   
         <div
+          onClick={()=>{answerQuestion(selectedOption)}}
           className={`${styles.nextButton} ${
             buttonHovered ? styles.nextButtonHover : ''
           }`}

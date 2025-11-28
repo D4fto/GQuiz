@@ -1,25 +1,30 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import CreateAccount from './pages/CreateAccount/CreateAccount';
 import Login from './pages/login/login';
-import ChooseWorlds from './pages/chooseWorlds/chooseWorlds';
+import ChooseWorlds from './pages/ChooseWorlds/chooseWorlds';
 import Admin from './pages/Admin/Admin';
 import Home from './pages/Home/Home';
 import NavBar from './components/NavBar/NavBar';
 import PrivateRoute from "./utils/PrivateRoute";
-import { Providers } from './contexts/Providers';
+
 import { Toaster } from "react-hot-toast";
 import Question from './pages/Question/Question';
 import RoomSelection from './pages/RoomSelection/RoomSelection';
 import UserProfile from './components/UserProfile/UserProfile';
+import ChooseLevel from './pages/ChosseLevel/ChooseLevel';
+import { useGame } from './contexts/gameContext';
+
 
 const noNavRoutes = ['/login','/create-account','/room-selection']
 
+
 export default function App() {
   const location = useLocation()
+  const {nextQuestion, actualScore, lastIsCorrect} = useGame()
+
 
   return (
     <>
-      <Providers>
 
 
         {!noNavRoutes.includes(location.pathname) && <NavBar />}
@@ -41,9 +46,21 @@ export default function App() {
               <ChooseWorlds />
             </PrivateRoute>
             } />
+          <Route path="/worlds/:world" element={
+            <PrivateRoute>
+              <ChooseLevel />
+            </PrivateRoute>
+            } />
           <Route path="/question" element={
             <PrivateRoute>
               <Question />
+            </PrivateRoute>
+            } />
+          <Route path="/result" element={
+            <PrivateRoute>
+              <p>Pontos: {actualScore}</p>
+              <p>Resultado: {String(lastIsCorrect)}</p>
+              <button onClick={nextQuestion}>next</button>
             </PrivateRoute>
             } />
           <Route path="/profile" element={
@@ -56,7 +73,6 @@ export default function App() {
         </Routes>
 
         <Toaster position='top-right' toastOptions={{style:{fontSize: "2.4rem"}}}></Toaster>
-      </Providers>
     </>
   );
 }

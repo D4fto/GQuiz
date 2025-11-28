@@ -1,7 +1,9 @@
 import styles from "./ChooseWorlds.module.css";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function ChooseWorlds() {
+  const navigate = useNavigate()
   const [worlds, setWorlds]= useState([])
   const [loading, setLoading] = useState(true);
 
@@ -21,7 +23,7 @@ export default function ChooseWorlds() {
         const formatted = data.data.map((world) => ({
           label: world.name,
           icon: world.icon,
-          onClick: () => console.log(`Clicou em ${world.name}`),
+          onClick: () => navigate('/worlds/'+world.id),
         }));
 
         setWorlds(formatted);

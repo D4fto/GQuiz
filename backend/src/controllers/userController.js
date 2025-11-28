@@ -95,12 +95,20 @@ export async function updateUser(req, res) {
 
 export async function getUserLevels(req,res) {
   const user = parseInt(req.params.user)
+  const world = req.query.world || false
   
   try{
+    const where = {
+      id_user: user
+    };
+
+    if (world) {
+      where.level = {
+        id_world: parseInt(world)
+      };
+    }
     const response = await prisma.user_has_level.findMany({
-      where: {
-        id_user: user
-      },
+      where,
       select: {
         id_user: true,
         id_level: true,
