@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styles from './RoomSelection.module.css';
 import StyleSquare from '../../components/StyleSquare/StyleSquare';
+import BackButton from '../../components/BackButton/BackButton';
+import TitleBox from '../../components/TitleBox/TitleBox'
 
 export default function RoomSelect() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,6 +16,7 @@ export default function RoomSelect() {
     { id: 6, name: 'Sala6', people: '15/20', locked: false },
     { id: 7, name: 'Sala7', people: '7/10', locked: false },
     { id: 8, name: 'Sala8', people: '2/10', locked: false },
+    { id: 10, name: 'Sala10', people: '2/10', locked: false },
   ];
 
   const filteredRooms = rooms.filter(room =>
@@ -22,12 +25,10 @@ export default function RoomSelect() {
 
   return (
     <div className={styles.container}>
-      <StyleSquare option={1} innerColor={'var(--black)'} outColor={'var(--gray)'} position={'bottomLeft'}></StyleSquare>
+      <StyleSquare option={1} innerColor={'var(--primary-dark)'} outColor={'var(--primary)'} position={'bottomLeft'}></StyleSquare>
       <div className={styles.mainContent}>
         {/* Title */}
-        <div className={styles.titleBox}>
-          <h1 className={styles.title}>Qual Sala Deseja ?</h1>
-        </div>
+        <TitleBox title={"Qual sala deseja?"}/>
 
         {/* Search Bar */}
         <div className={styles.searchBar}>
@@ -76,7 +77,7 @@ export default function RoomSelect() {
           <button className={styles.playButton}>Jogar</button>
         </div>
       </div>
-
+        <BackButton/>
     </div>
   );
 }
