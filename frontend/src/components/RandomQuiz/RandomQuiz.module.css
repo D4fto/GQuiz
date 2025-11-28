@@ -1,0 +1,116 @@
+:root {
+  --white: #F7F4F3;
+  --black: #070707;
+  --primary: #F03828;
+  --primary-dark: #BA1B1D;
+  --gray: #2F2A22;
+}
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.topTab {
+  background: var(--primary);
+  padding: 0.6rem 3rem;
+  border-radius: 0.4rem;
+  color: var(--white);
+  font-size: 1.3rem;
+  margin-left: 0; 
+}
+
+.card {
+  width: 140rem;
+  height: 70rem;
+  background: var(--primary);
+  margin-top: 1rem;
+  border-radius: 0.8rem;
+  padding: 3rem;              /* AUMENTADO */
+  display: flex;
+  gap: 4rem;
+  margin-left: 0;             /* COLADO À ESQUERDA */
+}
+
+.leftArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dice {
+  width: 40rem;               /* MAIOR */
+  height: 40rem;
+}
+
+.rightArea {
+  flex: 1;
+  color: var(--white);
+}
+
+.rightArea h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;             /* MAIOR */
+}
+
+.row {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 0.4rem;
+  border: none;
+  font-size: 1.1rem;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.7rem;
+  font-size: 1.1rem;
+}
+
+.divirta {
+  text-align: center;
+  margin: 1.5rem 0;
+  font-size: 1.3rem;
+}
+
+.playBtn {
+  width: 55%;
+  margin: 0 auto;
+  display: block;
+  background: none;
+  border: 0.15rem solid var(--white);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.3rem;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.playBtn:hover {
+  background: var(--primary-dark);
+}

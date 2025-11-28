@@ -28,7 +28,11 @@ export default function Home() {
               navigate("/worlds");
             }}
           />
-          <MainButton text="Quiz Aleatório" onClick={() => {}} />
+          <MainButton 
+           text="Quiz Aleatório"
+           onClick={() => {
+            navigate("/RandomQuiz")
+           }} />
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import CreateAccount from './pages/CreateAccount/CreateAccount';
 import Login from './pages/login/login';
 import ChooseWorlds from './pages/chooseWorlds/chooseWorlds';
+import RandomQuiz from './pages/randomQuiz/randomQuiz';
 import Admin from './pages/Admin/Admin';
 import Home from './pages/Home/Home';
 import NavBar from './components/NavBar/NavBar';
@@ -73,6 +74,13 @@ export default function App() {
               <RoomSelection />
             </PrivateRoute>
           } />
+
+          <Route path="/RandomQuiz" element={ 
+            <PrivateRoute>
+              <RandomQuiz/>
+            </PrivateRoute>
+          } />
+
           <Route path="/login" element={<Login />} />
         </Routes>
 
