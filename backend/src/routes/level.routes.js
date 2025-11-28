@@ -5,6 +5,7 @@ import { adminMiddleware, authMiddleware } from "../middlewares/authMiddleware.j
 const router = Router();
 
 router.get("/world/:world", authMiddleware, levelController.getLevelsFromWorld);
+
 router.get("/questions/:level", authMiddleware, levelController.getLevelQuestions);
 router.post("/questions/:level", authMiddleware, adminMiddleware, levelController.addQuestionsToLevel);
 router.delete("/questions/:level", authMiddleware, adminMiddleware, levelController.removeQuestionsFromLevel);

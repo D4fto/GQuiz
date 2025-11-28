@@ -1,63 +1,13 @@
 import prisma from "../config/db.js"
-
-
-export async function getLevelsFromWorld(req,res) {
-  const world = parseInt(req.params.world)
-  
-  try{
-    const response = await prisma.level.findMany({
-      where: {
-        id_world: world
-      },
-      orderBy: {
-        number: 'asc'
-        
-      }
-    })
-    return res.status(200).send({data: response})
-  }
-  catch(e){
-    return res.status(400).send({error: e})
-  }
-}
+import { getLevelQuestionsService } from "../services/levelService.js"
 
 export async function getLevelQuestions(req,res) {
   const level = parseInt(req.params.level)
   
   const type = req.query.type || false
-
-  console.log(type)
   
   try{
-    const query = {
-      where: {
-        id_level: level
-      },
-      include: {
-        question:{
-          select: {
-            title: true,
-            weight: true,
-            id_category: true,
-            option: {
-              select: {
-                id: true,
-                label: true
-              }
-            }
-          }
-        }
-      },
-      orderBy: {
-        question: {
-          id: 'asc'
-        }
-      }
-    }
-    if(type == 'simple'){
-      delete query.include.question.select.option
-    }
-    const response = await prisma.level_has_question.findMany(query)
+    const response = await getLevelQuestionsService(level, type)
     return res.status(200).send({data: response})
   }
   catch(e){
@@ -174,3 +124,40 @@ export async function deleteLevel(req,res) {
     return res.status(400).send({error: e})
   }
 }
+
+
+export async function getLevelsFromWorld(req, res){
+  const world = parseInt(req.params.world)
+  
+  try{
+  const levels = await prisma.level.findMany({
+    where: {
+      id_world: world
+    },
+    include: {
+      level_has_question:{
+        select: {
+          question: true
+        }
+      }
+    },
+    orderBy: {
+      number: 'asc'
+    }
+  })
+  const result = levels.map(level => {
+    const newLevel = {
+    ...level,
+    totalWeight: level.level_has_question.reduce((sum, lhq) => {
+      return sum + (lhq.question?.weight || 0)
+    }, 0)
+    }
+    delete newLevel.level_has_question
+    return newLevel
+  });
+  res.send({data: result})
+  }catch(e){
+    res.status(400).send({error: e})
+  }
+};
+

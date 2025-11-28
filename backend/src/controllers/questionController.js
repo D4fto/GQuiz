@@ -1,4 +1,7 @@
 import prisma from "../config/db.js"
+import { gameManager } from "../config/gameManager.js"
+
+import { answerQuestionService, nextQuestionService, getActualQuestionService } from "../services/questionService.js"
 
 
 export async function getQuestionsTitles(req,res) {
@@ -102,5 +105,36 @@ export async function deleteQuestion(req,res) {
     return res.status(200).send({data: response, message: 'Pergunta deletada com sucesso'})
   }catch(e){
     return res.status(400).send({error: e})
+  }
+}
+
+export async function answerQuestion(req,res) {
+  const index = req.params.index
+
+  try {
+    res.send({result: await answerQuestionService(req.user.id, index), score: gameManager.getUserScore(req.user.id)})
+  } catch(e){
+    console.log(e)
+    res.status(400).send({error: e})
+  }
+}
+
+
+export async function nextQuestion(req,res) {
+
+  try {
+    
+    res.send()
+  } catch(e){
+    res.status(400).send({error: e})
+  }
+}
+export async function getActualQuestion(req,res) {
+
+  try {
+    const game = gameManager.getUser(req.user.id).actualGame
+    res.send({question: await getActualQuestionService(req.user.id), timeByQuestion: game.getTimeByQuestion(), time: game.setTimeToNow()})
+  } catch(e){
+    res.status(400).send({error: e})
   }
 }

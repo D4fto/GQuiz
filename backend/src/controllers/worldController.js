@@ -45,10 +45,14 @@ export async function editWorld(req, res) {
 export async function deleteWorld(req, res) {
   const id = parseInt(req.params.id)
   try{
-    await prisma.world_has_level.deleteMany({
+    await prisma.level.updateMany({
       where: {
-        id_level: id
+        id_world: id
+      },
+      data: {
+        id_world: 1
       }
+
     })
     const response = await prisma.world.delete({
       where: {
@@ -60,3 +64,4 @@ export async function deleteWorld(req, res) {
     res.status(400).send({error: e})
   }
 }
+
