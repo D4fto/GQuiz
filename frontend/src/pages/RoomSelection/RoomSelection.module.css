@@ -1,30 +1,31 @@
 .container {
-  min-height: 100vh;
-  background-color: var(--primary-dark);
-  padding-top: 10rem;
-  padding-bottom: 5rem;
+  height: 100%;
+  background: linear-gradient(to bottom right, #dc2626, #b91c1c);
+  padding-top: 5rem;
+  padding-bottom: 3rem;
   padding-left: 2rem;
   padding-right: 2rem;
+  position: relative;
 }
 
 .mainContent {
-  max-width: 90rem;
+  max-width: 70rem;
   margin-left: auto;
   margin-right: auto;
 }
 
 .titleBox {
-  background-color: var(--primary);
-  border-radius: 2rem;
+  background-color: #ef4444;
+  border-radius: 1rem;
   box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
-  margin-bottom: 3rem;
-  padding: 4rem;
+  margin-bottom: 1.2rem;
+  padding: 1.5rem 4rem;
   text-align: center;
 }
 
 .title {
   color: white;
-  font-size: 3.5rem;
+  font-size: 2.8rem;
   font-weight: bold;
   margin: 0;
 }
@@ -33,8 +34,8 @@
   background-color: #f3f4f6;
   border-radius: 1.5rem;
   box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
-  margin-bottom: 3rem;
-  padding: 2rem;
+  margin-bottom: 1.2rem;
+  padding: 1.2rem 1.8rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -48,8 +49,8 @@
 
 .searchIcon {
   color: #dc2626;
-  font-size: 2rem;
-  margin-left: 1rem;
+  font-size: 1.8rem;
+  margin-left: 0.5rem;
 }
 
 .input {
@@ -57,9 +58,9 @@
   background: transparent;
   border: none;
   outline: none;
-  padding-left: 1.5rem;
+  padding-left: 1rem;
   color: #374151;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
 }
 
 .input::placeholder {
@@ -69,14 +70,14 @@
 .addButton {
   background-color: #ef4444;
   color: white;
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
   border-radius: 50%;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -91,14 +92,14 @@
   border-radius: 1.5rem;
   box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  margin-bottom: 4rem;
+  margin-bottom: 1.5rem;
 }
 
 .roomItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2rem 3rem;
+  padding: 1.5rem 2.5rem;
   border-bottom: 0.1rem solid #e5e7eb;
   transition: background-color 0.2s;
 }
@@ -115,12 +116,12 @@
 .roomInfo {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.2rem;
 }
 
 .icon {
-  width: 2rem;
-  height: 2rem;
+  width: 1.9rem;
+  height: 1.9rem;
   color: #4b5563;
   stroke-width: 0.2rem;
 }
@@ -128,24 +129,24 @@
 .roomName {
   color: #1f2937;
   font-weight: 500;
-  font-size: 1.8rem;
+  font-size: 1.7rem;
 }
 
 .roomDetails {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .roomScore {
   color: #4b5563;
   font-weight: 500;
-  font-size: 1.8rem;
+  font-size: 1.7rem;
 }
 
 .lockIcon {
-  width: 2rem;
-  height: 2rem;
+  width: 1.9rem;
+  height: 1.9rem;
   color: #4b5563;
   stroke-width: 0.2rem;
 }
@@ -158,9 +159,9 @@
 .playButton {
   background-color: #000;
   color: white;
-  padding: 2rem 6rem;
+  padding: 1.5rem 5rem;
   border-radius: 50rem;
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 600;
   border: none;
   box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
@@ -171,27 +172,4 @@
 .playButton:hover {
   background-color: #1f2937;
   transform: scale(1.05);
-}
-
-.backButton {
-  position: fixed;
-  top: 11rem;
-  right: 3rem;
-  background-color: #991b1b;
-  color: white;
-  width: 5rem;
-  height: 5rem;
-  border-radius: 1rem;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
-  font-size: 2.5rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.backButton:hover {
-  background-color: #7f1d1d;
 }
