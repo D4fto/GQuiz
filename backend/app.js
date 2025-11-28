@@ -11,6 +11,7 @@ import levelRouter from './src/routes/level.routes.js'
 import userRouter from './src/routes/user.routes.js'
 import optionRouter from './src/routes/option.routes.js'
 import gameRouter from './src/routes/game.routes.js'
+import userImgs from './src/routes/userImgs.route.js'
 
 
 import * as dotenv from "dotenv";
@@ -27,6 +28,7 @@ app.use('/level', levelRouter)
 app.use('/user', userRouter)
 app.use('/option', optionRouter)
 app.use('/game', gameRouter)
+app.use('/uimgsser-', userImgs)
 
 app.get("/me", (req, res) => {
   const token = req.cookies.token;
