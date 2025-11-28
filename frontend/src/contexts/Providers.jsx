@@ -1,9 +1,12 @@
 import { AuthProvider } from "./authContext";
+import { GameProvider } from "./gameContext";
 
 export function Providers({ children }) {
   return (
-    <AuthProvider>
-      {children}
-    </AuthProvider>
+    <GameProvider>
+      <AuthProvider>
+        {children}
+      </AuthProvider>
+    </GameProvider>
   );
 }
