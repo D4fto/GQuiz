@@ -12,7 +12,7 @@ import Question from './pages/Question/Question';
 import RoomSelection from './pages/RoomSelection/RoomSelection';
 import UserProfile from './components/UserProfile/UserProfile';
 
-const noNavRoutes = ['/login','/create-account']
+const noNavRoutes = ['/login','/create-account','/room-selection']
 
 export default function App() {
   const location = useLocation()
@@ -51,11 +51,7 @@ export default function App() {
               <UserProfile />
             </PrivateRoute>
             } />
-            <Route path="/room-selection" element={
-            <PrivateRoute>
-              <RoomSelection />
-            </PrivateRoute>
-            } />
+          <Route path="/room-selection" element={ <RoomSelection />} />
           <Route path="/login" element={<Login />} />
         </Routes>
 
