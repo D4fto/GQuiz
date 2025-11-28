@@ -28,7 +28,7 @@ app.use('/level', levelRouter)
 app.use('/user', userRouter)
 app.use('/option', optionRouter)
 app.use('/game', gameRouter)
-app.use('/uimgsser-', userImgs)
+app.use('/user-imgs', userImgs)
 
 app.get("/me", (req, res) => {
   const token = req.cookies.token;

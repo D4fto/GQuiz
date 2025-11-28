@@ -4,34 +4,34 @@ import { formatData } from "../../../utils/formatData";
 import CRUD from "../../CRUD/CRUD";
 
 export function CRUDUserImgs(){
-  const [worlds, setWorlds] = useState({});
-  async function loadWorlds() {
+  const [useIMG, setUseIMG] = useState({});
+  async function loadUseIMG() {
     const response = await (
       await fetch(import.meta.env.VITE_API_URL + "/user-imgs", {
         credentials: "include",
       })
     ).json();
-    setWorlds(formatData(response.data));
+    setUseIMG(formatData(response.data));
   }
   useEffect(()=>{
-    loadWorlds()
+    loadUseIMG()
   },[])
 
   return <CRUD
     title={"img"}
-    header={worlds.header}
-    data={worlds.data}
+    header={useIMG.header}
+    data={useIMG.data}
     onDelete={async (id)=>{
       await deleteData('/user-imgs/', id)
-      loadWorlds()
+      loadUseIMG()
     }}
     onCreate={async (data)=>{
       await createData("/user-imgs", JSON.stringify(data));
-      loadWorlds()
+      loadUseIMG()
     }}
     onEdit={async (id, data)=>{
       await editData("/user-imgs/", id, JSON.stringify({data}));
-      loadWorlds()
+      loadUseIMG()
     }}
   ></CRUD>
 }
