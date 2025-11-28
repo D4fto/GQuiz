@@ -82,7 +82,7 @@ export function GameProvider({ children }){
       setActualQuestion(res.question)
       setGameState("question");
     })
-    socket.emit('createRoom', "sala", 20)
+    // socket.emit('createRoom', "sala", 20)
     socket.on("createRoom",(roomId)=>{
       socket.emit("startRoomGame", roomId)
     })
