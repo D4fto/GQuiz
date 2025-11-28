@@ -3,12 +3,12 @@ import styles from "./Question.module.css";
 import React, { useState, useEffect } from 'react';
 import StyleSquare from "../../components/StyleSquare/StyleSquare";
 import { useGame } from "../../contexts/gameContext";
+import NextButton from "../../components/NextButton/NextButton";
 
   export default function Question() {
     const { actualQuestion, answerQuestion, questionInitTime, timeByQuestion } = useGame()
     const [selectedOption, setSelectedOption] = useState(null);
     const [hoveredOption, setHoveredOption] = useState(null);
-    const [buttonHovered, setButtonHovered] = useState(false);
     const [options, setOptions] = useState([])
     const [time, setTime] = useState(timeByQuestion);
   
@@ -89,17 +89,8 @@ import { useGame } from "../../contexts/gameContext";
         <div className={styles.bottomLeftCard}>
           Pergunta 01
         </div>
+        <NextButton onClick={()=>{answerQuestion(selectedOption)}}></NextButton>
   
-        <div
-          onClick={()=>{answerQuestion(selectedOption)}}
-          className={`${styles.nextButton} ${
-            buttonHovered ? styles.nextButtonHover : ''
-          }`}
-          onMouseEnter={() => setButtonHovered(true)}
-          onMouseLeave={() => setButtonHovered(false)}
-        >
-          <div className={styles.arrow}></div>
-        </div>
       </div>
     );
   };
