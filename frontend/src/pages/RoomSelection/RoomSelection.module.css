@@ -14,27 +14,12 @@
   margin-right: auto;
 }
 
-.titleBox {
-  background-color: #ef4444;
-  border-radius: 1rem;
-  box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.2rem;
-  padding: 1.5rem 4rem;
-  text-align: center;
-}
-
-.title {
-  color: white;
-  font-size: 2.8rem;
-  font-weight: bold;
-  margin: 0;
-}
-
 .searchBar {
+  margin-top: 2rem;
   background-color: #f3f4f6;
   border-radius: 1.5rem;
   box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.9rem;
   padding: 1.2rem 1.8rem;
   display: flex;
   align-items: center;
@@ -88,11 +73,13 @@
 }
 
 .roomsList {
+  max-height: 41rem;
+  overflow-x: hidden;
+  overflow-y: scroll;
   background-color: white;
   border-radius: 1.5rem;
   box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .roomItem {

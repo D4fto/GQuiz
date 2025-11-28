@@ -1,0 +1,5 @@
+.mirror{
+    transform: scaleX(-100%);
+    bottom: 3rem;
+    left: 3rem;
+}
