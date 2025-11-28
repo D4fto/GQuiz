@@ -15,7 +15,7 @@ import ChooseLevel from './pages/ChosseLevel/ChooseLevel';
 import { useGame } from './contexts/gameContext';
 
 
-const noNavRoutes = ['/login','/create-account']
+const noNavRoutes = ['/login','/create-account','/room-selection']
 
 
 export default function App() {
@@ -68,11 +68,7 @@ export default function App() {
               <UserProfile />
             </PrivateRoute>
             } />
-            <Route path="/room-selection" element={
-            <PrivateRoute>
-              <RoomSelection />
-            </PrivateRoute>
-            } />
+          <Route path="/room-selection" element={ <RoomSelection />} />
           <Route path="/login" element={<Login />} />
         </Routes>
 
