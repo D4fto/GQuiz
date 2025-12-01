@@ -4,6 +4,7 @@ import Login from './pages/login/login';
 import ChooseWorlds from './pages/chooseWorlds/chooseWorlds';
 import RandomQuiz from './pages/randomQuiz/randomQuiz';
 import RoomCreation from './pages/roomCreation/roomCreation';
+import RoomCreationPt2 from './components/RoomCreationPt2/RoomCreationPt2'
 import Admin from './pages/Admin/Admin';
 import Home from './pages/Home/Home';
 import NavBar from './components/NavBar/NavBar';
@@ -118,6 +119,12 @@ export default function App() {
         <Route path="/RoomCreation" element={ 
           <PrivateRoute>
             <RoomCreation/>
+          </PrivateRoute>
+        } />
+
+        <Route path="/RoomCreationPt2" element={ 
+          <PrivateRoute>
+            <RoomCreationPt2/>
           </PrivateRoute>
         } />
 
