@@ -69,7 +69,7 @@ export async function answerQuestionService(userId,index){
     if(!user){
       throw new Error("Usuário não está jogando")
     }
-    const result = await user.actualGame.answerCurrentQuestion(index)
+    const result = await user.actualGame.answerCurrentQuestion(index,userId)
     return result
   }catch(e){
     console.log(e)
