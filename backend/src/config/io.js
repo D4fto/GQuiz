@@ -5,11 +5,13 @@ import { nextQuestionService, getActualQuestionService, answerQuestionService } 
 import { gameManager } from "./gameManager.js";
 import { startLevel, startRandom } from "../services/gameService.js";
 import { generateId } from "../utils/generateId.js";
-import { roomGame } from "../services/games.js";
+import { levelGame, randomGame, roomGame } from "../services/games.js";
 
-const usersSockets = new Map()
+export const usersSockets = new Map()
 
 export const rooms = new Map()
+
+const waitingHost = new Map()
 
 export function getUserSocket(id){
   return usersSockets.get(id)
@@ -29,7 +31,7 @@ io.use((socket, next) => {
   if (!token) {
     return next(new Error("Token não encontrado"));
   }
-  token = token.split("token=")[1].split(";")[0].trim();
+  token = token.split("token=")[1]?.split(";")[0].trim();
 
   try {
     const payload = verify(token);
@@ -41,9 +43,41 @@ io.use((socket, next) => {
 });
 
 io.on('connection', (socket) => {
+  if(usersSockets.get(socket.user.id)){
+    const user = gameManager.getUser(socket.user.id)
+    if(user?.actualGame?.type=="room"){
+      socket.join(user.actualGame.roomId)
+      const room = rooms.get(Array.from(socket.rooms)[1])
+      const playersArray = Array.from(room.game?.users.entries()).map(([id, user]) => ({
+        id,
+        username: user.username,
+        imgName: user.imgName
+      }));
+      socket.emit('joinedInRoom',
+        room.game.timeByQuestion,
+        playersArray, 
+        {
+          id: user.actualGame.roomId,
+          maxNumberOfPlayers: room.maxNumberOfPlayers,
+          numberOfPlayers: room.numberOfPlayers,
+          host: room.host
+        }
+      )
+    }
+  }
   usersSockets.set(socket.user.id, socket.id)
   socket.on("nextQuestion", async ()=>{
-    socket.emit("nextQuestion", {result: await nextQuestionService(socket.user.id)})
+    const notFinished = await nextQuestionService(socket.user.id)
+    if(notFinished){
+      socket.emit("nextQuestion")
+      return
+    }
+    const typesHandler = {
+      level: {},
+      random: {userId: socket.user.id}
+    }
+    const result = await gameManager.getUser(socket.user.id).actualGame?.finish(typesHandler[gameManager.getUser(socket.user.id).actualGame?.type])
+    socket.emit("finished", {result: result})
   })
 
   socket.on("actualQuestion", async ()=>{
@@ -58,6 +92,10 @@ io.on('connection', (socket) => {
   })
 
   socket.on("answerQuestion", async (index)=>{
+    if(gameManager.getUser(socket.user.id)?.actualGame.roomId){
+      socket.emit("waitingAnswers",{result: await answerQuestionService(socket.user.id, index), score: gameManager.getUserScore(socket.user.id) })
+      return
+    }
     socket.emit("answerQuestion",{result: await answerQuestionService(socket.user.id, index), score: gameManager.getUserScore(socket.user.id)})
   })
 
@@ -69,9 +107,13 @@ io.on('connection', (socket) => {
   })
 
   socket.on("createRoom", (name, maxNumberOfPlayers, password = false)=>{
+    if(Array.from(socket.rooms)[1]){
+      return
+    }
     const roomId = name + " " + generateId()
     socket.join(roomId)
     rooms.set(roomId, {
+      id: roomId,
       password: password,
       maxNumberOfPlayers: maxNumberOfPlayers,
       numberOfPlayers: 1,
@@ -79,35 +121,268 @@ io.on('connection', (socket) => {
       game: null
     })
 
-    socket.emit("createRoom", roomId)
+    socket.emit("roomCreated", roomId)
   })
 
   socket.on("startRoomGame", async (numberOfQuestions, timeByQuestion, categories = false)=>{
     const room = rooms.get(Array.from(socket.rooms)[1])
     const game = await new roomGame(Array.from(socket.rooms)[1],numberOfQuestions, timeByQuestion, categories).init()
     room.game = game
-    game.addUser(socket.user.id, socket.user.username)
+    const user = socket.user
+    game.addUser(socket.user.id, socket.user.username, socket.user.imgName)
     gameManager.addUser(socket.user.id)
     gameManager.setUserActualGame(socket.user.id, game)
-    console.log(game)
-    socket.emit("roomGameCreated")
+
+    socket.emit("roomGameCreated", 
+      timeByQuestion,
+      {
+        id: user.id,
+        username: user.username,
+        imgName: user.imgName
+      }, 
+      {
+        id: Array.from(socket.rooms)[1],
+        maxNumberOfPlayers: room.maxNumberOfPlayers,
+        numberOfPlayers: room.numberOfPlayers,
+        host: room.host
+      }
+    )
   })
 
   socket.on("joinRoom", (roomId, password = false)=>{
     const room = rooms.get(roomId)
+    if(!room){
+      socket.emit('roomClosed')
+      return
+    }
+    if(room?.numberOfPlayers>=room?.maxNumberOfPlayers){
+      throw new Error("Sala cheia")
+    }
     if(room.password){
       if(!room.password===password){
         throw new Error("Senha incorreta")
       }
     }
     socket.join(roomId)
-    gameManager.addUser(socket.user.id)
-    gameManager.setUserActualGame(socket.user.id, rooms)
-    io.to(roomId).emit("playerEnter")
+    const user = socket.user
+    gameManager.addUser(user.id)
+    gameManager.setUserActualGame(user.id, room.game)
+    room.game.addUser(user.id, user.username, user.imgName)
+    io.to(roomId).emit("playerEnter", {
+      id: user.id,
+      username: user.username,
+      imgName: user.imgName
+    })
+    room.numberOfPlayers++
+    const playersArray = Array.from(room.game?.users.entries()).map(([id, user]) => ({
+      id,
+      username: user.username,
+      imgName: user.imgName
+    }));
+    socket.emit('joinedInRoom',
+      room.game.timeByQuestion,
+      playersArray, 
+      {
+        id: roomId,
+        maxNumberOfPlayers: room.maxNumberOfPlayers,
+        numberOfPlayers: room.numberOfPlayers,
+        host: room.host
+      }
+    )
+  })
+
+  socket.on("leaveRoom",()=>{
+    const room = rooms.get(Array.from(socket.rooms)[1])
+    io.to(Array.from(socket.rooms)[1]).emit("playerLeave", socket.user.id)
+    room?.game?.removeUser(socket.user.id)
+    gameManager.removeUser(socket.user.id)
+    if(room?.host==socket.user.id){
+      if(room.game){
+        room.game.users.forEach((value, key) => {
+          gameManager.setUserActualGame(key, null)
+        });
+      }
+      rooms.delete(Array.from(socket.rooms)[1])
+      waitingHost.delete(Array.from(socket.rooms)[1])
+      io.to(Array.from(socket.rooms)[1]).emit("roomClosed")
+      io.socketsLeave(Array.from(socket.rooms)[1])
+
+    }
+    if(room?.numberOfPlayers==1){
+      rooms.delete(Array.from(socket.rooms)[1])
+      waitingHost.delete(Array.from(socket.rooms)[1])
+    }else{
+      if(room){
+        room.numberOfPlayers--
+      }
+    }
+    
   })
   
+  socket.on('initRoomGame',()=>{
+    const room = rooms.get(Array.from(socket.rooms)[1])
+    if(!(room?.host === socket.user.id)){
+      return
+    }
+    
+    const usersIds = Array.from(room.game.users.keys()).map((e)=>usersSockets.get(e))
+    
+    const roomSockets = io.sockets.adapter.rooms.get(Array.from(socket.rooms)[1])
+    if (roomSockets) {
+      console.log((Array.from(room.game.users.keys())))
+      console.log((usersIds))
+      const socketIds = Array.from(roomSockets);
+      for (const element of socketIds) {
+        console.log(element)
+        console.log(usersIds.includes(element))
+        if(!usersIds.includes(element)){
+          console.log(element + ' sadkloayuisdoahsda')
+          io.sockets.sockets.get(element)?.leave(room.id);
+        }
+      }
+      console.log("Sockets na sala:", socketIds);
+    } else {
+      console.log("Sala não encontrada");
+    }
+    setTimeout(() => {
+      console.log("Depois:", io.sockets.adapter.rooms.get(room.id));
+    }, 0);
+    console.log(room.id)
+    const question = room.game.getCurrentQuestion()
+    const timeByQuestion = room.game.getTimeByQuestion()
+    room.game.setTimeToNow()
+    room.game.acceptingPlayers = false
+    const time = room.game.getQuestionTimeInit()
+
+
+    io.to(room.id).emit('gameInitialized', {question, timeByQuestion, time})
+
+  })
+
+  socket.on('playRoomAgain', async ()=>{
+    const roomId = Array.from(socket.rooms)[1]
+    const room = rooms.get(roomId)
+    const user = socket.user
+    if(socket.user.id==room.host){
+      await room.game.init()
+      
+      room.numberOfPlayers++
+      room.game.addUser(user.id, user.username, user.imgName)
+      socket.emit("roomGameCreated", 
+        room.game.timeByQuestion,
+        {
+          id: user.id,
+          username: user.username,
+          imgName: user.imgName
+        }, 
+        {
+          id: Array.from(socket.rooms)[1],
+          maxNumberOfPlayers: room.maxNumberOfPlayers,
+          numberOfPlayers: room.numberOfPlayers,
+          host: room.host
+        }
+      )
+      room.game.acceptingPlayers=true
+      console.log(waitingHost)
+      waitingHost.get(roomId)?.map((user)=>{
+        console.log(user)
+        room.game.addUser(user.id, user.username, user.imgName)
+        room.numberOfPlayers++
+        const playersArray = Array.from(room.game?.users.entries()).map(([id, user]) => ({
+          id,
+          username: user.username,
+          imgName: user.imgName
+        }));
+        socket.emit("playerEnter", {
+          id: user.id,
+          username: user.username,
+          imgName: user.imgName
+        })
+        io.to(usersSockets.get(user.id)).emit('joinedInRoom',
+          room.game.timeByQuestion,
+          playersArray, 
+          {
+            id: roomId,
+            maxNumberOfPlayers: room.maxNumberOfPlayers,
+            numberOfPlayers: room.numberOfPlayers,
+            host: room.host
+          }
+        )
+      })
+      
+      waitingHost.delete(roomId)
+      return
+    }
+    if(room.game?.acceptingPlayers===false){
+      socket.emit("waitingHost")
+      if(waitingHost.get(roomId)){
+        waitingHost.set(roomId,[...waitingHost.get(roomId),{id: user.id, username: user.username, imgName: user.imgName}])
+        console.log(waitingHost)
+        return
+      }
+      waitingHost.set(roomId, [{id: user.id, username: user.username, imgName: user.imgName}])
+      console.log(waitingHost)
+      return
+    }
+    
+    room.game.addUser(user.id, user.username, user.imgName)
+    io.to(roomId).emit("playerEnter", {
+      id: user.id,
+      username: user.username,
+      imgName: user.imgName
+    })
+    room.numberOfPlayers++
+    const playersArray = Array.from(room.game?.users.entries()).map(([id, user]) => ({
+      id,
+      username: user.username,
+      imgName: user.imgName
+    }));
+    socket.emit('joinedInRoom',
+      room.game.timeByQuestion,
+      playersArray, 
+      {
+        id: roomId,
+        maxNumberOfPlayers: room.maxNumberOfPlayers,
+        numberOfPlayers: room.numberOfPlayers,
+        host: room.host
+      }
+    )
+  })
+  
+  socket.on("disconnecting", () => {
+    const room = rooms.get(Array.from(socket.rooms)[1])
+    if(usersSockets.get(socket.user.id)==socket.id){
+      io.to(Array.from(socket.rooms)[1]).emit("playerLeave", socket.user.id)
+      room?.game?.removeUser(socket.user.id)
+      gameManager.removeUser(socket.user.id)
+    if(room?.host==socket.user.id){
+      if(room.game){
+        room.game.users.forEach((value, key) => {
+          gameManager.setUserActualGame(key, null)
+        });
+        room.game.users.clear()
+      }
+      rooms.delete(Array.from(socket.rooms)[1])
+      waitingHost.delete(Array.from(socket.rooms)[1])
+      io.to(Array.from(socket.rooms)[1]).emit("roomClosed")
+      io.socketsLeave(Array.from(socket.rooms)[1])
+
+    }
+      if(room?.numberOfPlayers==1){
+        rooms.delete(Array.from(socket.rooms)[1])
+        waitingHost.delete(Array.from(socket.rooms)[1])
+      }else{
+        if(room){
+          room.numberOfPlayers--
+        }
+      }
+    }
+  });
+  
   socket.on('disconnect', () => {
-    usersSockets.delete(socket.user.id)
+    if(usersSockets.get(socket.user.id)==socket.id){
+      usersSockets.delete(socket.user.id)
+    }
   });
 }); 
 
