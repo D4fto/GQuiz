@@ -40,7 +40,7 @@ export default class GameManager {
         if(!user.actualGame){
             throw new Error('User is not in a game.');
         }
-        return user.actualGame.getUserScore()
+        return user.actualGame.getUserScore(userId)
 
     }
 }

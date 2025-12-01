@@ -1,17 +1,25 @@
 import { getQuestions } from "../controllers/questionController.js";
+import { finishLevel, finishRandom } from "./gameService.js";
 import { getLevelQuestionsService } from "./levelService.js";
 import { verifyOption } from "./optionService.js";
 import { getRandomQuestions, getRandomQuestionsByCategory } from "./questionService.js";
-import { io, rooms } from "../config/io.js";
+import { io, rooms, getUserSocket, usersSockets } from "../config/io.js";
+import prisma from "../config/db.js";
 
 export class game {
   constructor() {
     this.currentQuestionIndex = 0;
     this.questions = [];
-    this.timeByQuestion=60;
+    this.timeByQuestion=5;
     this.time=null
     this.tolerance=5
     this.penalty=.1
+    this.type="default"
+    this.timeout=null
+  }
+
+  finish(){
+    return true
   }
   
   nextQuestion() {
@@ -22,8 +30,14 @@ export class game {
     return true
   }
 
+  timeOutHandler(){
+
+  }
+
   setTimeToNow(){
     this.time = Date.now()
+    clearTimeout(this.timeout)
+    this.timeout = setTimeout(()=>this.timeOutHandler(),this.timeByQuestion*1000)
     return this.time
   }
 
@@ -61,7 +75,7 @@ export class levelGame extends game{
     this.id_level = id_level;
     this.userId = userId;
     this.score = 0;
-    
+    this.type="level"
 
   }
   
@@ -77,6 +91,7 @@ export class levelGame extends game{
       throw new Error("Level sem questões")
     }
     this.currentQuestionIndex = 0;
+    console.log(this.userId)
     return this;
   } 
 
@@ -87,14 +102,24 @@ export class levelGame extends game{
   getUserScore(userId){
     return this.getScore()
   }
+  
+  timeOutHandler(){
+    console.log(this.userId)
+    io.to(getUserSocket(this.userId)).emit("timeout")
+  }
 
   getCurrentQuestion(){
     return this.questions[this.currentQuestionIndex]
   }
 
+  async finish(){
+    console.log(this.userId)
+    return await finishLevel(this.userId, this.id_level, this.score)
+  }
+
   async answerCurrentQuestion(indexOption){
     try{
-      const isCorrect = await verifyOption(this.questions[this.currentQuestionIndex].option[indexOption].id)
+      const isCorrect = await verifyOption(this.questions[this.currentQuestionIndex].option[indexOption]?.id)
       if(isCorrect){
         const diff = Math.floor((Date.now() - this.getQuestionTimeInit()) / 1000);
         const questionWeight = this.questions[this.currentQuestionIndex].weight
@@ -104,6 +129,7 @@ export class levelGame extends game{
           this.score+=Math.floor(questionWeight*Math.max((this.getTimeByQuestion()-this.tolerance-diff)/(this.getTimeByQuestion()-this.tolerance)-this.penalty,0.5))
         }
       }
+      clearTimeout(this.timeout)
       return isCorrect
     }catch(e){
       throw e
@@ -120,6 +146,8 @@ export class randomGame extends game{
     this.numberOfQuestions = numberOfQuestions
     this.timeByQuestion = timeByQuestion
     this.categories = categories
+    this.type="random"
+    this.userId=null
   }
   async loadQuestions(){
     if(this.categories){
@@ -128,7 +156,8 @@ export class randomGame extends game{
     return await getRandomQuestions(this.numberOfQuestions);
 
   }
-  async init() {
+  async init(userId) {
+    this.userId = userId
     const response = await this.loadQuestions()
     response.sort(() => Math.random() - 0.5);
     
@@ -147,14 +176,21 @@ export class randomGame extends game{
   getScore() {
     return this.score  
   }
+  async finish({userId}){
+    return await finishRandom(userId, this.score)
+  }
   
   getUserScore(userId){
     return this.getScore()
   }
+  timeOutHandler(){
+    console.log(this.userId)
+    io.to(getUserSocket(this.userId)).emit("timeout")
+  }
 
   async answerCurrentQuestion(indexOption){
     try{
-      const isCorrect = await verifyOption(this.questions[this.currentQuestionIndex].option[indexOption].id)
+      const isCorrect = await verifyOption(this.questions[this.currentQuestionIndex].option[indexOption]?.id)
       if(isCorrect){
         const diff = Math.floor((Date.now() - this.getQuestionTimeInit()) / 1000);
         const questionWeight = this.questions[this.currentQuestionIndex].weight
@@ -164,6 +200,7 @@ export class randomGame extends game{
           this.score+=Math.floor(questionWeight*Math.max((this.getTimeByQuestion()-this.tolerance-diff)/(this.getTimeByQuestion()-this.tolerance)-this.penalty,0.5))
         }
       }
+      clearTimeout(this.timeout)
       return isCorrect
     }catch(e){
       throw e
@@ -177,6 +214,8 @@ export class roomGame extends randomGame{
     this.roomId = roomId
     this.users = new Map()
     this.answereds = new Map()
+    this.acceptingPlayers = true
+    this.type="room"
   }
   async init() {
     const response = await this.loadQuestions()
@@ -191,7 +230,6 @@ export class roomGame extends randomGame{
     }
     this.numberOfQuestions = this.questions.length
     this.currentQuestionIndex = 0;
-
     return this;
   } 
   
@@ -203,23 +241,79 @@ export class roomGame extends randomGame{
     return user.score;
   }
 
-  getTop(length=5){
+  getTop(length=false){
     const sorted = new Map(
       [...this.users.entries()].sort((a, b) => b[1].score - a[1].score)
-    );
-    return user.score;
+    ); 
+    
+    if (length) {
+      return [...sorted].slice(0, length).map(([id, data]) => ({ id, ...data }));
+    }
+    return [...sorted].map(([id, data]) => ({ id, ...data }));
   }
 
-  addUser(userId, username){
+  addUser(userId, username, imgName){
     this.users.set(userId,{
       score: 0,
-      username: username
+      username: username,
+      imgName: imgName,
+      lastScore: 0
     })
   }
 
   removeUser(userId){
     this.users.delete(userId)
   }
+
+  timeOutHandler(){
+    this.users.forEach((value, key)=>{
+      if(this.answereds.get(key)){
+        return
+      }
+      console.log(key)
+      io.to(getUserSocket(key)).emit("timeout")
+    })
+    io.to(this.roomId).emit("everyoneAnswered", {currentQuestionIndex: this.currentQuestionIndex, numberOfQuestions: this.numberOfQuestions})
+    setTimeout(()=>{
+      this.answereds.clear()
+      this.nextQuestion()
+    },5000)
+  }
+
+  async nextQuestion() {
+    this.currentQuestionIndex++
+    if(this.currentQuestionIndex>=this.questions.length){
+      const result = await this.finish()
+      io.to(this.roomId).emit("finished", {result: result})
+      return false
+    }
+    io.to(this.roomId).emit("nextQuestion", {result: this.currentQuestionIndex<this.questions.length})
+    return true
+  }
+
+  async finish(){
+    await this.users.forEach(async (value, key) => {
+      await prisma.user.update({
+        where: {id: key},
+        data: {
+          points: { increment: value.score}
+        }
+      })
+    });
+    const info = {top: this.getTop()}
+    this.acceptingPlayers=false
+    this.users.clear()
+    this.answereds.clear()
+    const newRoom = rooms.get(this.roomId)
+    if(newRoom){
+      newRoom.numberOfPlayers=0
+      rooms.set(this.roomId, newRoom)
+    }
+
+    return info
+  }
+
+
 
   async answerCurrentQuestion(indexOption, userId){
     try{
@@ -230,7 +324,7 @@ export class roomGame extends randomGame{
       if(this.answereds.get(userId)){
         return false
       }
-      const isCorrect = await verifyOption(this.questions[this.currentQuestionIndex].option[indexOption].id)
+      const isCorrect = await verifyOption(this.questions[this.currentQuestionIndex].option[indexOption]?.id)
       if(isCorrect){
         const diff = Math.floor((Date.now() - this.getQuestionTimeInit()) / 1000);
         const questionWeight = this.questions[this.currentQuestionIndex].weight
@@ -240,12 +334,17 @@ export class roomGame extends randomGame{
           user.score+=Math.floor(questionWeight*Math.max((this.getTimeByQuestion()-this.tolerance-diff)/(this.getTimeByQuestion()-this.tolerance)-this.penalty,0.5))
         }
       }
+      this.answereds.set(userId,true)
       io.to(this.roomId).emit("updateNumberOfAnswers", {
-        answereds: this.answereds.size,
-        numberOfPlayers: rooms.get(this.roomId)?.numberOfPlayers
+        answereds: this.answereds.size
       })
       if(this.answereds.size>=rooms.get(this.roomId)?.numberOfPlayers){
         io.to(this.roomId).emit("everyoneAnswered", {currentQuestionIndex: this.currentQuestionIndex, numberOfQuestions: this.numberOfQuestions})
+        clearTimeout(this.timeout)
+        setTimeout(()=>{
+          this.answereds.clear()
+          this.nextQuestion()
+        },5000)
       }
       return isCorrect
     }catch(e){
