@@ -12,28 +12,31 @@
   background: var(--white);
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding-top: 2rem;
 }
 
 .topTab {
   background: var(--primary);
+  height: 4.70rem;
   padding: 0.6rem 3rem;
   border-radius: 0.4rem;
   color: var(--white);
-  font-size: 1.3rem;
+  font-size: 3rem;
   margin-left: 0; 
+  margin-right: 140rem;
 }
 
 .card {
   width: 140rem;
-  height: 70rem;
+  height: 70dvh;
   background: var(--primary);
   margin-top: 1rem;
   border-radius: 0.8rem;
-  padding: 3rem;              /* AUMENTADO */
+  padding: 3rem; 
   display: flex;
   gap: 4rem;
-  margin-left: 0;             /* COLADO À ESQUERDA */
+  margin-left: 0;
+  padding-bottom: 2rem;   
 }
 
 .leftArea {
@@ -43,19 +46,19 @@
 }
 
 .dice {
-  width: 40rem;               /* MAIOR */
+  width: 40rem;           
   height: 40rem;
 }
 
 .rightArea {
   flex: 1;
   color: var(--white);
+  margin-top: 10rem;
 }
 
 .rightArea h2 {
-  text-align: center;
   margin-bottom: 1.5rem;
-  font-size: 2rem;             /* MAIOR */
+  font-size: 4rem;
 }
 
 .row {
@@ -71,17 +74,17 @@
 }
 
 label {
-  font-size: 1.1rem;
+  font-size: 2rem;
   margin-bottom: 0.4rem;
 }
 
 input[type="text"],
 input[type="number"] {
   width: 100%;
-  padding: 0.7rem;
+  padding: 1rem;
   border-radius: 0.4rem;
   border: none;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
 }
 
 .checkbox {
@@ -89,13 +92,19 @@ input[type="number"] {
   align-items: center;
   gap: 0.6rem;
   margin-top: 0.7rem;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
 }
 
 .divirta {
   text-align: center;
   margin: 1.5rem 0;
-  font-size: 1.3rem;
+  font-size: 3rem;
+  color: var(--black);
+}
+
+.stake{
+  border-bottom: 0.1rem solid var(--white);
+  margin-bottom: 3rem;
 }
 
 .playBtn {
@@ -104,13 +113,15 @@ input[type="number"] {
   display: block;
   background: none;
   border: 0.15rem solid var(--white);
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 0.5rem;
-  font-size: 1.3rem;
+  font-size: 3rem;
   color: var(--white);
   cursor: pointer;
+  background-color: var(--primary-dark);
 }
 
 .playBtn:hover {
-  background: var(--primary-dark);
+  background: var(--primary);
 }
+
