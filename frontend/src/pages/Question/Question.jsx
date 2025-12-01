@@ -6,7 +6,7 @@ import { useGame } from "../../contexts/gameContext";
 import NextButton from "../../components/NextButton/NextButton";
 
   export default function Question() {
-    const { actualQuestion, answerQuestion, questionInitTime, timeByQuestion } = useGame()
+    const { actualQuestion, answerQuestion, questionInitTime, timeByQuestion, gameType, room, numberOfAnswers } = useGame()
     const [selectedOption, setSelectedOption] = useState(null);
     const [hoveredOption, setHoveredOption] = useState(null);
     const [options, setOptions] = useState([])
@@ -49,6 +49,7 @@ import NextButton from "../../components/NextButton/NextButton";
       <div className={styles.container}>
         <StyleSquare option={1} innerColor={'var(--black)'} outColor={'var(--gray)'} position={'bottomLeft'}></StyleSquare>
           <div className={styles.timer}>{formatTime(time)}</div>
+          {gameType=="room" && <div>{numberOfAnswers}/{room.numberOfPlayers}</div>}
         
   
         <div className={styles.mainContent}>
