@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./RoomCreation.module.css";
 import group from "../../assets/groups_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 
 export default function RoomCreation() {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.page}>
       <div className={styles.topTab}>Criação de Sala</div>
@@ -32,10 +35,14 @@ export default function RoomCreation() {
           <p className={styles.divirta}>Divirta-se !</p>
           <div className={styles.stake}></div>
 
-          <button className={styles.playBtn}>Continuar</button>
+          <button 
+            className={styles.playBtn}
+            onClick={() => navigate("/roomCreationPt2")}
+          >
+            Continuar
+          </button>
         </div>
       </div>
     </div>
   );
 }
-
