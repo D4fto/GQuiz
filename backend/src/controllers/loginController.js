@@ -5,7 +5,14 @@ import { sign } from "../config/jwt.js";
 export async function login(req, res) {
   const { email, password } = req.body
   const user = await prisma.user.findUnique({
-    where: { email }
+    where: { email },
+    include: {
+      userImgs: {
+        select: {
+          imgName: true
+        }
+      }
+    }
   });
   if (!user) {
     return res.status(401).json({ error: "Usuário não encontrado" });
@@ -18,12 +25,15 @@ export async function login(req, res) {
     id: user.id,
     email: user.email,
     username: user.username,
+    imgName: user.userImgs.imgName,
     isAdmin: user.isAdmin,
   })
 
   res.cookie("token", token, { 
     maxAge: jwtExpirySeconds * 1000,
   })
+
+  console.log("sdpjasdpadosjasdodpasj")
 
   return res.status(200).send({message: "Usuário logado com sucesso"});
 }

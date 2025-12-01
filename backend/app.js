@@ -36,7 +36,7 @@ app.get("/me", (req, res) => {
 
   try {
     const payload = verify(token)
-    res.json({ id: payload.id, email: payload.email, username: payload.username});
+    res.json({ id: payload.id, email: payload.email, username: payload.username, imgName: payload.imgName, admin: payload.isAdmin});
   } catch {
     res.status(401).end();
   }
