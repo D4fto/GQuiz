@@ -1,6 +1,6 @@
 .container {
   height: 100%;
-  background: linear-gradient(to bottom right, #dc2626, #b91c1c);
+  background: linear-gradient(to bottom right, #bb1d1d, var(--primary-dark));
   padding-top: 5rem;
   padding-bottom: 3rem;
   padding-left: 2rem;
@@ -75,7 +75,7 @@
 .roomsList {
   max-height: 41rem;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: white;
   border-radius: 1.5rem;
   box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.1);
@@ -159,4 +159,7 @@
 .playButton:hover {
   background-color: #1f2937;
   transform: scale(1.05);
+}
+.selected{
+  backdrop-filter: brightness(.75);
 }
