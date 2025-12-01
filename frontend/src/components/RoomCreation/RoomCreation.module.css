@@ -1,0 +1,109 @@
+:root {
+  --white: #F7F4F3;
+  --black: #070707;
+  --primary: #F03828;
+  --primary-dark: #BA1B1D;
+  --gray: #2F2A22;
+}
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+}
+
+.topTab {
+  background: var(--primary);
+  height: 4.70rem;
+  padding: 0.6rem 3rem;
+  border-radius: 0.4rem;
+  color: var(--white);
+  font-size: 3rem;
+  margin-left: 0; 
+  margin-right: 140rem;
+}
+
+.card {
+  width: 90%;
+  max-width: 140rem;
+  height: 70dvh;
+  background: var(--primary);
+  margin-top: 2rem;
+  border-radius: 0.8rem;
+  padding: 3rem;
+  display: flex;
+  gap: 4rem;
+}
+
+.leftArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.group {
+  width: 35rem;
+  height: 35rem;
+}
+
+.rightArea {
+  flex: 1;
+  color: var(--white);
+  margin-top: 10rem;
+}
+
+.rightArea h2 {
+  font-size: 3.6rem;
+  margin-bottom: 2rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.6rem;
+}
+
+label {
+  font-size: 2rem;
+  margin-bottom: 0.4rem;
+}
+
+input {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.4rem;
+  border: none;
+  font-size: 1.6rem;
+}
+
+.divirta {
+  text-align: center;
+  margin: 1.5rem 0;
+  font-size: 2.8rem;
+  color: var(--black);
+}
+
+.stake {
+  border-bottom: 0.1rem solid var(--white);
+  margin-bottom: 3rem;
+}
+
+.playBtn {
+  width: 60%;
+  margin: 0 auto;
+  display: block;
+  background: var(--primary-dark);
+  border: 0.15rem solid var(--white);
+  padding: 1.8rem;
+  border-radius: 0.5rem;
+  font-size: 2.6rem;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.playBtn:hover {
+  background: var(--primary);
+}

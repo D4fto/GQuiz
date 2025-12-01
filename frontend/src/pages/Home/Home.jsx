@@ -23,7 +23,11 @@ export default function Home() {
           <MainButton text="Entrar em Sala" onClick={() => {
             navigate("/room-selection")
           }} />
-          <MainButton text="Criar Sala" onClick={() => {}} />
+          <MainButton 
+            text="Criar Sala"
+            onClick={() => {
+              navigate("/RoomCreation")
+            }} />
           <MainButton
             text="Jogar Fases"
             onClick={() => {

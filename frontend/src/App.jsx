@@ -3,6 +3,7 @@ import CreateAccount from './pages/CreateAccount/CreateAccount';
 import Login from './pages/login/login';
 import ChooseWorlds from './pages/chooseWorlds/chooseWorlds';
 import RandomQuiz from './pages/randomQuiz/randomQuiz';
+import RoomCreation from './pages/roomCreation/roomCreation';
 import Admin from './pages/Admin/Admin';
 import Home from './pages/Home/Home';
 import NavBar from './components/NavBar/NavBar';
@@ -115,6 +116,13 @@ export default function App() {
             <RandomQuiz/>
           </PrivateRoute>
         } />
+
+        <Route path="/RoomCreation" element={ 
+          <PrivateRoute>
+            <RoomCreation/>
+          </PrivateRoute>
+        } />
+
         <Route path="/finished" element={ 
           <PrivateRoute>
             <div>{JSON.stringify(finishedInfo)}

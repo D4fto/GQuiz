@@ -1,0 +1,15 @@
+.boto{
+    top: 3rem;
+    right: 3rem;
+    bottom: unset;
+    left: unset;
+}
+
+.page{
+    position: relative;
+}
+.di{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
