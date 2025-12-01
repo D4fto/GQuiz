@@ -20,7 +20,9 @@ export default function Home() {
           da UTFPR 2025 ?{" "}
         </p>
         <div className={styles.options}>
-          <MainButton text="Entrar em Sala" onClick={() => {}} />
+          <MainButton text="Entrar em Sala" onClick={() => {
+            navigate("/room-selection")
+          }} />
           <MainButton text="Criar Sala" onClick={() => {}} />
           <MainButton
             text="Jogar Fases"

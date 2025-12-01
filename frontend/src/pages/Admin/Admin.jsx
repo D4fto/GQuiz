@@ -1,10 +1,18 @@
 import styles from "./Admin.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CRUDCategory, CRUDOption, CRUDWorld, CRUDQuestion, CRUDLevelHasQuestion, CRUDLevel, CRUDUser, CRUDUserHasLevel, CRUDUserImgs } from "../../components/CRUDS/CRUDS";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/authContext";
 
 export default function Admin() {
   const [adminState, setAdminState] = useState("categorias");
-  
+  const navigate = useNavigate()
+  const {user, loading} = useAuth()
+  useEffect(()=>{
+    if(!user.admin){
+      navigate('/')
+    }
+  },[loading])
   
   
 

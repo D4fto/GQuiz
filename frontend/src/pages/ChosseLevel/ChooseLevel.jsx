@@ -194,7 +194,7 @@ export default function ChooseLevel(){
   return <div className={styles.chooseLevel}>
     <div className={styles.levels}>
       <TitleBox title={"Fases"}></TitleBox>
-      <button onClick={()=>{startRandom(20,30)}}>Play Random</button>
+      <button onClick={()=>{startRandom(20,30, [53,73])}}>Play Random</button>
     </div>
     {
       isError? 
