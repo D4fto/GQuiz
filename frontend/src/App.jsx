@@ -15,6 +15,7 @@ import UserProfile from './components/UserProfile/UserProfile';
 import ChooseLevel from './pages/ChosseLevel/ChooseLevel';
 import { useGame } from './contexts/gameContext';
 import { useAuth } from './contexts/authContext';
+import Loading from './pages/Loading/Loading';
 
 
 const noNavRoutes = ['/login','/create-account',]
@@ -68,6 +69,11 @@ export default function App() {
         <Route path="/admin" element={
           <PrivateRoute>
             <Admin />
+          </PrivateRoute>
+          } />
+          <Route path="/loading" element={
+          <PrivateRoute>
+            <Loading />
           </PrivateRoute>
           } />
         <Route path="/worlds" element={
