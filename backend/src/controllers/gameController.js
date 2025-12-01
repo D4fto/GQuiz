@@ -1,5 +1,6 @@
 import { startRandom, startLevel } from "../services/gameService.js";
 import { gameManager } from "../config/gameManager.js";
+import { rooms } from "../config/io.js";
 
 export async function onStartRandom(req,res) {
   try{
@@ -26,4 +27,17 @@ export async function onStartLevel(req,res) {
     console.log(e)
     res.status(400).send({error: e})
   }
+}
+
+export function getRooms(req,res) {
+  const formatedRooms = [...rooms].map((e)=>{
+    return {
+      id: e[0],
+      hasPassword: Boolean(e[1].password),
+      maxNumberOfPlayers: e[1].maxNumberOfPlayers,
+      numberOfPlayers: e[1].numberOfPlayers,
+      acceptingPlayers: e[1].game?.acceptingPlayers
+    }
+  })
+  res.send({rooms: formatedRooms})
 }
