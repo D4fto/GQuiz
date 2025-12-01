@@ -48,7 +48,7 @@ const Category = () => {
 
       <div className={styles.footer}>
         <label className={styles.checkboxLabel}>
-          <input type="checkbox" className={styles.checkbox} />
+          <input type="checkbox"/>
           <span className={styles.labelText}>Selecionar todos</span>
         </label>
         

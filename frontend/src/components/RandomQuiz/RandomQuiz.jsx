@@ -35,11 +35,12 @@ export default function RandomQuiz() {
           </div>
 
           <label className={styles.checkbox}>
-            <input type="checkbox" />
+            <input type="checkbox" className={styles.box}/>
             Quick Time Events
           </label>
 
           <p className={styles.divirta}>Divirta-se !</p>
+          <div className={styles.stake}></div>
 
           <button className={styles.playBtn}>Jogar</button>
         </div>
