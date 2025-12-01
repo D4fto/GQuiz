@@ -5,10 +5,17 @@ import StyleSquare from "../../components/StyleSquare/StyleSquare";
 import BlackQ from "../../components/BlackQ/BlackQ";
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast'
-
+import { useEffect } from "react";
+import { useAuth } from "../../contexts/authContext";
 
 export default function Login(){
+    const {user, loading} = useAuth()
     const navigate = useNavigate()
+    useEffect(()=>{
+        if(user){
+            navigate('/')
+        }
+    },[loading])
     function handleSubmit(event){
         event.preventDefault()
         fetch(import.meta.env.VITE_API_URL+'/login', {
@@ -28,7 +35,7 @@ export default function Login(){
                 toast.error(data.error)
                 return
             }
-            navigate('/')
+            window.location.href = import.meta.env.VITE_URL;
         }).catch((error)=>{
             console.error(error)
             toast.error(error)

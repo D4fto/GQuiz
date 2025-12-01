@@ -4,9 +4,17 @@ import MainButton from "../../components/MainButton/MainButton";
 import StyleSquare from "../../components/StyleSquare/StyleSquare";
 import { toast } from 'react-hot-toast'
 import BlackQ from "../../components/BlackQ/BlackQ";
-import { Link } from 'react-router-dom';
+import { useEffect } from "react";
+import { useAuth } from "../../contexts/authContext";
 export default function CreateAccount(){
     const navigate = useNavigate()
+    const {user, loading} = useAuth()
+    useEffect(()=>{
+        if(user){
+            console.log(user)
+            navigate('/')
+        }
+    },[loading])
     function handleSubmit(event){
         event.preventDefault()
         fetch(import.meta.env.VITE_API_URL+'/login/create-account', {
