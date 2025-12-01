@@ -87,12 +87,29 @@ input[type="number"] {
   font-size: 1.5rem;
 }
 
-.checkbox {
+
+.checkboxArea {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  margin-top: 0.7rem;
-  font-size: 1.5rem;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 1.8rem;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin: 1.5rem 0 2rem 0;
+  color: var(--white);
+  font-size: 2.4rem;
+}
+
+.checkbox {
+  width: 2.4rem;
+  height: 2.4rem;
+  cursor: pointer;
 }
 
 .divirta {
@@ -124,4 +141,3 @@ input[type="number"] {
 .playBtn:hover {
   background: var(--primary);
 }
-

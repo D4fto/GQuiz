@@ -8,10 +8,7 @@ export default function RandomQuiz() {
 
       <div className={styles.card}>
         <div className={styles.leftArea}>
-          <img
-            src={dice}
-            className={styles.dice}
-          />
+          <img src={dice} className={styles.dice} />
         </div>
 
         <div className={styles.rightArea}>
@@ -34,10 +31,12 @@ export default function RandomQuiz() {
             <input type="text" placeholder="Todos" />
           </div>
 
-          <label className={styles.checkbox}>
-            <input type="checkbox" className={styles.box}/>
-            Quick Time Events
-          </label>
+
+            <div className={styles.checkboxRow}>
+              <input type="checkbox" id="qte" className={styles.checkbox} />
+              <label htmlFor="qte">Quick Time Events</label>
+            </div>
+
 
           <p className={styles.divirta}>Divirta-se !</p>
           <div className={styles.stake}></div>
@@ -48,3 +47,4 @@ export default function RandomQuiz() {
     </div>
   );
 }
+
