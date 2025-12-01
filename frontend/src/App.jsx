@@ -16,6 +16,7 @@ import ChooseLevel from './pages/ChosseLevel/ChooseLevel';
 import { useGame } from './contexts/gameContext';
 import { useAuth } from './contexts/authContext';
 import Loading from './pages/Loading/Loading';
+import Result from './pages/Result/Result';
 
 
 const noNavRoutes = ['/login','/create-account',]
@@ -93,10 +94,7 @@ export default function App() {
           } />
         <Route path="/result" element={
           <PrivateRoute>
-            <p>Pontos: {actualScore}</p>
-            <p>Resultado: {String(lastIsCorrect)}</p>
-            {gameType=="room" && <div>{actualQuestionIndex+1}/{numberOfQuestions}</div>}
-            <button onClick={nextQuestion}>next</button>
+            <Result/>
           </PrivateRoute>
           } />
         <Route path="/profile" element={
