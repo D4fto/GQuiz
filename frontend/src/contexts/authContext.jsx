@@ -5,23 +5,22 @@ const AuthContext = createContext(null)
 export function AuthProvider({ children }){
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true); 
+  
+  async function checkAuth() {
+    try {
+      const res = await fetch(import.meta.env.VITE_API_URL+"/me", {
+        credentials: "include" 
+      });
 
-  useEffect(() => {
-    async function checkAuth() {
-      try {
-        const res = await fetch(import.meta.env.VITE_API_URL+"/me", {
-          credentials: "include" 
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data);
-        }
-      } finally {
-        setLoading(false);
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data);
       }
+    } finally {
+      setLoading(false);
     }
-
+  }
+  useEffect(() => {
     checkAuth();
   }, []);
 
