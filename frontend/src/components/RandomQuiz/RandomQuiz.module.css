@@ -73,13 +73,13 @@
   flex-direction: column;
 }
 
-label {
+.page label {
   font-size: 2rem;
   margin-bottom: 0.4rem;
 }
 
-input[type="text"],
-input[type="number"] {
+.page input[type="text"],
+.page input[type="number"] {
   width: 100%;
   padding: 1rem;
   border-radius: 0.4rem;
