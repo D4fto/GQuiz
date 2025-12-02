@@ -27,17 +27,12 @@ const noNavRoutes = ['/login','/create-account',]
 export default function App() {
   const location = useLocation()
   const {
-    nextQuestion, 
-    actualScore, 
-    lastIsCorrect, 
     createRoom, 
     startRoomGame, 
     room, 
     players, 
     initRoomGame, 
     numberOfAnswers,
-    actualQuestionIndex,
-    numberOfQuestions, 
     gameType, 
     finishedInfo,
     startLevel,
@@ -152,17 +147,6 @@ export default function App() {
               }
               
             </div>
-          </PrivateRoute>
-        } />
-        <Route path="/creating-room" element={ 
-          <PrivateRoute>
-            <button onClick={()=>createRoom('sala', 20)}>Create Room</button>
-          </PrivateRoute>
-        } />
-        <Route path="/creating-room-game" element={ 
-          <PrivateRoute>
-            <button onClick={()=>startRoomGame(3, 7)}>Create Room Game</button>
-            
           </PrivateRoute>
         } />
 

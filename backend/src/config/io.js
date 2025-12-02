@@ -156,13 +156,18 @@ io.on('connection', (socket) => {
       return
     }
     if(room?.numberOfPlayers>=room?.maxNumberOfPlayers){
-      throw new Error("Sala cheia")
+      console.log("full")
+      socket.emit("roomFull")
+      return
     }
     if(room.password){
       if(!room.password===password){
-        throw new Error("Senha incorreta")
+        console.log("pass")
+        socket.emit("wrongPassword")
+        return
       }
     }
+    console.log("join")
     socket.join(roomId)
     const user = socket.user
     gameManager.addUser(user.id)

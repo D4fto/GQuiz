@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 import { socket } from "../services/socket";
+import { toast } from 'react-hot-toast'
 import { useLocation } from "react-router-dom";
 
 
@@ -29,7 +30,7 @@ export function GameProvider({ children }){
     '/result',
     '/finished',
     '/waiting-players',
-    '/creating-room-game',
+    '/RoomCreationPt2',
     '/loading',
     '/waiting-answers',
     '/waiting-host',
@@ -39,7 +40,7 @@ export function GameProvider({ children }){
     result: ()=>navigate('/result'),
     finished: ()=>navigate('/finished'),
     waitingPlayers: ()=>navigate('/waiting-players'),
-    creatingRoomGame: ()=>navigate('/creating-room-game'),
+    creatingRoomGame: ()=>navigate('/RoomCreationPt2'),
     loading: ()=>navigate('/loading'),
     waitingAnswers: ()=>navigate('/waiting-answers'),
     waitingHost: ()=>navigate('/waiting-host')
@@ -154,8 +155,17 @@ export function GameProvider({ children }){
     socket.on("roomCreated",()=>{
       setGameState('creatingRoomGame')
     })
+    socket.on("roomFull", ()=>{
+      toast.error("Sala cheia")
+      setGameState("idle")
+      navigate("/room-selection")
+    })
+    socket.on("wrongPassword", ()=>{
+      toast.error("Senha incorreta")
+      setGameState("idle")
+      navigate("/room-selection")
+    })
     socket.on(("roomGameCreated"), (timeByQuestion,user,room)=>{
-      console.log("dfkjojsdffslkj")
       setTimeByQuestion(timeByQuestion)
       setRoom(room)
       setPlayers(prev => new Map(prev).set(user.id, user));
@@ -228,7 +238,8 @@ export function GameProvider({ children }){
     })
 
     socket.on("roomClosed", ()=>{
-      console.log(gameState)
+      setRoom({})
+      setPlayers(new Map())
       if(!['finished'].includes(gameState)){
         navigate('/')
         setGameState("idle")
