@@ -1,6 +1,8 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import CreateAccount from './pages/CreateAccount/CreateAccount';
 import Login from './pages/login/login';
+import ColorQuestion from './pages/QuickTimeEvent/ColorQuestion';
+import QuickTimeEvent from './pages/QuickTimeEvent/QuickTimeEvent';
 import ChooseWorlds from './pages/chooseWorlds/chooseWorlds';
 import RandomQuiz from './pages/randomQuiz/randomQuiz';
 import RoomCreation from './pages/roomCreation/roomCreation';
@@ -78,6 +80,16 @@ export default function App() {
         <Route path="/worlds" element={
           <PrivateRoute>
             <ChooseWorlds />
+          </PrivateRoute>
+          } />
+          <Route path="/time" element={
+          <PrivateRoute>
+            <QuickTimeEvent />
+          </PrivateRoute>
+          } />
+          <Route path="/color" element={
+          <PrivateRoute>
+            <ColorQuestion />
           </PrivateRoute>
           } />
         <Route path="/worlds/:world" element={

@@ -1,5 +1,5 @@
 .container {
-    min-height: 100vh;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,6 +46,11 @@
     color: var(--white);
 }
 
+.feedback.timeout {
+    background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+    color: var(--white);
+}
+
 .feedbackIcon {
     font-size: 4.8rem;
     display: block;
@@ -74,7 +79,7 @@
 .scoreSection {
     margin: 3rem 0;
     padding: 2rem;
-    background: var(--light-gray);
+    background: var(--grey);
     border-radius: 1rem;
 }
 
@@ -101,7 +106,7 @@
 .progressSection {
     margin: 3rem 0;
     padding: 2rem;
-    background: var(--light-gray);
+    background: var(--grey);
     border-radius: 1rem;
 }
 
