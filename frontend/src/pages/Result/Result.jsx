@@ -11,15 +11,32 @@ export default function Result(){
         gameType
     } = useGame()
     
+    const getFeedbackContent = () => {
+        if (lastIsCorrect === 'timeout') {
+            return {
+                className: styles.timeout,
+                icon: '⏱️',
+                text: 'Tempo Esgotado!'
+            };
+        }
+        return {
+            className: lastIsCorrect ? styles.correct : styles.incorrect,
+            icon: lastIsCorrect ? '✓' : '✗',
+            text: lastIsCorrect ? 'Correto!' : 'Incorreto'
+        };
+    };
+
+    const feedback = getFeedbackContent();
+    
     return(
         <div className={styles.container}>
             <div className={styles.resultCard}>
-                <div className={`${styles.feedback} ${lastIsCorrect ? styles.correct : styles.incorrect}`}>
+                <div className={`${styles.feedback} ${feedback.className}`}>
                     <span className={styles.feedbackIcon}>
-                        {lastIsCorrect ? '✓' : '✗'}
+                        {feedback.icon}
                     </span>
                     <h2 className={styles.feedbackText}>
-                        {lastIsCorrect ? 'Correto!' : 'Incorreto'}
+                        {feedback.text}
                     </h2>
                 </div>
 
@@ -43,12 +60,15 @@ export default function Result(){
                     </div>
                 )}
 
-                <button 
+                {gameType !== "room" && (
+                    <button 
                     className={styles.nextButton} 
                     onClick={nextQuestion}
-                >
+                    >
                     Próxima Pergunta
-                </button>
+                    </button>
+                )}
+
             </div>
         </div>
     )
