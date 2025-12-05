@@ -5,6 +5,7 @@ import ChooseWorlds from './pages/chooseWorlds/chooseWorlds';
 import RandomQuiz from './pages/randomQuiz/randomQuiz';
 import RoomCreation from './pages/roomCreation/roomCreation';
 import RoomCreationPt2 from './components/RoomCreationPt2/RoomCreationPt2'
+import Finished from './pages/finished/finished'
 import Admin from './pages/Admin/Admin';
 import Home from './pages/Home/Home';
 import NavBar from './components/NavBar/NavBar';
@@ -125,11 +126,12 @@ export default function App() {
 
         <Route path="/finished" element={ 
           <PrivateRoute>
-            <div>{JSON.stringify(finishedInfo)}
+            {/* <div>{JSON.stringify(finishedInfo)}
               <button onClick={playAgainFunctions[gameType]}>Jogar de novo</button>
               {finishedInfo.next && <button onClick={()=>startLevel(finishedInfo.next)}>Próxima</button>}
               <button onClick={handleHome}>HomeButton</button>
-            </div>
+            </div> */}
+           <Finished/>
           </PrivateRoute>
         } />
         <Route path="/waiting-answers" element={ 
