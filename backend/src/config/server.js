@@ -3,10 +3,12 @@ import http from 'http';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import * as dotenv from "dotenv";
+dotenv.config();
 
 export const app = express();
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: process.env.FRONT_URL,
   credentials: true,
   allowedHeaders:['Content-Type']
 }));

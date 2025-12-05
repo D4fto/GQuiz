@@ -6,6 +6,8 @@ import { gameManager } from "./gameManager.js";
 import { startLevel, startRandom } from "../services/gameService.js";
 import { generateId } from "../utils/generateId.js";
 import { levelGame, randomGame, roomGame } from "../services/games.js";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 export const usersSockets = new Map()
 
@@ -19,7 +21,7 @@ export function getUserSocket(id){
 
 export const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // your frontend address
+    origin: process.env.FRONT_URL, 
     methods: ["GET", "POST"],
     allowedHeaders: ['Content-Type'],
     credentials: true
