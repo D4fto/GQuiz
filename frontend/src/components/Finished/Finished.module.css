@@ -1,14 +1,7 @@
-:root {
-  --white: #F7F4F3;
-  --black: #070707;
-  --primary: #F03828;
-  --primary-dark: #BA1B1D;
-}
-
 .page {
   width: 100%;
   height: 100vh;
-  background: var(--primary);
+  background: var(--primary-dark);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,7 +20,7 @@
 
 /* Card de usuário */
 .userCard {
-  background: #d9d9d9;
+  background: var(--white);
   width: 35rem;
   height: 6.5rem;
   border-radius: 0.8rem;
@@ -36,54 +29,71 @@
   align-items: center;
   padding: 0 1rem;
   gap: 1rem;
+  position: relative;
+  height: 10rem;
+  width: 50rem;
+  margin-top: 6rem;
+  margin-right: 100rem;
 }
 
 .avatar {
-  width: 15rem;
-  height: 15rem;
+  width: 20rem;
+  height: 20rem;
   border-radius: 50%;
+  position: absolute;
+  left: -50%;
+  transform: translateX(50%);
 }
 
 .username {
-  font-size: 2rem;
+  font-size: 4rem;
   font-weight: 600;
   color: var(--black);
+  margin-left: 5rem;
 }
 
 /* Pontuação */
 .scoreBox {
   background: var(--black);
   color: var(--white);
-  padding: 0.8rem 2rem;
-  font-size: 2rem;
-  margin-top: 2rem;
-  border-radius: 0.4rem;
+  font-size: 4.2rem;
+  margin-top: 18rem;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
   display: flex;
   gap: 1rem;
+  width: 80rem;
+  align-self: start;
+  justify-content: end;
 }
 
 .scoreLabel {
-  font-weight: 500;
+  font-weight: 500rem;
 }
 
 .scoreValue {
-  font-weight: 700;
+  font-weight: 700rem;
+  padding-right: 10rem;
 }
 
 /* Mensagem */
 .message {
   margin-top: 5rem;
-  font-size: 4rem;
   color: var(--white);
+  font-size: 7rem;
+  margin-top: 10rem;
+  display: flex;
+  gap: 1rem;
+  width: 80rem;
+  align-self: start;
+  margin-left: 23rem;
+  font-weight: 400;
 }
 
 /* Parte inferior */
 .bottomArea {
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  padding: 3rem;
-  margin-top: auto;
 }
 
 .homeBtn {
