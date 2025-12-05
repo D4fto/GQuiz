@@ -102,18 +102,18 @@ export function GameProvider({ children }){
     socket.emit("answerQuestion",id)
   }
 
-  // useEffect(() => {
-  //   const gameStateHandlerFunction =  gameStateHandler[gameState]
-  //   if(gameStateHandlerFunction){
-  //     gameStateHandlerFunction()
-  //   }
-  //   if(gameState=="waitingAnswers" && numberOfAnswers>=room.numberOfPlayers){
-  //     setGameState("result")
-  //   }
-  //   if(locations.includes(location.pathname) && gameState == 'idle'){
-  //     navigate('/')
-  //   }
-  // }, [gameState, location.pathname]);
+  useEffect(() => {
+    const gameStateHandlerFunction =  gameStateHandler[gameState]
+    if(gameStateHandlerFunction){
+      gameStateHandlerFunction()
+    }
+    if(gameState=="waitingAnswers" && numberOfAnswers>=room.numberOfPlayers){
+      setGameState("result")
+    }
+    if(locations.includes(location.pathname) && gameState == 'idle'){
+      navigate('/')
+    }
+  }, [gameState, location.pathname]);
 
   useEffect(()=>{
     
