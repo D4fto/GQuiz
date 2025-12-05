@@ -1,5 +1,4 @@
 import styles from "./Finished.module.css";
-// import home from "../../assets/home.svg"; 
 
 export default function Finished() {
   return (
@@ -17,14 +16,11 @@ export default function Finished() {
       </div>
 
       {/* Mensagem final */}
-      <h2 className={styles.message}>Muito bem!</h2>
+      <h2 className={styles.message}>Parabéns!</h2>
 
       {/* Botões inferiores */}
       <div className={styles.bottomArea}>
-        <button className={styles.homeBtn}>
-          {/* <img src={} className={styles.homeIcon} alt="home" /> */}
-        </button>
-
+        <button className={styles.retryBtn}>Jogar Novamente</button>
         <button className={styles.retryBtn}>Jogar Novamente</button>
       </div>
     </div>
