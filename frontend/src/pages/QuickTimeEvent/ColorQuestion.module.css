@@ -1,92 +1,145 @@
 .container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-}
-
-.questionCard {
-    background: var(--white);
-    border-radius: 1rem;
-    padding: 4rem;
-    box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
-    max-width: 60rem;
     width: 100%;
-    text-align: center;
-    animation: slideUp 0.4s ease-out;
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(3rem);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.instruction {
-    font-size: 2.4rem;
-    color: var(--black);
-    margin: 0 0 1rem 0;
-    font-weight: 600;
-    opacity: 0.7;
-}
-
-.targetColor {
+    height: 100vh;
+    background-color: var(--primary-dark);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--white);
+  }
+  
+  .timer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 1rem;
+    padding-right: 1.5rem;
     font-size: 4.8rem;
     font-weight: bold;
-    color: var(--primary);
-    margin: 0 0 4rem 0;
-    text-transform: capitalize;
-}
-
-.optionsGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.colorOption {
-    aspect-ratio: 1;
+    color: var(--white);
+  }
+  
+  .mainContent {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+  
+  .questionCard {
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5f5;
     border-radius: 1rem;
+    padding: 3rem;
+    width: 100%;
+    max-width: 71rem;
+    height: 50rem;
+    box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.2);
+  }
+  
+  .questionTitle {
+    font-size: 3.6rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: var(--gray);
+  }
+  
+  .progressBar {
+    width: 100%;
+    min-height: 1.3rem;
+    background-color: #cfcfcf;
+    border-radius: 0.3rem;
+    margin-bottom: 3rem;
+    overflow: hidden;
+  }
+  
+  .progressFill {
+    height: 100%;
+    width: 60%;
+    background-color: var(--primary);
+    transition: width 0.3s ease;
+  }
+  
+  .optionsList {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .option {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    background-color: var(--white);
+    border-radius: 0.8rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    border: 0.3rem solid transparent;
-    box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.15);
-}
-
-.colorOption:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0.6rem 2rem rgba(0, 0, 0, 0.25);
-    border-color: var(--primary);
-}
-
-.colorOption:active {
-    transform: scale(0.95);
-}
-
-@media (max-width: 600px) {
-    .questionCard {
-        padding: 3rem 2rem;
-    }
-    
-    .instruction {
-        font-size: 2rem;
-    }
-    
-    .targetColor {
-        font-size: 3.6rem;
-        margin-bottom: 3rem;
-    }
-    
-    .optionsGrid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-    }
-}
+    transition: all 0.2s ease;
+    border: 0.2rem solid transparent;
+  }
+  
+  .optionHover {
+    background-color: #fafafa;
+    transform: translateX(0.5rem);
+  }
+  
+  .optionSelected {
+    background-color: #ffebee;
+    border-color: #c62828;
+  }
+  
+  .radio {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    border: 0.2rem solid #999;
+    margin-right: 1.5rem;
+    position: relative;
+    flex-shrink: 0;
+  }
+  
+  .radioSelected {
+    border-color: #c62828;
+  }
+  
+  .radioInner {
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    background-color: #c62828;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .optionText {
+    font-size: 2.4rem;
+    color: var(--gray);
+  }
+  
+  .bottomLeftCard {
+    position: absolute;
+    bottom: 4rem;
+    left: 2rem;
+    color: var(--white);
+    border-radius: 1rem;
+    font-size: 2.4rem;
+    font-weight: 500;
+  }
