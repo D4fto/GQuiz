@@ -27,9 +27,9 @@ export default function QuickTimeEvent() {
         selectNewWord()
     }, [])
 
-    const selectNewWord = () => {
-        const randomWord = words[Math.floor(Math.random() * words.length)]
-        setTargetWord(randomWord)
+    const selectNewWord = async () => {
+        const randomWord = await (await fetch("https://api.dicionario-aberto.net/random")).json()
+        setTargetWord((randomWord.word).toUpperCase())
         setRevealedLetters(Math.min(2, randomWord.length))
     }
 
@@ -84,6 +84,8 @@ export default function QuickTimeEvent() {
     }
 
     const checkAnswer = (answer) => {
+        console.log(answer)
+        console.log(targetWord)
         if (answer === targetWord) {
             const points = Math.ceil((timeLeft / 10) * 100)
             setScore(prev => prev + points)

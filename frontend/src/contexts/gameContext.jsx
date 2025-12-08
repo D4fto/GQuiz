@@ -24,6 +24,7 @@ export function GameProvider({ children }){
   const [actualQuestionIndex, setActualQuestionIndex] = useState(null)
   const [numberOfQuestions, setNumberOfQuestions] = useState(null)
   const [finishedInfo, setFinishedInfo] = useState({})
+  const [quickTimeEvent, setQuickTimeEvent] = useState({})
 
   const locations = [
     '/question',
@@ -34,6 +35,7 @@ export function GameProvider({ children }){
     '/loading',
     '/waiting-answers',
     '/waiting-host',
+    '/quickTimeEvent'
   ]
   const gameStateHandler = {
     question: ()=>navigate('/question'),
@@ -43,7 +45,8 @@ export function GameProvider({ children }){
     creatingRoomGame: ()=>navigate('/RoomCreationPt2'),
     loading: ()=>navigate('/loading'),
     waitingAnswers: ()=>navigate('/waiting-answers'),
-    waitingHost: ()=>navigate('/waiting-host')
+    waitingHost: ()=>navigate('/waiting-host'),
+    quickTimeEvent: ()=>navigate('/quickTimeEvent')
   }
 
   function joinRoom(roomId, password = false){
@@ -91,29 +94,29 @@ export function GameProvider({ children }){
     setGameState('loading')
     socket.emit("startLevel", id)
   }
-  async function startRandom(numberOfQuestions, timeByQuestion, categories = false) {
+  async function startRandom(numberOfQuestions, timeByQuestion, categories = false, hasQuickTime = false) {
     numberOfQuestions = parseInt(numberOfQuestions)
     timeByQuestion = parseInt(timeByQuestion)
     setGameState('loading')
-    socket.emit("startRandom", numberOfQuestions, timeByQuestion, categories)
+    socket.emit("startRandom", numberOfQuestions, timeByQuestion, categories, hasQuickTime)
   }
   async function answerQuestion(id) {
     setGameState('loading')
     socket.emit("answerQuestion",id)
   }
 
-  // useEffect(() => {
-  //   const gameStateHandlerFunction =  gameStateHandler[gameState]
-  //   if(gameStateHandlerFunction){
-  //     gameStateHandlerFunction()
-  //   }
-  //   if(gameState=="waitingAnswers" && numberOfAnswers>=room.numberOfPlayers){
-  //     setGameState("result")
-  //   }
-  //   if(locations.includes(location.pathname) && gameState == 'idle'){
-  //     navigate('/')
-  //   }
-  // }, [gameState, location.pathname]);
+  useEffect(() => {
+    const gameStateHandlerFunction =  gameStateHandler[gameState]
+    if(gameStateHandlerFunction){
+      gameStateHandlerFunction()
+    }
+    if(gameState=="waitingAnswers" && numberOfAnswers>=room.numberOfPlayers){
+      setGameState("result")
+    }
+    if(locations.includes(location.pathname) && gameState == 'idle'){
+      navigate('/')
+    }
+  }, [gameState, location.pathname]);
 
   useEffect(()=>{
     
@@ -237,6 +240,11 @@ export function GameProvider({ children }){
       setGameState("waitingHost")
     })
 
+    socket.on("quickTimeEvent", (response)=>{
+      setQuickTimeEvent(response)
+      setGameState("quickTimeEvent")
+    })
+    
     socket.on("roomClosed", ()=>{
       setRoom({})
       setPlayers(new Map())
@@ -281,6 +289,7 @@ export function GameProvider({ children }){
       finishedInfo,
       playRoomAgain,
       toHome,
+      quickTimeEvent,
       players
     }}>
       {children}

@@ -70,6 +70,9 @@ io.on('connection', (socket) => {
   usersSockets.set(socket.user.id, socket.id)
   socket.on("nextQuestion", async ()=>{
     const notFinished = await nextQuestionService(socket.user.id)
+    if(notFinished==="quickTimeEvent"){
+      return
+    }
     if(notFinished){
       socket.emit("nextQuestion")
       return
@@ -101,9 +104,9 @@ io.on('connection', (socket) => {
     socket.emit("answerQuestion",{result: await answerQuestionService(socket.user.id, index), score: gameManager.getUserScore(socket.user.id)})
   })
 
-  socket.on("startRandom", async (numberOfQuestions, timeByQuestion, categories)=>{
+  socket.on("startRandom", async (numberOfQuestions, timeByQuestion, categories = false, hasQuickTime = false)=>{
     const userId = socket.user.id
-    await startRandom(userId, numberOfQuestions, timeByQuestion, categories)
+    await startRandom(userId, numberOfQuestions, timeByQuestion, categories, hasQuickTime)
     const game = gameManager.getUser(userId).actualGame
     socket.emit("startRandom",{question: gameManager.getUserActualQuestion(userId), timeByQuestion: game.getTimeByQuestion(), time: game.setTimeToNow()})
   })

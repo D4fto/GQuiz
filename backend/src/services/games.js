@@ -140,13 +140,46 @@ export class levelGame extends game{
 }
 
 export class randomGame extends game{
-  constructor(numberOfQuestions, timeByQuestion, categories = false) {
+  constructor(numberOfQuestions, timeByQuestion, categories = false, hasQuickTime = false) {
     super()
+    this.hasQuickTime = hasQuickTime
     this.score = 0;
     this.numberOfQuestions = numberOfQuestions
     this.timeByQuestion = timeByQuestion
     this.categories = categories
     this.type="random"
+    this.quickEvents = [
+      {
+        type: "word",
+        get: async ()=>await this.getWordEvent()
+      },
+      {
+        type: "color",
+        get: async ()=>this.getColorEvent()
+      }
+    ]
+    this.colors = [
+      { nome: "vermelho",        cor: "#FF0000" },
+      { nome: "azul",            cor: "#0000FF" },
+      { nome: "verde",           cor: "#00FF00" },
+      { nome: "amarelo",         cor: "#FFFF00" },
+      { nome: "laranja",         cor: "#FFA500" },
+      { nome: "roxo",            cor: "#800080" },
+      { nome: "rosa",            cor: "#FFC0CB" },
+      { nome: "preto",           cor: "#000000" },
+      { nome: "cinza",           cor: "#808080" },
+      { nome: "ciano",           cor: "#00FFFF" },
+      { nome: "magenta",         cor: "#FF00FF" },
+      { nome: "marrom",          cor: "#8B4513" },
+      { nome: "bordô",           cor: "#800020" },
+      { nome: "vinho",           cor: "#722F37" },
+      { nome: "turquesa",        cor: "#40E0D0" },
+      { nome: "azul marinho",    cor: "#000080" },
+      { nome: "verde limão",     cor: "#32CD32" },
+      { nome: "verde água",      cor: "#00FA9A" },
+      { nome: "dourado",         cor: "#FFD700" },
+    ];
+    this.quickAnswer=null
     this.userId=null
   }
   async loadQuestions(){
@@ -172,7 +205,65 @@ export class randomGame extends game{
     this.currentQuestionIndex = 0;
 
     return this;
+  }
+  
+  async getWordEvent(){
+    try{
+      const response = await fetch('https://api.dicionario-aberto.net/random');
+      const data = await response.json();
+      this.quickAnswer = data.word
+      return { word: data.word}
+    }
+    catch(e){
+      this.quickAnswer = "cavaleiro"
+      return {
+        word: "cavaleiro"
+      }
+      
+    }
   } 
+
+  getColorEvent(){
+    let correctIndex = 0
+    const correct = this.colors[Math.floor(Math.random() * this.colors.length)];
+    const type = Math.random()>.5?"word":"color"
+    const totalOptions = 4;
+    const wrong = this.colors
+      .filter(c => c.nome !== correct.nome)
+      .sort(() => Math.random() - 0.5)
+      .slice(0, totalOptions - 1);
+  
+    const baseOptions = [correct, ...wrong].sort(()=> Math.random() - 0.5);
+    const shuffledColors = baseOptions
+      .map(c => c.cor)
+      .sort(() => Math.random() - 0.5);
+    
+    const options = baseOptions.map((opt, index) => {
+      if(type === "word"){
+        if(opt.nome === correct.nome){
+          correctIndex = index
+        }
+      }else{
+        if(shuffledColors[index] === correct.cor){
+          correctIndex = index
+        }
+      }
+      return{
+        nome: opt.nome,              
+        cor: shuffledColors[index],   
+        index: index
+      }
+    });
+    this.quickAnswer = correctIndex
+    console.log(correctIndex + " color")
+    return{
+      type,
+      correct,
+      options
+    }
+  }
+    
+
   getScore() {
     return this.score  
   }
@@ -186,6 +277,27 @@ export class randomGame extends game{
   timeOutHandler(){
     console.log(this.userId)
     io.to(getUserSocket(this.userId)).emit("timeout")
+  }
+  
+  async nextQuestion() {
+    if(this.hasQuickTime && this.quickAnswer===null){
+      if(Math.random()<.15){
+        // const event = this.quickEvents[Math.floor(Math.random() * this.quickEvents.length)];
+        const event = this.quickEvents[1];
+        const data = await event.get()
+        io.to(getUserSocket(this.userId)).emit("quickTimeEvent", {
+          type: event.type,
+          data: data
+        })
+        return "quickTimeEvent"
+      }
+    }
+    this.quickAnswer=null
+    this.currentQuestionIndex++
+    if(this.currentQuestionIndex>=this.questions.length){
+      return false
+    }
+    return true
   }
 
   async answerCurrentQuestion(indexOption){
@@ -209,8 +321,8 @@ export class randomGame extends game{
 }
 
 export class roomGame extends randomGame{
-  constructor(roomId, numberOfQuestions, timeByQuestion, categories = false) {
-    super(numberOfQuestions, timeByQuestion, categories = false)
+  constructor(roomId, numberOfQuestions, timeByQuestion, categories = false, hasQuickTime= false) {
+    super(numberOfQuestions, timeByQuestion, categories = false, hasQuickTime = false)
     this.roomId = roomId
     this.users = new Map()
     this.answereds = new Map()

@@ -2,12 +2,12 @@ import prisma from "../config/db.js";
 import { gameManager } from "../config/gameManager.js";
 import { randomGame, levelGame } from "./games.js";
 
-export async function startRandom(userId, numberOfQuestions, timeByQuestion, categories = false) {
+export async function startRandom(userId, numberOfQuestions, timeByQuestion, categories = false, hasQuickTime = false) {
   try{
     if(!gameManager.getUser(userId)){
       gameManager.addUser(userId)
     }
-    const game = await new randomGame(numberOfQuestions, timeByQuestion, categories).init(userId)
+    const game = await new randomGame(numberOfQuestions, timeByQuestion, categories, hasQuickTime).init(userId)
     gameManager.setUserActualGame(userId, game)
     return true
   }catch(e){

@@ -37,6 +37,7 @@ export default function App() {
     initRoomGame, 
     numberOfAnswers,
     gameType, 
+    quickTimeEvent,
     finishedInfo,
     startLevel,
     playRoomAgain,
@@ -127,6 +128,12 @@ export default function App() {
         <Route path="/RoomCreation" element={ 
           <PrivateRoute>
             <RoomCreation/>
+          </PrivateRoute>
+        } />
+
+        <Route path="/quickTimeEvent" element={ 
+          <PrivateRoute>
+            <p>{JSON.stringify(quickTimeEvent)}</p>
           </PrivateRoute>
         } />
 

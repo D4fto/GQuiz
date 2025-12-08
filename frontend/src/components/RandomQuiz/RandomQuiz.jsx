@@ -9,6 +9,7 @@ import { toast } from 'react-hot-toast'
 export default function RandomQuiz() {
   const [time, setTime] = useState("");
   const [numberOfQuestions, setNumberOfQuestions] = useState(1);
+  const [hasQuickTime, setHasQuickTime] = useState(false);
   const { startRandom } = useGame()
 
   function handleNumberQuestionsChange(e){
@@ -41,7 +42,8 @@ export default function RandomQuiz() {
     if(!extractSeconds(time)){
       return toast.error("Tempo por questão vazio")
     }
-    startRandom(parseInt(numberOfQuestions), extractSeconds(time), false)
+    console.log(hasQuickTime)
+    startRandom(parseInt(numberOfQuestions), extractSeconds(time), false, hasQuickTime)
 
   }
   return (
@@ -75,7 +77,7 @@ export default function RandomQuiz() {
 
 
             <div className={styles.checkboxRow}>
-              <input type="checkbox" id="qte" className={styles.checkbox} />
+              <input type="checkbox" id="qte" className={styles.checkbox} checked={hasQuickTime} onChange={e=>setHasQuickTime(e.target.checked)}/>
               <label htmlFor="qte">Quick Time Events</label>
             </div>
 
