@@ -65,7 +65,7 @@ export default function CreateAccount(){
                             <label htmlFor="email">Email</label>
                             <input className={styles.input} type="email" id="email" name="email" placeholder="example@gmail.com"/>
                             <label htmlFor="senha">Digite sua senha</label>
-                            <input className={styles.input} type="text" id="senha" name="senha" placeholder="*******"/>
+                            <input className={styles.input} type="text" id="senha" name="senha" placeholder="••••••••"/>
                         </div>
                         
                         <MainButton text="Fazer Cadastro" type="submit" />
