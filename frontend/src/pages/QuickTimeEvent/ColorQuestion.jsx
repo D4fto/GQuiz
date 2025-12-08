@@ -12,7 +12,7 @@ export default function Question() {
   const [time, setTime] = useState(10);
   
   // Controla qual modo de jogo: "color" = selecionar pela cor | "word" = selecionar pela palavra
-  const [corControl, setCorControl] = useState("color"); // ou "word"
+  const [corControl, setCorControl] = useState("word"); // ou "word"
 
   const colors = [
     { name: "AZUL", color: "#0000FF", id: 1 },
@@ -52,12 +52,7 @@ export default function Question() {
     
     // Define qual é a cor alvo (a cor que aparece no título)
     const target = selectedColors[Math.floor(Math.random() * selectedColors.length)];
-    
-    // Escolhe uma cor diferente para exibir a palavra do título
-    const availableColorsForTitle = colors.filter(c => c.id !== target.id);
-    const titleDisplayColor = availableColorsForTitle[Math.floor(Math.random() * availableColorsForTitle.length)];
-    
-    setTargetColor({ ...target, displayColor: titleDisplayColor.color });
+    setTargetColor(target);
 
     // Gera as opções embaralhando as cores e palavras
     const generatedOptions = selectedColors.map((colorObj, index) => {
@@ -121,7 +116,7 @@ export default function Question() {
         <div className={styles.questionCard}>
           <h2 className={styles.questionTitle}>
             Selecione a {corControl === "color" ? "cor" : "palavra"}{" "}
-            <span style={{ color: targetColor.displayColor }}>{targetColor.name}</span>
+            <span style={{ color: targetColor.color }}>{targetColor.name}</span>
           </h2>
           
           <div className={styles.progressBar}>
