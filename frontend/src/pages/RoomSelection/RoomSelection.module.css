@@ -160,6 +160,133 @@
   background-color: #1f2937;
   transform: scale(1.05);
 }
+
 .selected{
   backdrop-filter: brightness(.75);
+}
+
+/* Password Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 2rem;
+  padding: 3rem;
+  max-width: 45rem;
+  width: 90%;
+  box-shadow: 0 2rem 2.5rem -0.5rem rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(2rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modalTitle {
+  color: #1f2937;
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+}
+
+.modalSubtitle {
+  color: #6b7280;
+  font-size: 1.6rem;
+  margin: 0 0 2.5rem 0;
+  text-align: center;
+}
+
+.passwordInputContainer {
+  margin-bottom: 1.5rem;
+}
+
+.passwordInput {
+  width: 100%;
+  padding: 1.5rem 2rem;
+  font-size: 1.6rem;
+  border: 0.2rem solid #e5e7eb;
+  border-radius: 1rem;
+  outline: none;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.passwordInput:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 0.3rem rgba(239, 68, 68, 0.1);
+}
+
+.errorMessage {
+  color: #ef4444;
+  font-size: 1.4rem;
+  margin: 0 0 2rem 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.modalButtons {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.cancelButton,
+.confirmButton {
+  flex: 1;
+  padding: 1.4rem 2rem;
+  border-radius: 1rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelButton {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.cancelButton:hover {
+  background-color: #e5e7eb;
+}
+
+.confirmButton {
+  background-color: #ef4444;
+  color: white;
+}
+
+.confirmButton:hover {
+  background-color: #dc2626;
+  transform: translateY(-0.1rem);
+  box-shadow: 0 0.4rem 0.8rem rgba(239, 68, 68, 0.3);
 }

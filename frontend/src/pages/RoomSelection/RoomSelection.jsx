@@ -9,6 +9,9 @@ export default function RoomSelect() {
   const [searchTerm, setSearchTerm] = useState('');
   const [rooms, setRooms] = useState([])
   const [roomSelected, setRoomSelected] = useState(null)
+  const [showPasswordModal, setShowPasswordModal] = useState(false)
+  const [password, setPassword] = useState('')
+  const [passwordError, setPasswordError] = useState('')
   const { joinRoom } = useGame()
   
   async function updateRooms() {
@@ -30,21 +33,47 @@ export default function RoomSelect() {
   },[])
 
   function handleStart(){
-    joinRoom(roomSelected)
+    const selectedRoom = rooms.find(room => room.id === roomSelected)
+    
+    if (!selectedRoom) {
+      alert('Por favor, selecione uma sala')
+      return
+    }
+    
+    if (selectedRoom.hasPassword) {
+      setShowPasswordModal(true)
+      setPassword('')
+      setPasswordError('')
+    } else {
+      joinRoom(roomSelected)
+    }
   }
   
-  // const rooms = [
-  //   { id: 1, name: 'Sala1', people: '10/10', locked: true },
-  //   { id: 2, name: 'Sala2', people: '10/20', locked: false },
-  //   { id: 3, name: 'Sala3', people: '10/10', locked: false },
-  //   { id: 4, name: 'Sala4', people: '5/10', locked: true },
-  //   { id: 5, name: 'Sala5', people: '9/10', locked: true },
-  //   { id: 6, name: 'Sala6', people: '15/20', locked: false },
-  //   { id: 7, name: 'Sala7', people: '7/10', locked: false },
-  //   { id: 8, name: 'Sala8', people: '2/10', locked: false },
-  //   { id: 10, name: 'Sala10', people: '2/10', locked: false },
-  // ];
-
+  async function handleJoinWithPassword() {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/game/rooms/${roomSelected}/verify-password`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password })
+      })
+      
+      const data = await response.json()
+      
+      if (data.success || response.ok) {
+        setShowPasswordModal(false)
+        joinRoom(roomSelected, password)
+      } else {
+        setPasswordError('Senha incorreta. Tente novamente.')
+      }
+    } catch (e) {
+      setPasswordError('Erro ao verificar senha. Tente novamente.')
+      console.error(e)
+    }
+  }
+  
   const filteredRooms = rooms.filter(room =>
     room.id.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -103,7 +132,52 @@ export default function RoomSelect() {
           <button className={styles.playButton} onClick={handleStart}>Jogar</button>
         </div>
       </div>
-        <BackButton/>
+      
+      {/* Password Modal */}
+      {showPasswordModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowPasswordModal(false)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <h2 className={styles.modalTitle}>Sala Protegida</h2>
+            <p className={styles.modalSubtitle}>Digite a senha para entrar</p>
+            
+            <div className={styles.passwordInputContainer}>
+              <input
+                type="password"
+                placeholder="Senha..."
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                  setPasswordError('')
+                }}
+                onKeyPress={(e) => e.key === 'Enter' && handleJoinWithPassword()}
+                className={styles.passwordInput}
+                autoFocus
+              />
+            </div>
+            
+            {passwordError && (
+              <p className={styles.errorMessage}>{passwordError}</p>
+            )}
+            
+            <div className={styles.modalButtons}>
+              <button 
+                className={styles.cancelButton}
+                onClick={() => setShowPasswordModal(false)}
+              >
+                Cancelar
+              </button>
+              <button 
+                className={styles.confirmButton}
+                onClick={handleJoinWithPassword}
+              >
+                Entrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      <BackButton/>
     </div>
   );
 }
