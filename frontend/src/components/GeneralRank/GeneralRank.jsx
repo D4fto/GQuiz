@@ -26,6 +26,7 @@ export default function GeneralRank({length=15}){
     const response = await (await fetch(import.meta.env.VITE_API_URL+'/ranking/'+length, {
       credentials: 'include'
     })).json()
+    console.log(response.response)
     setData(response.response)
 
   }
@@ -33,13 +34,20 @@ export default function GeneralRank({length=15}){
   useEffect(()=>{
     fetchData()
   },[])
-  return <ul>
+  return <div className={styles.rankingContainer}>
+    <div className={styles.inputContainer}>
+      <input type="text" />
+    </div>
+    <ul className={styles.ranking}>
     {data.map((x,i)=>{
       return <li key={i}>
-        <img src={import.meta.env.VITE_URL+'/geral.png'} alt={"Imagem de " + x.username} className={styles.userImg}/>
-        <span>{x.username}</span>
+        <div className={styles.left}>
+          <img src={import.meta.env.VITE_URL+'/'+x.userImgs.imgName+'.png'} alt={"Imagem de " + x.username} className={styles.userImg}/>
+          <span>{x.username}</span>
+        </div>
         <span>{x.points}pt</span>
       </li>
     })}
   </ul>
+  </div>
 }

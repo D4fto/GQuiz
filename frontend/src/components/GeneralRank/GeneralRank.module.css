@@ -2,3 +2,48 @@
   height: 4rem;
   width: 4rem;
 }
+
+.rankingContainer{
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+.inputContainer{
+  input{
+    height: 10rem;
+    font-size: 3.6rem;
+  }
+}
+
+.ranking::-webkit-scrollbar{
+  width: 1rem;
+}
+
+.ranking::-webkit-scrollbar-thumb{
+  background-color: var(--primary-dark);
+}
+
+.ranking{
+  max-height: 100%;
+  overflow-x: hidden;
+
+  background-color: var(--white);
+  list-style: none;
+  border-radius: 1rem;
+  li{
+    padding: 1rem;
+    border-bottom: .3rem solid var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.left{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
