@@ -6,6 +6,7 @@
   flex-direction: column;
   align-items: center;
   padding-top: 2rem;
+  position: relative;
 }
 
 .logo {
@@ -86,7 +87,7 @@
   gap: 1rem;
   width: 80rem;
   align-self: start;
-  margin-left: 23rem;
+  margin-left: 30rem;
   font-weight: 400;
 }
 
@@ -94,6 +95,8 @@
 .bottomArea {
   width: 100%;
   display: flex;
+  gap: 150rem;
+  margin-top: 4rem;
 }
 
 .homeBtn {
@@ -115,5 +118,22 @@
   border-radius: 0.5rem;
   font-size: 1.5rem;
   cursor: pointer;
+  border: none;
+  width: 15rem;
+  height: 7rem;
+  font-size: 2rem;
+  margin-top: 20px
+;
+}
+
+.home{
+  height: 10rem;
+  width: 10rem;
+  background-color: var(--primary-dark);
+  margin-left: 10rem;
+}
+
+.borda{
+  background-color: var(--primary-dark);
   border: none;
 }

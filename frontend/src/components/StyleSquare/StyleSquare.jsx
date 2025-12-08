@@ -6,12 +6,14 @@ import Option1 from '../../assets/stylesSquares/option1.svg?react'
 import Option2 from '../../assets/stylesSquares/option2.svg?react'
 import Option3 from '../../assets/stylesSquares/option3.svg?react'
 import Option4 from '../../assets/stylesSquares/option4.svg?react'
+import Option5 from '../../assets/stylesSquares/option5.svg?react'
 
 const options = {
   1: Option1,
   2: Option2,
   3: Option3,
   4: Option4,
+  5: Option5,
 }
 
 export default function StyleSquare({option, position, innerColor, outColor}){
