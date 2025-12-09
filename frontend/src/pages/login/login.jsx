@@ -5,11 +5,12 @@ import StyleSquare from "../../components/StyleSquare/StyleSquare";
 import BlackQ from "../../components/BlackQ/BlackQ";
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast'
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/authContext";
 
 export default function Login(){
     const {user, loading} = useAuth()
+    const [waiting, setWaiting] = useState(false)
     const navigate = useNavigate()
     useEffect(()=>{
         if(user){
@@ -18,6 +19,7 @@ export default function Login(){
     },[loading])
     function handleSubmit(event){
         event.preventDefault()
+        setWaiting(true)
         fetch(import.meta.env.VITE_API_URL+'/login', {
             method:'POST',
             headers: {
@@ -32,26 +34,18 @@ export default function Login(){
             const data = await response.json();
             if(data.error){
                 console.error(data.error)
+                setWaiting(false)
                 toast.error(data.error)
                 return
             }
             window.location.href = import.meta.env.VITE_URL;
         }).catch((error)=>{
+            setWaiting(false)
             console.error(error)
             toast.error(error)
         })
     }
-    function logout(event){
-        event.preventDefault()
-        fetch(import.meta.env.VITE_API_URL+'/login/logout', {
-            method: 'POST',
-            credentials: 'include'
-        }).then(async (response) => {
-            const data = await response.json();
-            console.log(data);
-        })
-    }
-
+    
 
     return(
         <div className={styles.container}>
@@ -68,14 +62,14 @@ export default function Login(){
                             <input className={styles.input} type="password" id="senha" name="senha" placeholder="••••••••"/>
                         </div>
                         
-                        <MainButton text="Fazer Login" onClick={() => {}} />
+                        <MainButton text="Fazer Login" onClick={() => {}} options={{disabled:waiting}}/>
                         
                         <div className={styles.account}>Não tem conta? <Link className={styles.link} to={'/create-account'}>Cadastre-se</Link></div>
                         <div className={styles.white}></div>
-                        <div className={styles.google} onClick={logout}>
+                        {/* <div className={styles.google} >
                             <img className={styles.img} src="https://img.icons8.com/?size=100&id=V5cGWnc9R4xj&format=png&color=000000" alt="" />
                             continuar com google
-                        </div>
+                        </div> */}
                     </div>  
                 </form>
             </div>
