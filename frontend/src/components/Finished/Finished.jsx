@@ -3,6 +3,7 @@ import home from "../../assets/home_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg";
 import StyleSquare from "../../components/StyleSquare/StyleSquare";
 import { useGame } from "../../contexts/gameContext";
 import { useAuth } from "../../contexts/authContext";
+import Podium from "../Podium/Podium";
 
 export default function Finished() {
   const {
@@ -23,7 +24,9 @@ export default function Finished() {
   }
   
   return (
-    <div className={styles.page}>
+    gameType == "room" || true
+    ? <Podium></Podium>
+    :<div className={styles.page}>
 
       {/* Identificação do level */}
       {
