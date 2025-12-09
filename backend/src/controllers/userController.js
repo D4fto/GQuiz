@@ -1,6 +1,6 @@
 import prisma from "../config/db.js"
 
-export async function getMyUser(req, res) {
+export async function getMyPoints(req, res) {
   const id = req.user.id
   try{
     const response = await prisma.user.findUnique({
@@ -9,14 +9,8 @@ export async function getMyUser(req, res) {
       },
       
       select: {
-        email: true,
-        username: true,
         points: true,
-        userImgs: {
-          select:{
-            imgName: true
-          }
-        }
+        
       }
     })
     res.status(200).send({data: response})

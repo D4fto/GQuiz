@@ -89,3 +89,7 @@
 .editButton:hover {
   background: var(--primary-dark);
 }
+.editButton:disabled {
+  filter: brightness(.7);
+  cursor: unset;
+}

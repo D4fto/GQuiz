@@ -4,7 +4,7 @@ import { adminMiddleware, authMiddleware } from "../middlewares/authMiddleware.j
 
 const router = Router();
 
-router.get("/me/", authMiddleware, userController.getMyUser);
+router.get("/me/points/", authMiddleware, userController.getMyPoints);
 router.get("/", authMiddleware, adminMiddleware, userController.getUsers);
 router.post("/", authMiddleware, adminMiddleware, userController.createUser);
 router.patch("/:id", authMiddleware, adminMiddleware, userController.updateUser);
