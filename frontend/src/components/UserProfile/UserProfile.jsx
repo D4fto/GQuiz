@@ -43,7 +43,7 @@ export default function UserProfile() {
         
         <div className={styles.avatarWrapper}>
           <img 
-            src={import.meta.env.VITE_URL+'/'+user.imgName+'.png'} 
+            src={import.meta.env.VITE_URL+'/'+"geral"+'.png'} 
             alt="Foto de Perfil" 
             className={styles.avatar}
           />

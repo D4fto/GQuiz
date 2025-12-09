@@ -1,0 +1,224 @@
+.page {
+  width: 100%;
+  height: 100vh;
+  background: var(--primary-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+}
+
+/* Botão Home */
+.homeBtn {
+  position: absolute;
+  left: 2rem;
+  bottom: 2rem;
+  background: var(--black);
+  padding: 1rem;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+}
+
+.homeIcon {
+  width: 3rem;
+}
+
+/* Área central alinhada */
+.centerArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4.9rem;
+}
+
+/* Avatares */
+.avatar {
+  width: 17rem;
+  height: 17rem;
+  border-radius: 50%;
+}
+
+.name {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--white);
+  margin-top: 0.4rem;
+}
+
+/* Área do pódio */
+.podiumArea {
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Colunas do pódio */
+.col1, .col2, .col3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Bloco 1º lugar */
+.podiumBlock1 {
+  width: 25rem;
+  height: 50rem;
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Bloco 2º */
+.podiumBlock2 {
+  width: 25rem;
+  height: 40rem;
+  background: var(--gray);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Bloco 3º */
+.podiumBlock3 {
+  width: 25rem;
+  height: 35rem;
+  background: var(--gray);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Número dentro do círculo */
+.number {
+  background: var(--primary);
+  transform: translateY(-10rem);
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: var(--black);
+}
+
+.number1{
+    background: var(--yellow);
+  transform: translateY(-10rem);
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  color: var(--black);
+}
+
+.number2{
+    background: var(--plata);
+  transform: translateY(-10rem);
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  color: var(--black);
+}
+
+.number3{
+    background: var(--coco);
+  transform: translateY(-10rem);
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  color: var(--black);
+}
+
+
+
+
+/* Pontuação */
+.score {
+  font-size: 2rem;
+  color: var(--white);
+  margin-top: 0.8rem;
+}
+
+/* Lista inferior */
+.listItem {
+  background: var(--light-gray); /* atualizado */
+  width: 60rem;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 3rem;
+  font-size: 2.5rem;
+  background-color: var( --light-gray);
+  transform: translateY(-12rem);
+}
+
+.position {
+  font-size: 2rem;
+}
+
+.listAvatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.listName {
+  flex: 1;
+  margin-left: 1rem;
+}
+
+.listScore {
+  font-weight: bold;
+}
+
+/* Botão inferior */
+.retryBtn {
+  background: var(--black);
+  color: var(--white);
+  padding: 0rem 2rem;
+  border-radius: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  width: 15rem;
+  height: 7rem;
+  font-size: 2rem;
+  margin-left: 150rem;
+  transform: translateY(-18.1rem);
+}
+.options{
+  display: flex;
+  gap: 3rem;
+}
+
+.home{
+  height: 10rem;
+  width: 10rem;
+  background-color: var(--primary-dark); 
+  transform: translateY(-20rem); 
+}
+
+.borda{
+  background-color: var(--primary-dark);
+  border: none;
+  cursor: pointer;
+}
