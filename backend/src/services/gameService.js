@@ -29,6 +29,7 @@ export async function startLevel(gameManager, userId, levelId){
 }
 
 export async function finishLevel(userId, levelId, score) {
+
   const user = await prisma.user.findUnique({
     where: {
       id: userId
@@ -50,7 +51,7 @@ export async function finishLevel(userId, levelId, score) {
   })
   
   if(userHasLevel){
-    if(!userHasLevel.max_points>score){
+    if(!(userHasLevel.max_points>score)){
       
       await prisma.user_has_level.update({
         where: {
@@ -179,7 +180,8 @@ export async function finishRandom(userId, score) {
     score: score,
     numberOfQuestions: game.numberOfQuestions,
     timeByQuestion: game.timeByQuestion,
-    categories: game.categories
+    categories: game.categories,
+    hasQuickTime: game.hasQuickTime
   }
   gameManager.removeUser(userId)
   return info

@@ -57,9 +57,9 @@ export function GameProvider({ children }){
     setGameState('loading')
     socket.emit('createRoom', name, maxOfPlayers, password)
   }
-  function startRoomGame(numberOfQuestions, timeByQuestion, categories = false){
+  function startRoomGame(numberOfQuestions, timeByQuestion, categories = false, hasQuickTime = false){
     setGameState('loading')
-    socket.emit("startRoomGame", numberOfQuestions, timeByQuestion, categories)
+    socket.emit("startRoomGame", numberOfQuestions, timeByQuestion, categories, hasQuickTime)
   }
   function initRoomGame(){
     setGameState('loading')
@@ -86,6 +86,11 @@ export function GameProvider({ children }){
     setGameState('loading')
     socket.emit('nextQuestion')
   }
+
+  function answerQuick(answer){
+    setGameState('loading')
+    socket.emit('answerQuick', answer)
+  }
   async function updateQuestion() {
     setGameState('loading')
     socket.emit('actualQuestion')
@@ -105,18 +110,18 @@ export function GameProvider({ children }){
     socket.emit("answerQuestion",id)
   }
 
-  // useEffect(() => {
-  //   const gameStateHandlerFunction =  gameStateHandler[gameState]
-  //   if(gameStateHandlerFunction){
-  //     gameStateHandlerFunction()
-  //   }
-  //   if(gameState=="waitingAnswers" && numberOfAnswers>=room.numberOfPlayers){
-  //     setGameState("result")
-  //   }
-  //   if(locations.includes(location.pathname) && gameState == 'idle'){
-  //     navigate('/')
-  //   }
-  // }, [gameState, location.pathname]);
+  useEffect(() => {
+    const gameStateHandlerFunction =  gameStateHandler[gameState]
+    if(gameStateHandlerFunction){
+      gameStateHandlerFunction()
+    }
+    if(gameState=="waitingAnswers" && numberOfAnswers>=room.numberOfPlayers){
+      setGameState("result")
+    }
+    if(locations.includes(location.pathname) && gameState == 'idle'){
+      navigate('/')
+    }
+  }, [gameState, location.pathname]);
 
   useEffect(()=>{
     
@@ -189,8 +194,9 @@ export function GameProvider({ children }){
       
     })
 
-    socket.on('timeout', ()=>{
+    socket.on('timeout', (score)=>{
       setLastIsCorrect('timeout')
+      setActualScore(score)
       setGameState('result')
     })
     
@@ -240,8 +246,10 @@ export function GameProvider({ children }){
       setGameState("waitingHost")
     })
 
-    socket.on("quickTimeEvent", (response)=>{
-      setQuickTimeEvent(response)
+    socket.on("quickTimeEvent", (res)=>{
+      setQuickTimeEvent(res)
+      setQuestionInitTime(res.time)
+      setTimeByQuestion(res.timeByQuestion)
       setGameState("quickTimeEvent")
     })
     
@@ -290,6 +298,7 @@ export function GameProvider({ children }){
       playRoomAgain,
       toHome,
       quickTimeEvent,
+      answerQuick,
       players
     }}>
       {children}

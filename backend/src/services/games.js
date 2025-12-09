@@ -34,10 +34,10 @@ export class game {
 
   }
 
-  setTimeToNow(){
+  setTimeToNow(timeByQuestion = this.timeByQuestion){
     this.time = Date.now()
     clearTimeout(this.timeout)
-    this.timeout = setTimeout(()=>this.timeOutHandler(),this.timeByQuestion*1000)
+    this.timeout = setTimeout(()=>this.timeOutHandler(),timeByQuestion*1000)
     return this.time
   }
 
@@ -105,7 +105,7 @@ export class levelGame extends game{
   
   timeOutHandler(){
     console.log(this.userId)
-    io.to(getUserSocket(this.userId)).emit("timeout")
+    io.to(getUserSocket(this.userId)).emit("timeout", this.score)
   }
 
   getCurrentQuestion(){
@@ -148,6 +148,8 @@ export class randomGame extends game{
     this.timeByQuestion = timeByQuestion
     this.categories = categories
     this.type="random"
+    this.quickTime = 7
+    this.quickPenalty=600
     this.quickEvents = [
       {
         type: "word",
@@ -215,9 +217,10 @@ export class randomGame extends game{
       return { word: data.word}
     }
     catch(e){
-      this.quickAnswer = "cavaleiro"
+      const words = ["cavaleiro", "floresta", "dalmo", "couraças", "vampiros", "sacrifício", "hexatombe"]
+      this.quickAnswer = words[Math.floor(Math.random() * this.words.length)]
       return {
-        word: "cavaleiro"
+        word: this.quickAnswer
       }
       
     }
@@ -275,19 +278,44 @@ export class randomGame extends game{
     return this.getScore()
   }
   timeOutHandler(){
-    console.log(this.userId)
-    io.to(getUserSocket(this.userId)).emit("timeout")
+    console.log(this.quickAnswer)
+    if(this.quickAnswer!==null){
+      this.score-=this.quickPenalty
+    }
+    io.to(getUserSocket(this.userId)).emit("timeout", this.score)
+  }
+
+  answerQuick(answer){
+    if(typeof answer == "string"){
+      answer = answer.toLowerCase()
+    }
+    if(answer===this.quickAnswer){
+      const diff = Math.floor((Date.now() - this.getQuestionTimeInit()) / 1000);
+      const tolerance =2.5
+      if(diff>tolerance){
+        this.score -= this.quickPenalty/2
+      }
+    }else{
+      this.score-=this.quickPenalty
+    }
+    clearTimeout(this.timeout)
+    io.to(getUserSocket(this.userId)).emit("answerQuestion", {
+      result: answer===this.quickAnswer,
+      score: this.score
+    })
   }
   
   async nextQuestion() {
     if(this.hasQuickTime && this.quickAnswer===null){
-      if(Math.random()<.15){
-        // const event = this.quickEvents[Math.floor(Math.random() * this.quickEvents.length)];
-        const event = this.quickEvents[1];
+      if(Math.random()<.9){
+        const event = this.quickEvents[Math.floor(Math.random() * this.quickEvents.length)];
+        // const event = this.quickEvents[1];
         const data = await event.get()
         io.to(getUserSocket(this.userId)).emit("quickTimeEvent", {
           type: event.type,
-          data: data
+          data: data,
+          time: this.setTimeToNow(this.quickTime),
+          timeByQuestion: this.quickTime
         })
         return "quickTimeEvent"
       }
@@ -322,7 +350,7 @@ export class randomGame extends game{
 
 export class roomGame extends randomGame{
   constructor(roomId, numberOfQuestions, timeByQuestion, categories = false, hasQuickTime= false) {
-    super(numberOfQuestions, timeByQuestion, categories = false, hasQuickTime = false)
+    super(numberOfQuestions, timeByQuestion, categories, hasQuickTime)
     this.roomId = roomId
     this.users = new Map()
     this.answereds = new Map()
@@ -382,8 +410,11 @@ export class roomGame extends randomGame{
       if(this.answereds.get(key)){
         return
       }
+      if(this.quickAnswer!==null){
+        value.score-=this.quickPenalty
+      }
       console.log(key)
-      io.to(getUserSocket(key)).emit("timeout")
+      io.to(getUserSocket(key)).emit("timeout", value.score)
     })
     io.to(this.roomId).emit("everyoneAnswered", {currentQuestionIndex: this.currentQuestionIndex, numberOfQuestions: this.numberOfQuestions})
     setTimeout(()=>{
@@ -393,6 +424,24 @@ export class roomGame extends randomGame{
   }
 
   async nextQuestion() {
+    console.log("this.quickTime")
+    console.log(this.hasQuickTime)
+    if(this.hasQuickTime && this.quickAnswer===null){
+      if(true){
+        console.log("this.quickTime")
+        const event = this.quickEvents[Math.floor(Math.random() * this.quickEvents.length)];
+        // const event = this.quickEvents[1];
+        const data = await event.get()
+        io.to(this.roomId).emit("quickTimeEvent", {
+          type: event.type,
+          data: data,
+          time: this.setTimeToNow(this.quickTime),
+          timeByQuestion: this.quickTime
+        })
+        return "quickTimeEvent"
+      }
+    }
+    this.quickAnswer=null
     this.currentQuestionIndex++
     if(this.currentQuestionIndex>=this.questions.length){
       const result = await this.finish()
@@ -401,6 +450,43 @@ export class roomGame extends randomGame{
     }
     io.to(this.roomId).emit("nextQuestion", {result: this.currentQuestionIndex<this.questions.length})
     return true
+  }
+
+  answerQuick(answer, userId){
+    const user = this.users.get(userId);
+    if(this.answereds.get(userId)){
+      return false
+    }
+    if(typeof answer == "string"){
+      answer = answer.toLowerCase()
+    }
+    if(answer===this.quickAnswer){
+      const diff = Math.floor((Date.now() - this.getQuestionTimeInit()) / 1000);
+      const tolerance = 5
+      if(diff>tolerance){
+        user.score -= this.quickPenalty/2
+      }
+    }else{
+      user.score-=this.quickPenalty
+    }
+    this.answereds.set(userId,true)
+    io.to(this.roomId).emit("updateNumberOfAnswers", {
+      answereds: this.answereds.size,
+    })
+    if(this.answereds.size>=rooms.get(this.roomId)?.numberOfPlayers){
+      io.to(this.roomId).emit("everyoneAnswered", {currentQuestionIndex: this.currentQuestionIndex, numberOfQuestions: this.numberOfQuestions})
+      clearTimeout(this.timeout)
+      setTimeout(()=>{
+        this.answereds.clear()
+        this.nextQuestion()
+      },5000)
+    }
+    return answer===this.quickAnswer
+    // clearTimeout(this.timeout)
+    // io.to(getUserSocket(this.userId)).emit("answerQuestion", {
+    //   result: answer===this.quickAnswer,
+    //   score: this.score
+    // })
   }
 
   async finish(){

@@ -11,6 +11,7 @@ import { toast } from 'react-hot-toast'
 export default function RoomCreationPt2() {
   const [time, setTime] = useState("");
   const [numberOfQuestions, setNumberOfQuestions] = useState(1);
+  const [hasQuickTime, setHasQuickTime] = useState(false);
   const { startRoomGame } = useGame()
 
   function handleNumberQuestionsChange(e){
@@ -43,7 +44,7 @@ export default function RoomCreationPt2() {
     if(!extractSeconds(time)){
       return toast.error("Tempo por questão vazio")
     }
-    startRoomGame(parseInt(numberOfQuestions), extractSeconds(time), false)
+    startRoomGame(parseInt(numberOfQuestions), extractSeconds(time), false, hasQuickTime)
 
   }
   return (
@@ -77,7 +78,7 @@ export default function RoomCreationPt2() {
             </div>
 
             <div className={styles.checkboxRow}>
-              <input type="checkbox" id="qte" className={styles.checkbox} />
+              <input type="checkbox" id="qte" className={styles.checkbox} checked={hasQuickTime} onChange={e=>setHasQuickTime(e.target.checked)}/>
               <label htmlFor="qte">Quick Time Events</label>
             </div>
 

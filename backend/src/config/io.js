@@ -103,6 +103,15 @@ io.on('connection', (socket) => {
     }
     socket.emit("answerQuestion",{result: await answerQuestionService(socket.user.id, index), score: gameManager.getUserScore(socket.user.id)})
   })
+  
+  socket.on("answerQuick", (answer)=>{
+    if(gameManager.getUser(socket.user.id)?.actualGame.roomId){
+      socket.emit("waitingAnswers",{result: gameManager.getUser(socket.user.id)?.actualGame?.answerQuick(answer, socket.user.id), score: gameManager.getUserScore(socket.user.id) })
+      
+      return
+    }
+    gameManager.getUser(socket.user.id)?.actualGame?.answerQuick(answer)
+  })
 
   socket.on("startRandom", async (numberOfQuestions, timeByQuestion, categories = false, hasQuickTime = false)=>{
     const userId = socket.user.id
@@ -129,9 +138,9 @@ io.on('connection', (socket) => {
     socket.emit("roomCreated", roomId)
   })
 
-  socket.on("startRoomGame", async (numberOfQuestions, timeByQuestion, categories = false)=>{
+  socket.on("startRoomGame", async (numberOfQuestions, timeByQuestion, categories = false, hasQuickTime = false)=>{
     const room = rooms.get(Array.from(socket.rooms)[1])
-    const game = await new roomGame(Array.from(socket.rooms)[1],numberOfQuestions, timeByQuestion, categories).init()
+    const game = await new roomGame(Array.from(socket.rooms)[1],numberOfQuestions, timeByQuestion, categories, hasQuickTime).init()
     room.game = game
     const user = socket.user
     game.addUser(socket.user.id, socket.user.username, socket.user.imgName)

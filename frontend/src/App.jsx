@@ -30,28 +30,18 @@ const noNavRoutes = ['/login','/create-account',]
 export default function App() {
   const location = useLocation()
   const {
-    createRoom, 
-    startRoomGame, 
     room, 
     players, 
     initRoomGame, 
     numberOfAnswers,
-    gameType, 
     quickTimeEvent,
-    finishedInfo,
-    startLevel,
-    playRoomAgain,
-    toHome,
-    startRandom
   } = useGame()
   const { user } = useAuth()
-  const playAgainFunctions = {
-    level: ()=>startLevel(finishedInfo.id),
-    random: ()=>startRandom(finishedInfo.numberOfQuestions, finishedInfo.timeByQuestion, finishedInfo.categories),
-    room: ()=>{playRoomAgain()}
-  }
-  function handleHome(){
-    toHome()
+  
+
+  const quickTimeEventPages = {
+    "word": <QuickTimeEvent/>,
+    "color": <ColorQuestion/>
   }
 
   return (
@@ -133,7 +123,9 @@ export default function App() {
 
         <Route path="/quickTimeEvent" element={ 
           <PrivateRoute>
-            <p>{JSON.stringify(quickTimeEvent)}</p>
+            {
+              quickTimeEventPages[quickTimeEvent.type]
+            }
           </PrivateRoute>
         } />
 
