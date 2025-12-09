@@ -22,6 +22,7 @@ import { useGame } from './contexts/gameContext';
 import { useAuth } from './contexts/authContext';
 import Loading from './pages/Loading/Loading';
 import Result from './pages/Result/Result';
+import Waiting from './pages/Waiting/Waiting';
 
 
 const noNavRoutes = ['/login','/create-account',]
@@ -152,14 +153,15 @@ export default function App() {
         } />
         <Route path="/waiting-players" element={ 
           <PrivateRoute>
-            <div>
+            <Waiting/>
+            {/* <div>
               <p>{JSON.stringify(room)}</p>
               <p>{JSON.stringify(Array.from(players))}</p>
               {
                 user?.id===room?.host && <button onClick={initRoomGame}>Iniciar</button>
               }
               
-            </div>
+            </div> */}
           </PrivateRoute>
         } />
 
