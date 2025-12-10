@@ -25,6 +25,8 @@ export function GameProvider({ children }){
   const [numberOfQuestions, setNumberOfQuestions] = useState(null)
   const [finishedInfo, setFinishedInfo] = useState({})
   const [quickTimeEvent, setQuickTimeEvent] = useState({})
+  const [partialRanking, setPartialRanking] = useState([])
+  // const [roomPassword, setRoomPassword] = useState(false)
 
   const locations = [
     '/question',
@@ -110,18 +112,18 @@ export function GameProvider({ children }){
     socket.emit("answerQuestion",id)
   }
 
-  // useEffect(() => {
-  //   const gameStateHandlerFunction =  gameStateHandler[gameState]
-  //   if(gameStateHandlerFunction){
-  //     gameStateHandlerFunction()
-  //   }
-  //   if(gameState=="waitingAnswers" && numberOfAnswers>=room.numberOfPlayers){
-  //     setGameState("result")
-  //   }
-  //   if(locations.includes(location.pathname) && gameState == 'idle'){
-  //     navigate('/')
-  //   }
-  // }, [gameState, location.pathname]);
+  useEffect(() => {
+    const gameStateHandlerFunction =  gameStateHandler[gameState]
+    if(gameStateHandlerFunction){
+      gameStateHandlerFunction()
+    }
+    if(gameState=="waitingAnswers" && numberOfAnswers>=room.numberOfPlayers){
+      setGameState("result")
+    }
+    if(locations.includes(location.pathname) && gameState == 'idle'){
+      navigate('/')
+    }
+  }, [gameState, location.pathname]);
 
   useEffect(()=>{
     
@@ -267,6 +269,7 @@ export function GameProvider({ children }){
     socket.on("everyoneAnswered", (res)=>{
       setActualQuestionIndex(res.currentQuestionIndex)
       setNumberOfQuestions(res.numberOfQuestions)
+      setPartialRanking(res.ranking)
       setGameState("result")
       console.log("sfdkjhfdiodfhsosdfjdsfjj")
     })
@@ -299,6 +302,7 @@ export function GameProvider({ children }){
       toHome,
       quickTimeEvent,
       answerQuick,
+      partialRanking,
       players
     }}>
       {children}
