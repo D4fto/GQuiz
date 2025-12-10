@@ -22,10 +22,10 @@
   display: flex;
   flex-direction: column;
 }
-.waitingCard::-webkit-scrollbar{
+.playersList::-webkit-scrollbar{
   width: 1rem;
 }
-.waitingCard::-webkit-scrollbar-thumb{
+.playersList::-webkit-scrollbar-thumb{
   background-color: var(--primary);
 }
 
@@ -39,7 +39,7 @@
 }
 
 .playersList {
-  max-height: 45rem;
+  max-height: 42rem;
   overflow-x: hidden;
   width: 100%;
   border: 1rem solid var(--primary);
