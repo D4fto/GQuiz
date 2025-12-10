@@ -3,6 +3,7 @@ import styles from './Waiting.module.css';
 import TitleBox from '../../components/TitleBox/TitleBox';
 import { useGame } from '../../contexts/gameContext';
 import { useAuth } from '../../contexts/authContext';
+import StyleSquare from '../../components/StyleSquare/StyleSquare';
 
 
 export default function Waiting(){
@@ -11,6 +12,7 @@ export default function Waiting(){
 
   return (
     <div className={styles.container}>
+            <StyleSquare option={4} innerColor={'var(--black)'} outColor={'var(--gray)'} position={'bottomLeft'}></StyleSquare>
         <div className={styles.waitingCard}>
           <div className = {styles.title}>
             <TitleBox title={<div><p>Esperando Jogadores</p><p>Nome da sala: {room.id}</p></div>} />

@@ -2,7 +2,7 @@ import styles from "./chooseWorlds.module.css";
 import TitleBox from "../../components/TitleBox/TitleBox";
 import StyleSquare from "../../components/StyleSquare/StyleSquare";
 import ChooseWorlds from "../../components/ChooseWorlds/ChooseWorlds";
-import Category from "../../components/Category/Category";
+import BackButton from "../../components/BackButton/BackButton";
 
 
 export default function chooseWorlds(){
@@ -17,9 +17,9 @@ export default function chooseWorlds(){
                 <TitleBox title="Mundos" />
             </div>
         </div>
-        <Category/>
         <ChooseWorlds/>
       </main>
+      <BackButton/>
     </div>
   );
     
