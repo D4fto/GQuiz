@@ -30,7 +30,7 @@ import NextButton from "../../components/NextButton/NextButton";
       const timer = setInterval(() => {
         const now = Date.now();
         const diff = Math.max(Math.floor((endTime - now) / 1000), 0);
-        setTime(diff);
+        setTime(diff+1);
 
         if (diff <= 0) clearInterval(timer);
       }, 200); 
@@ -49,7 +49,7 @@ import NextButton from "../../components/NextButton/NextButton";
       <div className={styles.container}>
         <StyleSquare option={1} innerColor={'var(--black)'} outColor={'var(--gray)'} position={'bottomLeft'}></StyleSquare>
           <div className={styles.timer}>{formatTime(time)}</div>
-          {gameType=="room" && <div>{numberOfAnswers}/{room.numberOfPlayers}</div>}
+          {gameType=="room" && <div className={styles.answereds}>{numberOfAnswers}/{room.numberOfPlayers}</div>}
         
   
         <div className={styles.mainContent}>

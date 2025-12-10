@@ -79,7 +79,7 @@ export default function QuickTimeEvent() {
         const timer = setInterval(() => {
         const now = Date.now();
         const diff = Math.max(Math.floor((endTime - now) / 1000), 0);
-        setTime(diff);
+        setTime(diff+1);
 
         if (diff <= 0) clearInterval(timer);
         }, 200); 

@@ -33,6 +33,18 @@
   color: var(--white);
 }
 
+.answereds{
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 1rem;
+  padding-right: 1.5rem;
+  font-size: 4.8rem;
+  font-weight: bold;
+  color: var(--white);
+
+}
+
 .mainContent {
   flex: 1;
   display: flex;
