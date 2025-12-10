@@ -39,6 +39,17 @@
   padding-bottom: 2rem;   
 }
 
+.categoryInput{
+  cursor: default;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.4rem;
+  border: none;
+  background-color: var(--white);
+  color: var(--black);
+  font-size: 1.5rem;
+}
+
 .leftArea {
   display: flex;
   align-items: center;

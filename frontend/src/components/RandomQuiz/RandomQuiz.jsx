@@ -4,12 +4,14 @@ import { useState } from "react";
 import formatTime, {extractSeconds} from "../../utils/formatTime";
 import { useGame } from "../../contexts/gameContext";
 import { toast } from 'react-hot-toast'
-
+import Category from "../Category/Category";
 
 export default function RandomQuiz() {
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState("0:30");
   const [numberOfQuestions, setNumberOfQuestions] = useState(1);
   const [hasQuickTime, setHasQuickTime] = useState(false);
+  const [categoryOpen, setCategoryOpen] = useState(false)
+  const [categoryIds, setCategoryIds] = useState(false)
   const { startRandom } = useGame()
 
   function handleNumberQuestionsChange(e){
@@ -43,11 +45,15 @@ export default function RandomQuiz() {
       return toast.error("Tempo por questão vazio")
     }
     console.log(hasQuickTime)
-    startRandom(parseInt(numberOfQuestions), extractSeconds(time), false, hasQuickTime)
+    startRandom(parseInt(numberOfQuestions), extractSeconds(time), categoryIds, hasQuickTime)
 
   }
   return (
     <div className={styles.page}>
+      {
+        categoryOpen&&
+        <Category setCategoryIds={setCategoryIds} setShowing={setCategoryOpen} categoriesIds={categoryIds}></Category>
+      }
       <div className={styles.topTab}>Quiz Aleatório</div>
 
       <div className={styles.card}>
@@ -72,7 +78,9 @@ export default function RandomQuiz() {
 
           <div className={styles.field}>
             <label>Categoria</label>
-            <input type="text" placeholder="Todos" />
+            <p className={styles.categoryInput} onClick={()=>setCategoryOpen(true)}>
+              {categoryIds?"Personalizado":"Todos"}
+            </p>
           </div>
 
 

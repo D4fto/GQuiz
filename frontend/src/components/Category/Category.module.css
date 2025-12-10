@@ -10,9 +10,10 @@
   background-color: var(--primary);
   padding: 1.5rem;
   width: 100%;
-  max-width: 50rem;
+  max-width: 100rem;
   border-radius: 0.5rem;
   color: var(--white);
+  font-size: 2.4rem;
   font-family: sans-serif;
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
 }
@@ -31,10 +32,10 @@
 
 .select {
   width: 100%;
-  padding: 0.5rem 1rem;
+  padding: 1rem 2rem;
   border-radius: 0.25rem;
   border: none;
-  font-size: 1rem;
+  font-size: 2.4rem;
   background-color: var(--white); 
   color: var(--gray); 
   cursor: pointer;
@@ -44,13 +45,16 @@
   background-repeat: no-repeat;
   background-position: right 0.7rem top 50%;
   background-size: 0.65rem auto;
+  option{
+    font-size: 2.4rem;
+  }
 }
 
 .closeBtn {
   background: none;
   border: none;
   color: var(--white);
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 300;
   cursor: pointer;
   line-height: 1;
@@ -60,7 +64,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  gap: 2rem;
   margin-bottom: 3rem;
 }
 
@@ -74,26 +78,28 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .checkbox {
   appearance: none;
   background-color: transparent;
   margin: 0;
-  width: 1.25rem;
-  height: 1.25rem;
-  border: 0.125rem solid var(--white);
-  border-radius: 0.125rem;
+  width: 4rem;
+  height: 4rem;
+  border: 0.3rem solid var(--white);
+  border-radius: 1rem;
   display: grid;
   place-content: center;
   cursor: pointer;
 }
-
+.checkbox:disabled{
+  cursor: default;
+}
 .checkbox::before {
   content: "";
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 1.8rem;
+  height: 1.8rem;
   background-color: var(--white);
   transform: scale(0);
   transition: 120ms transform ease-in-out;
@@ -106,15 +112,18 @@
 }
 
 .labelText {
-  font-size: 1rem;
+  font-size: 2.4rem;
   color: var(--white);
   user-select: none;
 }
 
-
+.disabled{
+  opacity: .5;
+  cursor: default !important;
+}
 .footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-top: auto;
 }
@@ -124,7 +133,7 @@
   color: var(--white);
   border: none;
   padding: 0.75rem 2rem;
-  font-size: 1.125rem;
+  font-size: 2.4rem;
   border-radius: 0.25rem;
   cursor: pointer;
   transition: filter 0.2s;
@@ -132,4 +141,27 @@
 
 .doneBtn:hover {
   filter: brightness(1.1);
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
