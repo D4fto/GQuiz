@@ -1,110 +1,129 @@
+.container {
+  width: 100dvw;
+  display: flex;
+  height: 100%;
+  background: var(--primary-dark);
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+}
 
-  
-  .container {
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 2rem;
+}
+
+.waitingCard {
+  width: 73rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.waitingCard::-webkit-scrollbar{
+  width: 1rem;
+}
+.waitingCard::-webkit-scrollbar-thumb{
+  background-color: var(--primary);
+}
+
+.title {
+  width: 100%;
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column; 
+  align-items: stretch;
+  justify-content: center;
+}
+
+.playersList {
+  max-height: 45rem;
+  overflow-x: hidden;
+  width: 100%;
+  border: 1rem solid var(--primary);
+  border-radius: 1rem; 
+  display: flex;
+
+  ul {
     display: flex;
-    height: 100%;
-    background: var(--primary-dark);
-    overflow: hidden;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    width: 100%;
   }
-  
-  .main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    padding: 2rem;
+
+  img {
+    height: 5rem;
+    margin-right: 1rem;
   }
-  
-  .waitingCard {
-    width: 42rem;
-    position: relative;
-  }
-  
-  .title {
-    text-align: center;
-    font-size: 2.4rem;
-    font-weight: 600;
-    margin-bottom: 3.5rem;
-    background: var(--primary-dark);
-    padding: 1.8rem 2.5rem;
-    border-radius: 1rem;
+
+  li {
     color: var(--white);
-  }
-  
-  .playersList {
-    max-height: 55rem;
-    overflow-x: hidden;
-    width: 45rem;
-    border: 1rem solid var(--primary);
-    border-radius: 1rem;
-    display: flex;
-    ul{
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
-    img{
-        height: 5rem;
-    }
-    li{
-        display: flex;
-        align-items: center;
-        padding: 1rem;
-        justify-content: space-between;
-        border-bottom: 1rem solid var(--primary);
-    }
-  }
-  
-  .playerItem {
     display: flex;
     align-items: center;
-    background: var(--primary-dark);
     padding: 1rem;
+    justify-content: flex-start;
+    border-bottom: 1rem solid var(--primary);
   }
-  
-  
-  .playerName {
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--white);
+
+  li:last-child {
+    border-bottom: none;
   }
-  
-  .playerCount {
-    text-align: left;
-    font-size: 1.6rem;
-    font-weight: 600;
-    margin-bottom: 2rem;
-    color: var(--white);
+}
+
+.playersList img {
+  height: 5rem;
+  margin-right: 1rem;
+}
+.playerItem {
+  display: flex;
+  align-items: center;
+  background: var(--primary-dark);
+  padding: 1rem;
+}
+
+.playerName {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.playerCount {
+  text-align: left;
+  width: 100%;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: var(--white);
+  margin-top: 1rem;
+}
+
+.startBtn {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 1.3rem 3rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+}
+
+.startBtn:hover {
+  background: #1a1a1a;
+  transform: translateY(-0.2rem);
+}
+
+.startBtn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .waitingCard {
+    width: 95%;
   }
-  
-  .startBtn {
-    background: var(--black);
-    color: var(--white);
-    border: none;
-    padding: 1.3rem 3rem;
-    font-size: 1.6rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
-  }
-  
-  .startBtn:hover {
-    background: #1a1a1a;
-    transform: translateY(-0.2rem);
-  }
-  
-  .startBtn:active {
-    transform: translateY(0);
-  }
-  
-  @media (max-width: 768px) {
-    .waitingCard {
-      width: 100%;
-    }
-  }
+}

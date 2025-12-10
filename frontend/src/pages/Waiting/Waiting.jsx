@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Waiting.module.css';
+import TitleBox from '../../components/TitleBox/TitleBox';
 
 // Mock data para preview
 const mockUser = { id: 117 };
@@ -25,7 +26,9 @@ export default function Waiting(){
   return (
     <div className={styles.container}>
         <div className={styles.waitingCard}>
-          <h1 className={styles.title}>Esperando Jogadores</h1>
+          <div className = {styles.title}>
+            <TitleBox title="Esperando Jogadores" />
+          </div>
           
           <div className={styles.playersList}>
             <ul>
