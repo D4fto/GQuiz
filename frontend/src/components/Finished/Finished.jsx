@@ -20,11 +20,10 @@ export default function Finished() {
   const playAgainFunctions = {
     level: ()=>startLevel(finishedInfo.id),
     random: ()=>startRandom(finishedInfo.numberOfQuestions, finishedInfo.timeByQuestion, finishedInfo.categories, finishedInfo.hasQuickTime),
-    room: ()=>{playRoomAgain()}
   }
   
   return (
-    gameType == "room" || true
+    gameType == "room"
     ? <Podium></Podium>
     :<div className={styles.page}>
 
