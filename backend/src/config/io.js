@@ -282,7 +282,7 @@ io.on('connection', (socket) => {
     const roomId = Array.from(socket.rooms)[1]
     const room = rooms.get(roomId)
     const user = socket.user
-    if(socket.user.id==room.host){
+    if(socket.user.id==room?.host){
       await room.game.init()
       
       room.numberOfPlayers++
@@ -332,7 +332,7 @@ io.on('connection', (socket) => {
       waitingHost.delete(roomId)
       return
     }
-    if(room.game?.acceptingPlayers===false){
+    if(room?.game?.acceptingPlayers===false){
       socket.emit("waitingHost")
       if(waitingHost.get(roomId)){
         waitingHost.set(roomId,[...waitingHost.get(roomId),{id: user.id, username: user.username, imgName: user.imgName}])
@@ -344,13 +344,16 @@ io.on('connection', (socket) => {
       return
     }
     
-    room.game.addUser(user.id, user.username, user.imgName)
+    room?.game.addUser(user.id, user.username, user.imgName)
     io.to(roomId).emit("playerEnter", {
       id: user.id,
       username: user.username,
       imgName: user.imgName
     })
-    room.numberOfPlayers++
+    if(room){
+      room.numberOfPlayers++
+
+    }
     const playersArray = Array.from(room.game?.users.entries()).map(([id, user]) => ({
       id,
       username: user.username,

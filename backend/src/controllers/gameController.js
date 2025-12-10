@@ -41,3 +41,23 @@ export function getRooms(req,res) {
   })
   res.send({rooms: formatedRooms})
 }
+export function verifyPassword(req,res) {
+  try{
+    console.log("=============")
+    console.log(req.body)
+    const roomId = req.body.roomId
+    const password = req.body.password
+    const room = rooms.get(roomId)
+    console.log(room)
+    if(room.password === password){
+      res.status(200).send({success: "senha correta"})
+      return
+    }
+    res.status(401).send({error: "senha incorreta"})
+    return
+
+  }catch(e){
+    res.status(400).send({error: e})
+  }
+  
+}

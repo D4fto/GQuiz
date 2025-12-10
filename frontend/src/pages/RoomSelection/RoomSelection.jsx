@@ -51,24 +51,26 @@ export default function RoomSelect() {
   
   async function handleJoinWithPassword() {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/game/rooms/${roomSelected}/verify-password`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/game/rooms/verify-password/`, {
         method: 'POST',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ password })
+        body: JSON.stringify({ password, roomId: roomSelected })
       })
       
-      const data = await response.json()
       
-      if (data.success || response.ok) {
+      if ( response.ok) {
+        const data = await response.json()
         setShowPasswordModal(false)
         joinRoom(roomSelected, password)
       } else {
+        console.log(response)
         setPasswordError('Senha incorreta. Tente novamente.')
       }
     } catch (e) {
+
       setPasswordError('Erro ao verificar senha. Tente novamente.')
       console.error(e)
     }
