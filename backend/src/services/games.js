@@ -217,7 +217,7 @@ export class randomGame extends game{
       return { word: data.word}
     }
     catch(e){
-      const words = ["cavaleiro", "floresta", "dalmo", "couraças", "vampiros", "sacrifício", "hexatombe"]
+      const words = ["cavaleiro", "floresta", "dalmo", "couraças", "vampiros", "sacrifício", "hexatombe", "jaé","cabeça de gaiola"]
       this.quickAnswer = words[Math.floor(Math.random() * this.words.length)]
       return {
         word: this.quickAnswer
@@ -416,7 +416,7 @@ export class roomGame extends randomGame{
       console.log(key)
       io.to(getUserSocket(key)).emit("timeout", value.score)
     })
-    io.to(this.roomId).emit("everyoneAnswered", {currentQuestionIndex: this.currentQuestionIndex, numberOfQuestions: this.numberOfQuestions})
+    io.to(this.roomId).emit("everyoneAnswered", {currentQuestionIndex: this.currentQuestionIndex, numberOfQuestions: this.numberOfQuestions, ranking: this.getTop()})
     setTimeout(()=>{
       this.answereds.clear()
       this.nextQuestion()
@@ -474,7 +474,7 @@ export class roomGame extends randomGame{
       answereds: this.answereds.size,
     })
     if(this.answereds.size>=rooms.get(this.roomId)?.numberOfPlayers){
-      io.to(this.roomId).emit("everyoneAnswered", {currentQuestionIndex: this.currentQuestionIndex, numberOfQuestions: this.numberOfQuestions})
+      io.to(this.roomId).emit("everyoneAnswered", {currentQuestionIndex: this.currentQuestionIndex, numberOfQuestions: this.numberOfQuestions, ranking: this.getTop()})
       clearTimeout(this.timeout)
       setTimeout(()=>{
         this.answereds.clear()
@@ -490,26 +490,30 @@ export class roomGame extends randomGame{
   }
 
   async finish(){
-    await this.users.forEach(async (value, key) => {
+    for (const [key, value] of this.users) {
       await prisma.user.update({
-        where: {id: key},
+        where: { id: key },
         data: {
-          points: { increment: value.score}
+          points: { increment: value.score }
         }
       })
-    });
-    const info = {top: this.getTop()}
-    this.acceptingPlayers=false
+    }
+
+    const info = { top: this.getTop() }
+
+    this.acceptingPlayers = false
     this.users.clear()
     this.answereds.clear()
+
     const newRoom = rooms.get(this.roomId)
-    if(newRoom){
-      newRoom.numberOfPlayers=0
+    if (newRoom) {
+      newRoom.numberOfPlayers = 0
       rooms.set(this.roomId, newRoom)
     }
 
     return info
   }
+
 
 
 
@@ -537,7 +541,7 @@ export class roomGame extends randomGame{
         answereds: this.answereds.size
       })
       if(this.answereds.size>=rooms.get(this.roomId)?.numberOfPlayers){
-        io.to(this.roomId).emit("everyoneAnswered", {currentQuestionIndex: this.currentQuestionIndex, numberOfQuestions: this.numberOfQuestions})
+        io.to(this.roomId).emit("everyoneAnswered", {currentQuestionIndex: this.currentQuestionIndex, numberOfQuestions: this.numberOfQuestions, ranking: this.getTop()})
         clearTimeout(this.timeout)
         setTimeout(()=>{
           this.answereds.clear()

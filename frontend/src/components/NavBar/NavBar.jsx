@@ -3,7 +3,7 @@ import gql from '../../assets/gquiz-logo-white.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/authContext';
 
-const noProfileRoutes = ['/question']
+const noProfileRoutes = ['/question', '/loading', '/result', '/quickTimeEvent', '/waiting-host', '/finished']
 
 export default function NavBar() {
   const { user } = useAuth()
@@ -18,11 +18,11 @@ export default function NavBar() {
           <img src={gql} alt="GQuiz Logo" className={styles.logoImage} />
       </div>
       <div className={styles.routes}>
-        <Link to={'/'}>Home</Link>
+        {/* <Link to={'/'}>Home</Link>
         <Link to={'/login'}>Login</Link>
         <Link to={'/worlds'}>Worlds</Link>
         <Link to={'/question'}>Question</Link>
-        <Link to={'/profile'}>Profile</Link>
+        <Link to={'/profile'}>Profile</Link> */}
       </div>
       {
         !noProfileRoutes.includes(location.pathname) &&

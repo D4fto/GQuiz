@@ -13,6 +13,8 @@ import Home from './pages/Home/Home';
 import NavBar from './components/NavBar/NavBar';
 import PrivateRoute from "./utils/PrivateRoute";
 import { useEffect } from "react";
+import WaitingHost from './pages/WaitingHost/WaitingHost';
+import WaitingAnswers from './pages/WaitingAnswers/WaitingAnswers';
 import { Toaster } from "react-hot-toast";
 import Question from './pages/Question/Question';
 import RoomSelection from './pages/RoomSelection/RoomSelection';
@@ -34,7 +36,7 @@ export default function App() {
     room, 
     players, 
     initRoomGame, 
-    numberOfAnswers,
+    
     quickTimeEvent,
   } = useGame()
   const { user } = useAuth()
@@ -148,20 +150,25 @@ export default function App() {
         } />
         <Route path="/waiting-answers" element={ 
           <PrivateRoute>
-              <div>{numberOfAnswers}/{room.numberOfPlayers}</div>
+              <WaitingAnswers></WaitingAnswers>
+          </PrivateRoute>
+        } />
+        <Route path="/waiting-host" element={ 
+          <PrivateRoute>
+              <WaitingHost></WaitingHost>
           </PrivateRoute>
         } />
         <Route path="/waiting-players" element={ 
           <PrivateRoute>
-            <Waiting/>
-            {/* <div>
+            {/* <Waiting/> */}
+            <div>
               <p>{JSON.stringify(room)}</p>
               <p>{JSON.stringify(Array.from(players))}</p>
               {
                 user?.id===room?.host && <button onClick={initRoomGame}>Iniciar</button>
               }
               
-            </div> */}
+            </div>
           </PrivateRoute>
         } />
 
