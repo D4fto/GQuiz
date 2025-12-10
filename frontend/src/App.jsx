@@ -160,15 +160,15 @@ export default function App() {
         } />
         <Route path="/waiting-players" element={ 
           <PrivateRoute>
-            {/* <Waiting/> */}
-            <div>
+            <Waiting/>
+            {/* <div>
               <p>{JSON.stringify(room)}</p>
               <p>{JSON.stringify(Array.from(players))}</p>
               {
                 user?.id===room?.host && <button onClick={initRoomGame}>Iniciar</button>
               }
               
-            </div>
+            </div> */}
           </PrivateRoute>
         } />
 
