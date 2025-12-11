@@ -1,11 +1,3 @@
-:root {
-  --white: #F7F4F3;
-  --black: #070707;
-  --primary: #F03828;
-  --primary-dark: #BA1B1D;
-  --gray: #2F2A22;
-}
-
 .box {
   width: 100%;
   height: 100%;
@@ -36,7 +28,7 @@
   width: 18rem;
   height: 18rem;
   border-radius: 50%;
-  border: 0.25rem solid var(--primary);
+  border: 0.3rem solid var(--primary);
 }
 
 .name {
@@ -84,6 +76,7 @@
   font-size: 1rem;
   transition: 0.2s;
   font-size: 2rem;
+  margin-top: 2rem;
 }
 
 .editButton:hover {

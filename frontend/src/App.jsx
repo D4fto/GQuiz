@@ -7,6 +7,7 @@ import ChooseWorlds from './pages/chooseWorlds/chooseWorlds';
 import RandomQuiz from './pages/randomQuiz/randomQuiz';
 import RoomCreation from './pages/roomCreation/roomCreation';
 import RoomCreationPt2 from './components/RoomCreationPt2/RoomCreationPt2'
+import EditProfile from './components/EditProfile/EditProfile';
 import Finished from './pages/finished/finished'
 import Admin from './pages/Admin/Admin';
 import Home from './pages/Home/Home';
@@ -109,6 +110,12 @@ export default function App() {
         <Route path="/room-selection" element={ 
           <PrivateRoute>
             <RoomSelection />
+          </PrivateRoute>
+        } />
+
+        <Route path="/edit-profile" element={ 
+          <PrivateRoute>
+            <EditProfile />
           </PrivateRoute>
         } />
 

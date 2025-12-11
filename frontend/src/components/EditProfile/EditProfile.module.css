@@ -1,0 +1,94 @@
+.box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  background: var(--primary-dark);
+}
+
+.card {
+  width: 50rem;
+  background: var(--white);
+  border-radius: 1.125rem;
+  padding: 2rem 2rem;
+  text-align: center;
+  color: var(--black);
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.avatarWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.avatar {
+  width: 18rem;
+  height: 18rem;
+  border-radius: 50%;
+  border: 0.3rem solid var(--primary);
+}
+
+.label {
+  display: block;
+  text-align: left;
+  font-size: 1.8rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--black);
+}
+
+.fileInput {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.6rem;
+}
+
+.input {
+  width: 100%;
+  padding: 1.2rem;
+  border-radius: 0.5rem;
+  border: 0.15rem solid var(--gray);
+  font-size: 1.8rem;
+}
+
+.saveButton {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1.8rem;
+  background: var(--primary);
+  border: none;
+  color: var(--white);
+  border-radius: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.saveButton:hover {
+  background: var(--primary-dark);
+}
+
+.backButton {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1.6rem;
+  background: var(--gray);
+  color: var(--white);
+  border: none;
+  border-radius: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.backButton:hover {
+  filter: brightness(.8);
+}
