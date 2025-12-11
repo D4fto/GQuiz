@@ -10,7 +10,7 @@ export class game {
   constructor() {
     this.currentQuestionIndex = 0;
     this.questions = [];
-    this.timeByQuestion=5;
+    this.timeByQuestion=30;
     this.time=null
     this.tolerance=5
     this.penalty=.1
