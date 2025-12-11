@@ -61,7 +61,7 @@ export default function Result(){
     
     return(
         <div className={styles.container}>
-            <div className={styles.timer}>{formatTime(time)}</div>
+            {gameType === "room" && <div className={styles.timer}>{formatTime(time)}</div>}
             {gameType === "room" && actualQuestionIndex + 1 === numberOfQuestions?
             <div className={styles.ocult}>Resultados ocultos para maior suspense 🤫</div>:
             <>

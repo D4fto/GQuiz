@@ -92,3 +92,8 @@
 .backButton:hover {
   filter: brightness(.8);
 }
+
+.editImage{
+  display: flex;
+  flex-direction: column;
+}

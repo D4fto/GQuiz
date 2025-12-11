@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { CRUDCategory, CRUDOption, CRUDWorld, CRUDQuestion, CRUDLevelHasQuestion, CRUDLevel, CRUDUser, CRUDUserHasLevel, CRUDUserImgs } from "../../components/CRUDS/CRUDS";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
+import BackButton from "../../components/BackButton/BackButton";
 
 export default function Admin() {
   const [adminState, setAdminState] = useState("categorias");
@@ -56,6 +57,7 @@ export default function Admin() {
         </fieldset>
         <div className={styles.crud}>{cruds[adminState]}</div>
       </div>
+      <BackButton onClick={()=>navigate('/')}></BackButton>
     </div>
   );
 }

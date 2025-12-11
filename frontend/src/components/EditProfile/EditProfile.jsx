@@ -1,35 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./EditProfile.module.css";
 import { useAuth } from "../../contexts/authContext";
 import StyleSquare from "../StyleSquare/StyleSquare";
+import { useNavigate } from "react-router-dom";
+import { ImageSelect } from "../ImageSelect/imageSelect";
 
 export default function EditProfile() {
   const { user } = useAuth();
   const [username, setUsername] = useState(user.username || "");
-  const [file, setFile] = useState(null);
+  const [selectedImg, setSelectedImg] = useState("")
+  const [images, setImages] = useState([])
+  const navigate = useNavigate()
   const [waiting, setWaiting] = useState(false);
+
+  async function fetchImages() {
+    const data = await (await fetch(import.meta.env.VITE_API_URL+'/user-imgs',{
+      credentials: "include"
+    })).json()
+    data.data.map((e)=>{
+      if(e.imgName==user.imgName){
+        setSelectedImg(JSON.stringify({id: e.id, imgName: e.imgName}))
+      }
+    })
+    setImages(data.data)
+  } 
 
   async function handleSubmit(e) {
     e.preventDefault();
     setWaiting(true);
 
-    const formData = new FormData();
-    formData.append("username", username);
-    if (file) formData.append("image", file);
 
     try {
       await fetch(import.meta.env.VITE_API_URL + "/user/update", {
         method: "PUT",
         credentials: "include",
-        body: formData
+     
       });
 
-      window.location.href = import.meta.env.VITE_URL + "/profile";
+      navigate("/profile");
     } catch (e) {
       console.error(e);
       setWaiting(false);
     }
   }
+
+  useEffect(()=>{
+    fetchImages()
+  },[])
 
   return (
     <div className={styles.box}>
@@ -42,22 +59,22 @@ export default function EditProfile() {
           <div className={styles.avatarWrapper}>
             <img
               src={
-                file
-                  ? URL.createObjectURL(file)
-                  : import.meta.env.VITE_URL + "/" + user.imgName + ".png"
+                selectedImg?
+                import.meta.env.VITE_URL + "/" + JSON.parse(selectedImg).imgName + ".png":
+                import.meta.env.VITE_URL + "/" + user.imgName + ".png"
               }
               alt="Avatar"
               className={styles.avatar}
             />
           </div>
-
-          <label className={styles.label}>Alterar foto</label>
-          <input
-            type="file"
-            accept="image/*"
-            className={styles.fileInput}
-            onChange={(e) => setFile(e.target.files[0])}
-          />
+          <div className={styles.editImage}>
+            <label htmlFor="images">Editar imagem</label>
+            <ImageSelect
+              images={images}
+              value={selectedImg}
+              onChange={(obj)=>setSelectedImg(JSON.stringify(obj))}
+              />
+          </div>
 
           <label className={styles.label}>Nome de usuário</label>
           <input
@@ -74,7 +91,7 @@ export default function EditProfile() {
           <button
             type="button"
             className={styles.backButton}
-            onClick={() => window.location.href = import.meta.env.VITE_URL + "/profile"}
+            onClick={() => navigate("/profile")}
           >
             Voltar
           </button>

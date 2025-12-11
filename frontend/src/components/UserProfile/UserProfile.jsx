@@ -2,11 +2,16 @@ import styles from "./UserProfile.module.css";
 import StyleSquare from "../StyleSquare/StyleSquare";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/authContext";
+import BackButton from "../../components/BackButton/BackButton";
+import { useNavigate } from "react-router-dom";
+
 
 export default function UserProfile() {
   const [data, setData] = useState({});
   const { user } = useAuth({});
+  const navigate = useNavigate()
   const [waiting, setWaiting] = useState(false);
+  console.log(user)
 
   async function fetchData() {
     try {
@@ -67,19 +72,28 @@ export default function UserProfile() {
         {/* <button className={styles.editButton}>Editar Perfil</button> */}
         <button
           className={styles.editButton}
-          onClick={logout}
-          disabled={waiting}
-        >
-          Sair
-        </button>
-        <button
-          className={styles.editButton}
           onClick={() =>
-            (window.location.href = import.meta.env.VITE_URL + "/edit-profile")
+            navigate("/edit-profile")
           }
           disabled={waiting}
         >
           Editar Perfil
+        </button>
+        {
+          user.admin && <button
+          className={styles.editButton}
+          onClick={()=>navigate('/admin')}
+          disabled={waiting}
+        >
+          Admin
+        </button>
+        }
+        <button
+          className={styles.editButton + ' ' + styles.logout}
+          onClick={logout}
+          disabled={waiting}
+        >
+          Sair
         </button>
       </div>
       <StyleSquare
@@ -88,6 +102,7 @@ export default function UserProfile() {
         outColor={"var(--black)"}
         position={"bottomRight"}
       ></StyleSquare>
+      <BackButton onClick={()=>navigate('/')}></BackButton>
     </div>
   );
 }

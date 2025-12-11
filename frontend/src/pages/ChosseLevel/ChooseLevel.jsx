@@ -6,6 +6,7 @@ import Tooltip from '../../components/Tooltip/Tooltip';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/authContext';
 import { useGame } from '../../contexts/gameContext';
+import BackButton from '../../components/BackButton/BackButton';
 
  function MapLevels({
   levels = [],
@@ -202,6 +203,7 @@ export default function ChooseLevel(){
       <div className={styles.loading}>Carregando...</div> :
       <MapLevels levels={levels} onSelect={(id)=>startLevel(id)}></MapLevels>
     }
+    <BackButton></BackButton>
     
   </div>
 }
