@@ -104,11 +104,8 @@ export async function deleteLevel(req,res) {
         id_level:id
       }
     })
-    await prisma.world_has_level.deleteMany({
-      where: {
-        id_level:id
-      }
-    })
+
+
     await prisma.user_has_level.deleteMany({
       where: {
         id_level:id

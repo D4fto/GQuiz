@@ -19,8 +19,10 @@ import { useEffect, useState } from 'react'
 //   },
 // ]
 
-export default function GeneralRank({length=15}){
+export default function GeneralRank({length=""}){
   const [data, setData] = useState([])
+  const [search, setSearch] = useState("")
+  const [filteredData, setFilteredData] = useState([])
 
   async function fetchData() {
     const response = await (await fetch(import.meta.env.VITE_API_URL+'/ranking/'+length, {
@@ -34,14 +36,19 @@ export default function GeneralRank({length=15}){
   useEffect(()=>{
     fetchData()
   },[])
+
+  useEffect(()=>{
+    setFilteredData(data.filter((e)=>e.username.toLowerCase().includes(search.toLowerCase())))
+  },[search, data])
   return <div className={styles.rankingContainer}>
     <div className={styles.inputContainer}>
-      <input type="text" />
+      <input type="text" onChange={(e)=>setSearch(e.target.value)} className={styles.searchInput}/>
     </div>
     <ul className={styles.ranking}>
-    {data.map((x,i)=>{
+    {filteredData.map((x,i)=>{
       return <li key={i}>
         <div className={styles.left}>
+          <span>{x.position}</span>
           <img src={import.meta.env.VITE_URL+'/'+x.userImgs.imgName+'.png'} alt={"Imagem de " + x.username} className={styles.userImg}/>
           <span>{x.username}</span>
         </div>

@@ -15,7 +15,7 @@ export default function RoomCreationPt2() {
   const [hasQuickTime, setHasQuickTime] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false)
   const [categoryIds, setCategoryIds] = useState(false)
-  const { startRoomGame } = useGame()
+  const { startRoomGame, toHome } = useGame()
 
   function handleNumberQuestionsChange(e){
     if(!e.target.value){
@@ -98,7 +98,7 @@ export default function RoomCreationPt2() {
             <button className={styles.playBtn}>Criar</button>
           </form>
 
-          <BackButton classes={styles.boto} />
+          <BackButton classes={styles.boto} onClick={toHome}/>
         </div>
       </div>
 

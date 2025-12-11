@@ -2,10 +2,9 @@ import prisma from "../config/db.js"
 
 
 export async function getRanking(req, res){
-  const limit = req.params.limit || 10
+  const limit = req.params.limit 
   try{
-    const response = await prisma.user.findMany({
-      take: parseInt(limit),
+    const query = {
       where: {
         isAdmin: false
       },
@@ -21,8 +20,16 @@ export async function getRanking(req, res){
           }
         }
       }
-    })
-    res.send({response})
+    }
+    if(limit){
+      query.take = parseInt(limit)
+    }
+    const response = await prisma.user.findMany(query)
+    
+    res.send({response: response.map((e,i)=>{
+      e.position = i+1
+      return e
+    })})
   }catch(e){
     res.status(400).send({error: e})
   }

@@ -24,8 +24,8 @@ export default function RoomCreation() {
   
   function handleMaxPlayers(e){
     const value = e.target.value.replace(/\D/g, "")
-    if(!value || Number(value)<2){
-      setMaxPlayers(2)
+    if(!value){
+      setMaxPlayers("")
       return
     }
     if(Number(value)>40){
@@ -41,7 +41,7 @@ export default function RoomCreation() {
       toast.error("Nome da sala vazio")
       return
     }
-    if(!maxPlayers){
+    if(!maxPlayers || Number(maxPlayers)<2){
       toast.error("Número de players inválido")
       return
     }

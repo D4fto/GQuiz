@@ -2,19 +2,21 @@ import styles from './NavBar.module.css';
 import gql from '../../assets/gquiz-logo-white.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/authContext';
+import { useGame } from '../../contexts/gameContext';
 
-const noProfileRoutes = ['/question', '/loading', '/result', '/quickTimeEvent', '/waiting-host', '/finished']
+const noProfileRoutes = ['/question', '/loading', '/result', '/quickTimeEvent', '/waiting-host', '/finished', '/RoomCreationPt2', '/waiting-players', '/profile', '/edit-profile']
 
 export default function NavBar() {
   const { user } = useAuth()
   const location = useLocation()
+  const { gameType, toHome } = useGame()
   const navigate = useNavigate()
   console.log(user)
 
 
   return (
     <nav className={styles.navbar}>
-      <div className={styles.logo}>
+      <div className={styles.logo} onClick={gameType=="room"?toHome:()=>navigate('/')}>
           <img src={gql} alt="GQuiz Logo" className={styles.logoImage} />
       </div>
       <div className={styles.routes}>
