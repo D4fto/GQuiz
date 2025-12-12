@@ -57,7 +57,7 @@ export default function Login(){
                     <div className={styles.else}>
                         <div className={styles.validation}>
                             <label htmlFor="email">Email</label>
-                            <input className={styles.input} type="email" id="email" name="email" maxLength={25} placeholder="example@gmail.com"/>
+                            <input className={styles.input} type="email" id="email" name="email" maxLength={45} placeholder="example@gmail.com"/>
                             <label htmlFor="senha">Digite sua senha</label>
                             <input className={styles.input} type="password" id="senha" name="senha" maxLength={25} placeholder="••••••••"/>
                         </div>
