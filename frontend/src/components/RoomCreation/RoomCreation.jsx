@@ -15,11 +15,11 @@ export default function RoomCreation() {
 
   function handleRoomName(e){
     const value = e.target.value
-    setRoomName(value)
+    if (e.target.value.length <= 15) {setRoomName(value)} 
   }
 
   function handlePassword(e){
-    setPassword(e.target.value)
+    if (e.target.value.length <= 15) {setPassword(e.target.value)}
   }
   
   function handleMaxPlayers(e){
