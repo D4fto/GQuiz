@@ -139,6 +139,10 @@ export class levelGame extends game{
 
 }
 
+function removerAcentos(texto) {
+  return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 export class randomGame extends game{
   constructor(numberOfQuestions, timeByQuestion, categories = false, hasQuickTime = false) {
     super()
@@ -213,11 +217,11 @@ export class randomGame extends game{
     try{
       const response = await fetch('https://api.dicionario-aberto.net/random');
       const data = await response.json();
-      this.quickAnswer = data.word
-      return { word: data.word}
+      this.quickAnswer = removerAcentos(data.word)
+      return { word: removerAcentos(data.word)}
     }
     catch(e){
-      const words = ["cavaleiro", "floresta", "dalmo", "couraças", "vampiros", "sacrifício", "hexatombe", "jaé","cabeça de gaiola"]
+      const words = ["cavaleiro", "floresta", "dalmo", "couraças", "vampiros", "sacrifício", "hexatombe", "jae","cabeça de gaiola"]
       this.quickAnswer = words[Math.floor(Math.random() * this.words.length)]
       return {
         word: this.quickAnswer
@@ -308,8 +312,8 @@ export class randomGame extends game{
   async nextQuestion() {
     if(this.hasQuickTime && this.quickAnswer===null){
       if(Math.random()<1/3){
-        // const event = this.quickEvents[Math.floor(Math.random() * this.quickEvents.length)];
-        const event = this.quickEvents[1];
+        const event = this.quickEvents[Math.floor(Math.random() * this.quickEvents.length)];
+        // const event = this.quickEvents[1];
         const data = await event.get()
         io.to(getUserSocket(this.userId)).emit("quickTimeEvent", {
           type: event.type,
@@ -429,8 +433,8 @@ export class roomGame extends randomGame{
     if(this.hasQuickTime && this.quickAnswer===null){
       if(Math.random()<1/3){
         console.log("this.quickTime")
-        // const event = this.quickEvents[Math.floor(Math.random() * this.quickEvents.length)];
-        const event = this.quickEvents[1];
+        const event = this.quickEvents[Math.floor(Math.random() * this.quickEvents.length)];
+        // const event = this.quickEvents[1];
         const data = await event.get()
         io.to(this.roomId).emit("quickTimeEvent", {
           type: event.type,
