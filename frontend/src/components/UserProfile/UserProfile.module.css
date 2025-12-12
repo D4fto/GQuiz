@@ -6,6 +6,7 @@
   align-items: center;
   padding-top: 2rem;
   padding-bottom: 2rem;
+  gap: 10rem;
   background: var(--primary-dark);
 }
 
@@ -17,6 +18,14 @@
   padding: 2rem 2rem;
   text-align: center;
   color: var(--black);
+}
+
+.graph{
+  width: 50rem;
+  padding: 2rem;
+  background-color: var(--white);
+  height: 76rem;
+  border-radius: 1rem;
 }
 
 .avatarWrapper {

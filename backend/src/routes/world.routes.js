@@ -5,6 +5,7 @@ import { adminMiddleware, authMiddleware } from "../middlewares/authMiddleware.j
 const router = Router();
 
 router.get("/", authMiddleware, worldController.getWorlds);
+router.get("/my-progress/", authMiddleware, worldController.myProgress);
 router.post("/", authMiddleware, adminMiddleware, worldController.createWorld);
 router.patch("/:id", authMiddleware, adminMiddleware, worldController.editWorld);
 router.delete("/:id", authMiddleware, adminMiddleware, worldController.deleteWorld);

@@ -65,3 +65,69 @@ export async function deleteWorld(req, res) {
   }
 }
 
+export async function myProgress(req,res) {
+  try{
+    const worlds = await prisma.world.findMany({
+      select: {
+        id: true,
+        name: true,
+        level: {
+          select: {
+            level_has_question: {
+              select: {
+                question: {
+                  select: {
+                    weight: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+
+    worlds.map((e)=>{
+      let sum = 0
+      e.level.map(y=>{
+        y.level_has_question.map((x)=>{
+          sum+=x.question.weight
+        })
+      })
+      e.total=sum
+      delete e.level
+    })
+
+
+
+    const my = await prisma.$queryRaw`
+      SELECT l.id_world, SUM(uhl.max_points) as total_points
+      FROM user_has_level uhl
+      JOIN level l ON l.id = uhl.id_level
+      WHERE uhl.id_user = ${req.user.id}
+      GROUP BY l.id_world
+    `;
+
+    const fixed = my.map(row => ({
+      ...row,
+      total_points: Number(row.total_points)
+    }));
+
+    const data = worlds.map((e)=>{
+      const myStatus = fixed.find(x=>x.id_world===e.id)
+      if(myStatus){
+        return [e.name,Math.round(myStatus.total_points/e.total*100,2)]
+      }
+      return [e.name, 0]
+    })
+
+    data.unshift(['mundo', 'progresso %'])
+
+    
+
+
+    res.send({data: data })
+  }catch(e){
+    console.error(e)
+  }
+}
