@@ -62,13 +62,7 @@ export default function QuickTimeEvent() {
             setTimeout(() => checkAnswer(value), 100)
         }
     }
-
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter' && userInput.length > 0) {
-            checkAnswer(userInput)
-        }
-    }
-
+    
     const checkAnswer = (answer) => {
         answerQuick(answer)
     }

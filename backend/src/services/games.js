@@ -307,9 +307,9 @@ export class randomGame extends game{
   
   async nextQuestion() {
     if(this.hasQuickTime && this.quickAnswer===null){
-      if(Math.random()<.9){
-        const event = this.quickEvents[Math.floor(Math.random() * this.quickEvents.length)];
-        // const event = this.quickEvents[1];
+      if(Math.random()<1/3){
+        // const event = this.quickEvents[Math.floor(Math.random() * this.quickEvents.length)];
+        const event = this.quickEvents[1];
         const data = await event.get()
         io.to(getUserSocket(this.userId)).emit("quickTimeEvent", {
           type: event.type,
@@ -427,10 +427,10 @@ export class roomGame extends randomGame{
     console.log("this.quickTime")
     console.log(this.hasQuickTime)
     if(this.hasQuickTime && this.quickAnswer===null){
-      if(true){
+      if(Math.random()<1/3){
         console.log("this.quickTime")
-        const event = this.quickEvents[Math.floor(Math.random() * this.quickEvents.length)];
-        // const event = this.quickEvents[1];
+        // const event = this.quickEvents[Math.floor(Math.random() * this.quickEvents.length)];
+        const event = this.quickEvents[1];
         const data = await event.get()
         io.to(this.roomId).emit("quickTimeEvent", {
           type: event.type,
