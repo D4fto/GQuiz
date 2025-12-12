@@ -139,10 +139,6 @@ export class levelGame extends game{
 
 }
 
-function removerAcentos(texto) {
-  return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
-
 export class randomGame extends game{
   constructor(numberOfQuestions, timeByQuestion, categories = false, hasQuickTime = false) {
     super()
@@ -217,11 +213,11 @@ export class randomGame extends game{
     try{
       const response = await fetch('https://api.dicionario-aberto.net/random');
       const data = await response.json();
-      this.quickAnswer = removerAcentos(data.word)
-      return { word: removerAcentos(data.word)}
+      this.quickAnswer = data.word
+      return { word: data.word}
     }
     catch(e){
-      const words = ["cavaleiro", "floresta", "dalmo", "couraças", "vampiros", "sacrifício", "hexatombe", "jae","cabeça de gaiola"]
+      const words = ["cavaleiro", "floresta", "dalmo", "couraças", "vampiros", "sacrifício", "hexatombe", "jaé","cabeça de gaiola"]
       this.quickAnswer = words[Math.floor(Math.random() * this.words.length)]
       return {
         word: this.quickAnswer
