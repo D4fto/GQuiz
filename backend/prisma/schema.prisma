@@ -48,8 +48,8 @@ model level {
   created_at         DateTime             @default(now()) @db.Timestamptz(6)
   number             Int
   label              String?
-  id_world           Int?
-  world              world?               @relation(fields: [id_world], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id_world           Int
+  world              world                @relation(fields: [id_world], references: [id], onDelete: NoAction, onUpdate: NoAction)
   level_has_question level_has_question[]
   user_has_level     user_has_level[]
 }
@@ -79,7 +79,7 @@ model user_has_level {
   id_user    Int      @default(autoincrement())
   created_at DateTime @default(now()) @db.Timestamptz(6)
   id_level   Int
-  max_points Int?
+  max_points Int      @default(0)
   level      level    @relation(fields: [id_level], references: [id], onDelete: NoAction, onUpdate: NoAction)
   user       user     @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
 

@@ -1,5 +1,6 @@
 import { error } from "console";
 import prisma from "../config/db.js";
+import argon2 from "argon2";
 import { sign } from "../config/jwt.js";
 
 export async function login(req, res) {
@@ -17,7 +18,7 @@ export async function login(req, res) {
   if (!user) {
     return res.status(401).json({ error: "Usuário não encontrado" });
   }
-  if (user.password !== password) {
+  if (!(await argon2.verify(user.password,password))) {
     return res.status(401).json({ error: "Senha incorreta" });
   }
 
@@ -55,12 +56,14 @@ export async function createAccount(req, res){
       data:{
         email: email,
         username: username,
-        password: password,
+        password: await argon2.hash(password),
         id_userImg: id
       },
     })
+    console.log(response)
     res.status(200).send({message: "Usuário criado", response: response})
   } catch(e){
+    console.log(e)
     
     res.status(400).send({error: e})
   }
