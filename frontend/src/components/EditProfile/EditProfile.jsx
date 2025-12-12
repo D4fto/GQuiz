@@ -3,7 +3,7 @@ import styles from "./EditProfile.module.css";
 import { useAuth } from "../../contexts/authContext";
 import StyleSquare from "../StyleSquare/StyleSquare";
 import { useNavigate } from "react-router-dom";
-import { ImageSelect } from "../ImageSelect/imageSelect";
+import { ImageSelect } from "../ImageSelect/ImageSelect";
 import { toast } from 'react-hot-toast'
 
 export default function EditProfile() {
