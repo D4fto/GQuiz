@@ -33,6 +33,11 @@ export default function QuickTimeEvent() {
         setTargetWord((quickTimeEvent.data.word).toUpperCase())
         setRevealedLetters(Math.min(2, quickTimeEvent.data.word.length))
     }
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && userInput.length > 0) {
+            checkAnswer(userInput)
+        }
+    }
 
 
     // Global key listener - always capture input
