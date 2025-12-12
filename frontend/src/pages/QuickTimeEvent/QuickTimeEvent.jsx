@@ -130,7 +130,7 @@ export default function QuickTimeEvent() {
                     type="text"
                     value={userInput}
                     onChange={handleInputChange}
-                    onKeyPress={handleKeyPress}
+                    // onKeyPress={handleKeyPress}
                     maxLength={targetWord.length}
                     className={styles.hiddenInput}
                     autoComplete="off"
