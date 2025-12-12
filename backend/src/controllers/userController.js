@@ -1,4 +1,5 @@
 import prisma from "../config/db.js"
+import { sign } from "../config/jwt.js";
 
 export async function getMyPoints(req, res) {
   const id = req.user.id
@@ -83,6 +84,46 @@ export async function updateUser(req, res) {
     })
     res.status(200).send({message: "Usuário atualizado com sucesso", response: response})
   }catch(e){
+    res.status(400).send({error: e})
+  }
+}
+export async function updateMyUser(req, res) {
+  const  data  = req.body
+  console.log(req.body)
+  const id = req.user.id
+  try{
+    const response = await prisma.user.update({
+      where: {
+        id: id
+      },
+      data: data
+    })
+    const user = await prisma.user.findUnique({
+      where: { id: id },
+      include: {
+        userImgs: {
+          select: {
+            imgName: true
+          }
+        }
+      }
+    });
+    const { token, jwtExpirySeconds } = sign({
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      imgName: user.userImgs.imgName,
+      isAdmin: user.isAdmin,
+    })
+
+    res.cookie("token", token, { 
+      maxAge: jwtExpirySeconds * 1000,
+    })
+      
+
+    res.status(200).send({message: "Usuário atualizado com sucesso"})
+  }catch(e){
+    console.log(e)
     res.status(400).send({error: e})
   }
 }

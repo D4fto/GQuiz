@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/authContext";
 import StyleSquare from "../StyleSquare/StyleSquare";
 import { useNavigate } from "react-router-dom";
 import { ImageSelect } from "../ImageSelect/imageSelect";
+import { toast } from 'react-hot-toast'
 
 export default function EditProfile() {
   const { user } = useAuth();
@@ -28,14 +29,32 @@ export default function EditProfile() {
   async function handleSubmit(e) {
     e.preventDefault();
     setWaiting(true);
+    const body = {
+      username: username
+    }
+    
+    if(selectedImg){
+      body.id_userImg = parseInt(JSON.parse(selectedImg).id)
+    }
+    console.log(body)
 
 
     try {
-      await fetch(import.meta.env.VITE_API_URL + "/user/update", {
-        method: "PUT",
+      const response = await fetch(import.meta.env.VITE_API_URL + "/user/me/", {
+        method: "PATCH",
         credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body)
      
       });
+      const data = await response.json()
+      if(data.error){
+        toast.error('Erro ao editar usuario')
+        return
+      }
+      console.log()
 
       navigate("/profile");
     } catch (e) {
