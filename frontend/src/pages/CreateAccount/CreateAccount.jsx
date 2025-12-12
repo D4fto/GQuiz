@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast';
 import BlackQ from "../../components/BlackQ/BlackQ";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/authContext";
+import BackButton from "../../components/BackButton/BackButton";
 
 export default function CreateAccount() {
     const [senha, setSenha] = useState('');
@@ -68,6 +69,7 @@ export default function CreateAccount() {
 
     return (
         <div className={styles.container}>
+            <BackButton/>
             <div className={styles.ptU}>
                 <StyleSquare option={2} innerColor={'var(--primary-dark)'} outColor={'var(--primary)'} position={'bottomRight'}></StyleSquare>
                 <StyleSquare option={3} innerColor={'var(--primary-dark)'} position={'topLeft'}></StyleSquare>
