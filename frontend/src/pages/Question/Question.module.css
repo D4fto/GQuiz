@@ -146,15 +146,5 @@
   color: var(--gray);
 }
 
-.bottomLeftCard {
-  position: absolute;
-  bottom: 4rem;
-  left: 2rem;
-  color: var(--white);
-
-  border-radius: 1rem;
-  font-size: 2.4rem;
-  font-weight: 500;
-}
 
 

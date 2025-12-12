@@ -87,9 +87,6 @@ import NextButton from "../../components/NextButton/NextButton";
           </div>
         </div>
   
-        <div className={styles.bottomLeftCard}>
-          Pergunta 01
-        </div>
         <NextButton onClick={()=>{answerQuestion(selectedOption)}}></NextButton>
   
       </div>
