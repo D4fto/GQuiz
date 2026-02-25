@@ -5,7 +5,7 @@ singleplayer, fases, mundos temáticos e partidas multiplayer em tempo
 real.
 
 🔗 **Acesse o projeto online:**
-👉 https://g-quiz-five.vercel.app
+👉 https://g-quizz.vercel.app/
 
 ------------------------------------------------------------------------
 
