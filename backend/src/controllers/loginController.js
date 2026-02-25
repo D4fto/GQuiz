@@ -30,9 +30,12 @@ export async function login(req, res) {
     isAdmin: user.isAdmin,
   })
 
-  res.cookie("token", token, { 
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,        // obrigatório em HTTPS (Render usa HTTPS)
+    sameSite: "none",    // necessário para frontend em outro domínio
     maxAge: jwtExpirySeconds * 1000,
-  })
+  });
 
   console.log("sdpjasdpadosjasdodpasj")
 
